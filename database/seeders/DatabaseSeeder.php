@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 use App\Enum\PermisosEnum;
 use App\Enum\RolesEnum;
+use App\Models\Configuracion;
 use App\Models\User;
+use Faker\Factory;
+use GuzzleHttp\Promise\Create;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -42,5 +45,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'user','email' => 'user@example.com',
         ])->assignRole(RolesEnum::User);
+
+        Configuracion::factory(10)->create();
     }
 }
