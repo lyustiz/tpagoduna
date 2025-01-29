@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ConfiguracionResource;
 use App\Models\Configuracion;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class ConfiguracionController extends Controller
 {
@@ -12,7 +15,12 @@ class ConfiguracionController extends Controller
      */
     public function index()
     {
-        //
+        DB::enableQueryLog();
+        $paginated =  Configuracion::latest()->paginate(10);
+        
+        return Inertia::render("Configuracion/Index", [
+            "configuraciones"=> ConfiguracionResource::collection($paginated )   ,
+        ]);
     }
 
     /**

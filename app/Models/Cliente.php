@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model
 {
-    /** @use HasFactory<\Database\Factories\ClienteFactory> */
-   // use HasFactory;
-
    protected $table 	  = 'Clientes';
 
    protected $fillable   = [
