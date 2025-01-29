@@ -6,7 +6,7 @@ use App\Http\Resources\ConfiguracionResource;
 use App\Models\Configuracion;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ConfiguracionController extends Controller
 {
@@ -15,11 +15,10 @@ class ConfiguracionController extends Controller
      */
     public function index()
     {
-        DB::enableQueryLog();
         $paginated =  Configuracion::latest()->paginate(10);
-        
+
         return Inertia::render("Configuracion/Index", [
-            "configuraciones"=> ConfiguracionResource::collection($paginated )   ,
+            "configuraciones" => ConfiguracionResource::collection($paginated),
         ]);
     }
 
@@ -28,7 +27,7 @@ class ConfiguracionController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render("Configuracion/Create");
     }
 
     /**
@@ -36,7 +35,18 @@ class ConfiguracionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            "referencia" => ["required", "string"],
+            "descripcion" => ["nullable", "string"],
+            "valor" => ["required", "integer"],
+        ]);
+
+        $data['id_usuario'] = Auth::user()->id;
+        $data['id_estado'] = 1;
+
+        Configuracion::create($data);
+
+        return to_route('configuracion.index')->with('success', 'Configuracion Creada Correctamente');
     }
 
     /**
@@ -44,7 +54,9 @@ class ConfiguracionController extends Controller
      */
     public function show(Configuracion $configuracion)
     {
-        //
+        return Inertia::render("Configuracion/Show", [
+            "configuracion" => new ConfiguracionResource($configuracion),
+        ]);
     }
 
     /**
@@ -52,7 +64,9 @@ class ConfiguracionController extends Controller
      */
     public function edit(Configuracion $configuracion)
     {
-        //
+        return Inertia::render("Configuracion/Edit", [
+            "configuracion" => new ConfiguracionResource($configuracion),
+        ]);
     }
 
     /**
@@ -60,7 +74,16 @@ class ConfiguracionController extends Controller
      */
     public function update(Request $request, Configuracion $configuracion)
     {
-        //
+        $data = $request->validate([
+            "referencia" => ["required", "string"],
+            "descripcion" => ["nullable", "string"],
+            "valor" => ["required", "integer"],
+            'id_estado' => ["required", "integer"]
+        ]);
+
+        $configuracion->update($data);
+
+        return to_route('configuracion.index')->with('success', 'Configuracion Actualizada Correctamente');
     }
 
     /**
@@ -68,6 +91,9 @@ class ConfiguracionController extends Controller
      */
     public function destroy(Configuracion $configuracion)
     {
-        //
+        $configuracion->delete();
+
+        return to_route('configuracion.index')->with('success', 'Configuracion Eliminada Correctamente');
+
     }
 }

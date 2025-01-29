@@ -32,7 +32,9 @@ Route::middleware('auth')->group(function () {
             return Inertia::render('Dashboard');
         })->name('dashboard');;
 
-        Route::get('/configuracion',  [ConfiguracionController::class, 'index'])->name('configuracion.index');
+        // Route::get('/configuracion',  [ConfiguracionController::class, 'index'])->name('configuracion.index');
+
+        Route::resource('/configuracion',  ConfiguracionController::class);
     });
 });
 

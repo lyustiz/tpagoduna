@@ -1,6 +1,8 @@
 import ConfiguracionItem from "@/Components/ConfiguracionItem";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
+import {Link} from "@inertiajs/react";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Index({ configuraciones }) {
   return (
@@ -13,11 +15,16 @@ export default function Index({ configuraciones }) {
     >
       <Head title="Configuracion" />
 
+      <div className="mb-8">
+      <PrimaryButton>
+        <Link href={route('configuracion.create')}>Nuevo</Link>
+      </PrimaryButton>
+      </div>
+     
+        {configuraciones.data.map((configuracion) => (
+          <ConfiguracionItem configuracion={configuracion} key={configuracion.id} />
+        ))}
       
-          {configuraciones.data.map((configuracion) => (
-            <ConfiguracionItem configuracion={configuracion} key={configuracion.id} />
-          ))}
-       
     </AuthenticatedLayout>
   );
 }
