@@ -1,5 +1,6 @@
 <?php
 
+use App\Enum\PermisosEnum;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -32,9 +33,12 @@ Route::middleware('auth')->group(function () {
             return Inertia::render('Dashboard');
         })->name('dashboard');;
 
-        // Route::get('/configuracion',  [ConfiguracionController::class, 'index'])->name('configuracion.index');
+        Route::resource('/configuracion',  ConfiguracionController::class)
+        ->except(['index', 'show'])
+        ->middleware('can:'.PermisosEnum::AdministrarConfiguracion->value);
 
-        Route::resource('/configuracion',  ConfiguracionController::class);
+        Route::resource('/configuracion',  ConfiguracionController::class)
+        ->only(['index', 'show']);
     });
 });
 
