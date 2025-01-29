@@ -78,7 +78,6 @@ class ConfiguracionController extends Controller
             "referencia" => ["required", "string"],
             "descripcion" => ["nullable", "string"],
             "valor" => ["required", "integer"],
-            'id_estado' => ["required", "integer"]
         ]);
 
         $configuracion->update($data);

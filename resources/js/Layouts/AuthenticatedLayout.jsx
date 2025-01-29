@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function AuthenticatedLayout({ header, children }) {
   const user = usePage().props.auth.user;
+  const success = usePage().props.success;
 
   const [showingNavigationDropdown, setShowingNavigationDropdown] =
     useState(false);
@@ -178,6 +179,9 @@ export default function AuthenticatedLayout({ header, children }) {
 
       <div className="py-8">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+          {success && <div className="bg-emerald-200 text-black-300 py-4 px-6 mb-8 rounded">
+            {success}
+          </div>}
           <main>{children}</main>
         </div>
       </div>

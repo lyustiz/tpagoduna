@@ -8,7 +8,7 @@ import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { useRef } from 'react';
 
-export default function Show() {
+export default function Create() {
 
    const {data, 
        setData,
@@ -27,6 +27,7 @@ export default function Show() {
 
     post(route('configuracion.store'), {
       preserveScroll: true,
+
     });
   };
 

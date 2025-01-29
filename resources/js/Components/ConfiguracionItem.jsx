@@ -2,6 +2,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import {Link} from "@inertiajs/react";
+import ConfiguracionAction from "./ConfiguracionActions";
 
 export default function ConfiguracionItem({ configuracion }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -37,6 +38,10 @@ export default function ConfiguracionItem({ configuracion }) {
             <button onClick={ToggleRead} className="text-amber-500">
                 { isExpanded ? 'Menos' : 'Mas' }
             </button>
+          </div>
+
+          <div>
+           <ConfiguracionAction configuracion={configuracion} />
           </div>
         </div>
       </div>

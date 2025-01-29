@@ -37,6 +37,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $user ? new AuthUserResource($user): null,
             ],
+            'success' => session('success'),
         ];
     }
 }
