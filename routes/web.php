@@ -1,8 +1,10 @@
 <?php
 
 use App\Enum\PermisosEnum;
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VentaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,11 +18,19 @@ use Inertia\Inertia;
     ]);
 });*/
 
-Route::redirect("/", "/dashboard");
+Route::redirect("/", "/welcome");
+
+Route::get('/welcome', function () {
+    return Inertia::render('Welcome');
+})->name('welcome');
+
+Route::resource('/compra',  CompraController::class)
+        ->only(['index', 'store']);
+
 
 Route::get('/loteria', function () {
     return Inertia::render('Loteria');
-})->name('loteria');;
+})->name('loteria');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -38,7 +48,11 @@ Route::middleware('auth')->group(function () {
         ->middleware('can:'.PermisosEnum::AdministrarConfiguracion->value);
 
         Route::resource('/configuracion',  ConfiguracionController::class)
-        ->only(['index', 'show']);
+       // ->except(['index', 'show'])
+        ->middleware('can:'.PermisosEnum::AdministrarConfiguracion->value);
+
+        Route::resource('/venta',  VentaController::class);
+        //->only(['index', 'show']);
     });
 });
 

@@ -22,13 +22,23 @@ class Ticket extends Model
         ];
 
 
-    public function scopeActivo($query)
+    public function scopePendiente($query)
     {
-        return $query->where('id_estado', 1);
+        return $query->where('id_estado', 3);
+    }
+
+    public function scopeReservado($query)
+    {
+        return $query->where('id_estado', 4);
+    }
+
+    public function scopeVendido($query)
+    {
+        return $query->where('id_estado', 5);
     }
 
     public function estado()
     {
-        return $this->BelongsTo('App\Models\Estado', 'id_estado');
+        return $this->BelongsTo(Estado::class, 'id_estado');
     }
 }

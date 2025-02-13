@@ -1,0 +1,27 @@
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { Button } from "@mui/material";
+
+export default function WhatsappButton({loading, celular, texto }) {
+
+    const url = new URL("https://wa.me/"+(celular || '00000'));
+    const params = new URLSearchParams(url.search);
+    params.append("text", (texto || 'enviar comprobante'));
+    url.search = params.toString();
+    console.log(url.toString()); 
+
+  return (
+    <>
+      <Button
+        href={url.toString()}
+        variant="contained"
+        color="success"
+        size="large"
+        target="_blank" rel="noopener noreferrer"
+        startIcon={<WhatsAppIcon />}
+        loading={loading}
+      >
+        Enviar Mensaje WhatsApp
+      </Button>
+    </>
+  );
+}

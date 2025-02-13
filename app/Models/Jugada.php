@@ -13,21 +13,26 @@ class Jugada extends Model
         'tx_estado',
         'tx_observaciones',
         'id_usuario',
-       ]; 
+    ];
 
-protected $hidden     = [
+    protected $hidden     = [
         'created_at',
         'updated_at'
-       ];
+    ];
 
 
-       public function scopeActivo($query)
-       {
-           return $query->where('id_estado', 1);
-       }
-   
-       public function estado()
-       {
-           return $this->BelongsTo('App\Models\Estado', 'id_estado');
-       }
+    public function scopeActivo($query)
+    {
+        return $query->where('id_estado', 1);
+    }
+
+    public function estado()
+    {
+        return $this->BelongsTo(Estado::class, 'id_estado');
+    }
+
+    public function tickets()
+    {
+        return $this->HasMany(Ticket::class, 'id_jugada');
+    }
 }

@@ -38,6 +38,13 @@ return [
             'report' => false,
         ],
 
+        'comprobante' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/comprobante'),
+            'url' => env('APP_URL').'/storage/comprobante',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

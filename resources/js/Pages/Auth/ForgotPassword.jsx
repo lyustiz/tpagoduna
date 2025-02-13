@@ -3,6 +3,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/react';
+import Card from "@mui/material/Card";
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -18,7 +19,7 @@ export default function ForgotPassword({ status }) {
     return (
         <GuestLayout>
             <Head title="Forgot Password" />
-
+            <Card className="p-6 bg-white shadow-sm sm:rounded-lg mx-auto mt-6 w-full sm:w-96 mb-6">
             <div className="mb-4 text-sm text-gray-600">
                 Forgot your password? No problem. Just let us know your email
                 address and we will email you a password reset link that will
@@ -30,7 +31,7 @@ export default function ForgotPassword({ status }) {
                     {status}
                 </div>
             )}
-
+            
             <form onSubmit={submit}>
                 <TextInput
                     id="email"
@@ -50,6 +51,7 @@ export default function ForgotPassword({ status }) {
                     </PrimaryButton>
                 </div>
             </form>
+            </Card>
         </GuestLayout>
     );
 }
