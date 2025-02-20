@@ -9,6 +9,7 @@ const MemoizedChip = React.memo(({ ticket, onDelete }) => (
     label={ticket.nu_numero.toString().padStart(3, "0")}
     clickable
     onDelete={onDelete}
+    sx={{ fontSize: '1.20rem', fontWeight: 'bold' }}
   />
 ));
 

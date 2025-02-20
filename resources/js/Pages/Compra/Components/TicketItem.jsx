@@ -41,11 +41,13 @@ const TicketItem = memo(({ ticketsSel, ticket, onAddTicket, onRemoveTicket }) =>
         title={isSelected ? "Seleccionado" : estado.label}
       >
         <Chip
+          size="medium"
           color={isSelected ? "primary" : estado.color}
           label={ticket.nu_numero.toString().padStart(3, "0")}
           clickable={estado.active}
           onClick={estado.active ? handleClick : null}
           message={isSelected ? "active" : "inactive"}
+          sx={{ fontSize: '1.20rem', fontWeight: 'bold' }}
         ></Chip>
       </Tooltip>
     </>

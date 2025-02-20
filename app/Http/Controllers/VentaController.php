@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Venta;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -94,6 +95,11 @@ class VentaController extends Controller
                 'id_usuario' => $request->user()->id
             ]);
 
+            Ticket::where('id_venta', $id)->update([
+                'id_estado' => self::VENDIDO,
+                'id_usuario' => $request->user()->id
+            ]);
+
             return redirect()->back()->with('success', 'Venta confirmada correctamente.');
 
         } catch (\Throwable $th) {
@@ -131,6 +137,12 @@ class VentaController extends Controller
                 'id_estado' => $this::CANCELADO,
                 'id_usuario' => $request->user()->id,
                 'tx_observaciones' => $request->observaciones
+            ]);
+
+            Ticket::where('id_venta', $id)->update([
+                'id_venta' => null,
+                'id_estado' => self::RESERVADO,
+                'id_usuario' => $request->user()->id
             ]);
 
             return redirect()->back()->with('success', 'Venta cancelada correctamente.');
