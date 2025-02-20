@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Chip, Tooltip } from "@mui/material";
 
-export default function TicketItem({ ticket, onAddTicket, onRemoveTicket, ticketsSel }) {
-  const [isSelected, setIsSelected] = useState(false);
+const TicketItem = memo(({ ticketsSel, ticket, onAddTicket, onRemoveTicket }) => {
+  const isSelected = ticketsSel.some((t) => t.id === ticket.id);
 
   const estados = {
     3: { color: "#2e7d32", label: "Disponible", active: true , "code" : '#2e7d32'},
@@ -12,10 +12,14 @@ export default function TicketItem({ ticket, onAddTicket, onRemoveTicket, ticket
 
   const estado = estados[ticket.id_estado];
 
-  const handledAddRemove = (isSelected) => {
-    setIsSelected(!isSelected);
-    !isSelected ? onAddTicket(ticket) : onRemoveTicket(ticket);
+  const handleClick = () => {
+    if (isSelected) {
+      onRemoveTicket(ticket);
+    } else {
+      onAddTicket(ticket);
+    }
   };
+
 
   // si no esta en los seleccionado desactivar
   const miTicket = ticketsSel.find((t) => t.id === ticket.id)
@@ -40,16 +44,13 @@ export default function TicketItem({ ticket, onAddTicket, onRemoveTicket, ticket
           color={isSelected ? "primary" : estado.color}
           label={ticket.nu_numero.toString().padStart(3, "0")}
           clickable={estado.active}
-          onClick={
-            estado.active
-              ? () => {
-                  handledAddRemove(isSelected);
-                }
-              : null
-          }
+          onClick={estado.active ? handleClick : null}
           message={isSelected ? "active" : "inactive"}
         ></Chip>
       </Tooltip>
     </>
   );
-}
+});
+
+
+export default TicketItem;

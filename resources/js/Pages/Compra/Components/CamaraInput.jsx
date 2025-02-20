@@ -24,18 +24,16 @@ export default forwardRef(function CameraInput(
       setImageSrc(null); 
       setError(null); 
     },
-  })); // Referencia al input de tipo file
+  })); 
 
-  // Función para manejar la selección de archivos
+  
   const handleFileChange = (event) => {
-    const file = event.target.files[0]; // Obtener el archivo seleccionado
+    const file = event.target.files[0]; 
     if (file) {
-      const reader = new FileReader(); // Crear un FileReader para leer el archivo
-
-      // Cuando el archivo se haya leído, actualizar el estado con la imagen
+      const reader = new FileReader(); 
       reader.onload = (e) => {
-        setImageSrc(e.target.result); // Guardar la imagen en el estado como una URL de datos
-        setError(null); // Limpiar el mensaje de error si existe
+        setImageSrc(e.target.result); 
+        setError(null); 
       };
 
       reader.readAsDataURL(file);

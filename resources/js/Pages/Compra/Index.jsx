@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Head } from "@inertiajs/react";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Grid2, Container, Paper } from "@mui/material";
@@ -10,13 +10,13 @@ import FormCompra from "./Components/FormCompra";
 export default function Index({ jugada }) {
   const [ticketsSel, setTickets] = useState([]);
 
-  function HandleAddTicket(ticket) {
-    setTickets([...ticketsSel, ticket]);
-  }
+  const HandleAddTicket = useCallback((ticket) => {
+    setTickets((prevTickets) => [...prevTickets, ticket]);
+  }, []);
 
-  function HandleRemoveTicket(ticket) {
-    setTickets(ticketsSel.filter((t) => t.id !== ticket.id));
-  }
+  const HandleRemoveTicket = useCallback((ticket) => {
+    setTickets((prevTickets) => prevTickets.filter((t) => t.id !== ticket.id));
+  }, []);
 
   function HandleFinVenta() {
     setTickets([]);

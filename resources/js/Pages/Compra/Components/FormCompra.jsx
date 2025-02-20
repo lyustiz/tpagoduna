@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 import {
   Card,
   CardHeader,
   CardContent,
   CardActions,
   Avatar,
-  Grid,
+  Grid2,
   Select,
   MenuItem,
   FormGroup,
@@ -14,23 +14,26 @@ import {
   Snackbar,
   Fade,
   Alert,
-} from '@mui/material';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Transition } from '@headlessui/react';
-import { useForm, router } from '@inertiajs/react';
-import PersonIcon from '@mui/icons-material/Person';
-import PaymentsIcon from '@mui/icons-material/Payments';
-import RequestPageIcon from '@mui/icons-material/RequestPage';
-import WhatsappButton from './WhatsappButton';
-import InfoPago from './InfoPago';
-import CameraInput from './CamaraInput';
+} from "@mui/material";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import { Transition } from "@headlessui/react";
+import { useForm, router, usePage  } from "@inertiajs/react";
+import PersonIcon from "@mui/icons-material/Person";
+import PaymentsIcon from "@mui/icons-material/Payments";
+import RequestPageIcon from "@mui/icons-material/RequestPage";
+import WhatsappButton from "./WhatsappButton";
+import InfoPago from "./InfoPago";
+import CameraInput from "./CamaraInput";
+import MensajeError from "@/Components/MensajeError";
+import MensajeExito from "@/Components/MensajeExito";
 
-export default function FormCompra({ jugada, ticketsSel, onFinVenta}) {
+export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
   const idsTicketSel = ticketsSel.map((ticket) => ticket.id);
   const cameraInputRef = useRef(null);
+  const props = usePage().props
   const {
     data,
     setData,
@@ -43,11 +46,11 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta}) {
     transform,
     clearErrors,
   } = useForm({
-    nombre: '',
+    nombre: "",
     codigo: 58,
-    celular: '',
+    celular: "",
     whatsapp: false,
-    comprobante: '',
+    comprobante: "",
     tickets: [],
     idJugada: jugada.id,
   });
@@ -57,13 +60,13 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta}) {
   const CantTickets = ticketsSel.length;
 
   const textoWhatsapp =
-    'Compra de ' + CantTickets + ' Ticket(s) Jugada ' + jugada.id;
+    "Compra de " + CantTickets + " Ticket(s) Jugada " + jugada.id;
 
   const create = (e) => {
     e.preventDefault();
 
     if (CantTickets < 1) {
-      alert('Seleccione tickets');
+      alert("Seleccione tickets");
       return;
     }
 
@@ -72,13 +75,14 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta}) {
       tickets: idsTicketSel,
     }));
 
-    if (!data.whatsapp && data.comprobante === '') {
-      alert('El comprobante es Obligatorio');
+    if (!data.whatsapp && data.comprobante === "") {
+      alert("El comprobante es Obligatorio");
       return;
     }
 
-    post(route('compra.store'), {
-      _method: 'put',
+    post(route("compra.store"), {
+      _method: "put",
+      _token: props.csrf_token,
       forceFormData: !data.whatsapp,
       preserveScroll: true,
       onSuccess: (page) => {
@@ -87,68 +91,51 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta}) {
         if (cameraInputRef.current) {
           cameraInputRef.current.clearImage();
         }
-          router.reload(  { only: ['jugada'] });
-          onFinVenta();
+        router.reload({ only: ["jugada"] });
+        onFinVenta();
       },
     });
   };
 
   const handleCloseSuccess = () => {
     setShowSuccess(false);
-    
   };
 
   var handleCelular = (celularVal) => {
-    setData('celular', celularVal);
+    setData("celular", celularVal);
   };
 
   var handleWhatsapp = (whatsapp) => {
-    setData('whatsapp', whatsapp);
+    setData("whatsapp", whatsapp);
     if (whatsapp) {
-      setData('comprobante', '');
+      setData("comprobante", "");
     }
   };
 
   var HandleChangeDataFile = (file) => {
-    setData('comprobante', file);
+    setData("comprobante", file);
   };
 
   return (
     <>
       {/* Mostrar error */}
-      <Snackbar
+      <MensajeError
         open={hasErrors}
         onClose={() => clearErrors()}
-        autoHideDuration={3000}
-        TransitionComponent={Fade}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert
-          severity={errors.error ? 'error' : 'warning'}
-          variant='filled'
-          sx={{ width: '100%' }}
-        >
-          {errors.error || errors.warning}
-        </Alert>
-      </Snackbar>
+        errors={errors}
+      ></MensajeError>
 
       {/* Mostrar éxito */}
-      <Snackbar
+      <MensajeExito
         open={showSuccess}
         onClose={handleCloseSuccess}
-        autoHideDuration={3000}
-        TransitionComponent={Fade}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert severity='success' variant='filled' sx={{ width: '100%' }}>
-          Compra realizada con éxito.
-        </Alert>
-      </Snackbar>
+        mensaje={"Compra realizada con éxito."}
+      ></MensajeExito>
 
-      <form onSubmit={create} className=''>
+      <form onSubmit={create}>
         <Card>
           <CardHeader
-            title='DATOS PERSONALES'
+            title="DATOS PERSONALES"
             avatar={
               <Avatar>
                 <PersonIcon />
@@ -156,71 +143,71 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta}) {
             }
           ></CardHeader>
           <CardContent>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={4}>
+            <Grid2 container spacing={2}>
+              <Grid2 item xs={12} md={4}>
                 <div>
-                  <InputLabel htmlFor='nombre' value='Nombre*' />
+                  <InputLabel htmlFor="nombre" value="Nombre*" />
 
                   <TextInput
-                    id='nombre'
-                    className='mt-1 mb-3 block w-full'
+                    id="nombre"
+                    className="mt-1 mb-3 block w-full"
                     value={data.nombre}
-                    onChange={(e) => setData('nombre', e.target.value)}
+                    onChange={(e) => setData("nombre", e.target.value)}
                     required
                     isFocused
-                    autoComplete='nombre'
-                    title='Este campo es obligatorio.'
+                    autoComplete="nombre"
+                    title="Este campo es obligatorio."
                   />
 
-                  <InputError className='mt-2' message={errors.nombre} />
+                  <InputError className="mt-2" message={errors.nombre} />
                 </div>
-              </Grid>
+              </Grid2>
 
-              <Grid item xs={4} md={2}>
+              <Grid2 item xs={4} md={2}>
                 <div>
-                  <InputLabel htmlFor='codigo' value='Codigo*' />
+                  <InputLabel htmlFor="codigo" value="Codigo*" />
 
                   <Select
-                    labelId='demo-simple-select-label'
-                    id='demo-simple-select'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
                     value={58}
-                    label='Age'
-                    className='w-full'
-                    onChange={(e) => setData('codigo', e.target.value)}
+                    label="Age"
+                    className="w-full"
+                    onChange={(e) => setData("codigo", e.target.value)}
                   >
                     <MenuItem value={58}>+58 Ven</MenuItem>
                     <MenuItem value={57}>+57 Col</MenuItem>
                     <MenuItem value={56}>+53 Cl</MenuItem>
                   </Select>
 
-                  <InputError className='mt-2' message={errors.codigo} />
+                  <InputError className="mt-2" message={errors.codigo} />
                 </div>
-              </Grid>
+              </Grid2>
 
-              <Grid item xs={8} md={4}>
+              <Grid2 item xs={8} md={4}>
                 <div>
-                  <InputLabel htmlFor='celular' value='Celular ' />
+                  <InputLabel htmlFor="celular" value="Celular " />
 
                   <TextInput
-                    id='celular'
-                    type='number'
-                    className='mt-1 mb-3 block w-full'
+                    id="celular"
+                    type="number"
+                    className="mt-1 mb-3 block w-full"
                     value={data.celular}
                     onChange={(e) => handleCelular(e.target.value)}
-                    autoComplete='celular'
-                    pattern='[0-9]+'
+                    autoComplete="celular"
+                    pattern="[0-9]+"
                     required
-                    title='Solo numeros, Este campo es obligatorio.'
+                    title="Solo numeros, Este campo es obligatorio."
                   />
 
-                  <InputError className='mt-2' message={errors.telefono} />
+                  <InputError className="mt-2" message={errors.telefono} />
                 </div>
-              </Grid>
-            </Grid>
+              </Grid2>
+            </Grid2>
           </CardContent>
 
           <CardHeader
-            title='METODO DE PAGO'
+            title="METODO DE PAGO"
             avatar={
               <Avatar>
                 <PaymentsIcon></PaymentsIcon>
@@ -233,7 +220,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta}) {
           </CardContent>
 
           <CardHeader
-            title='COMPROBANTE'
+            title="COMPROBANTE"
             avatar={
               <Avatar>
                 <RequestPageIcon></RequestPageIcon>
@@ -246,39 +233,42 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta}) {
               <FormControlLabel
                 control={
                   <Switch
-                    id='celular'
+                    id="celular"
                     checked={data.whatsapp}
-                    color='success'
+                    color="success"
                     onChange={(e) => handleWhatsapp(e.target.checked)}
                   />
                 }
-                label={'Envio por Whatsapp'}
+                label={"Envio por Whatsapp"}
               />
             </FormGroup>
 
             {data.whatsapp ? (
               <WhatsappButton
-                celular='+5804129098862'
+                celular="+5804129098862"
                 texto={textoWhatsapp}
                 loading={processing}
               />
             ) : (
-              <CameraInput ref={cameraInputRef} onChangeDataFile={HandleChangeDataFile} />
+              <CameraInput
+                ref={cameraInputRef}
+                onChangeDataFile={HandleChangeDataFile}
+              />
             )}
           </CardContent>
 
           <CardActions>
-            <div className='flex items-center gap-4'>
+            <div className="flex items-center gap-4">
               <PrimaryButton disabled={processing}>Comprar</PrimaryButton>
 
               <Transition
                 show={recentlySuccessful}
-                enter='transition ease-in-out'
-                enterFrom='opacity-0'
-                leave='transition ease-in-out'
-                leaveTo='opacity-0'
+                enter="transition ease-in-out"
+                enterFrom="opacity-0"
+                leave="transition ease-in-out"
+                leaveTo="opacity-0"
               >
-                <p className='text-sm text-gray-600'>Saved.</p>
+                <p className="text-sm text-gray-600">Saved.</p>
               </Transition>
             </div>
           </CardActions>

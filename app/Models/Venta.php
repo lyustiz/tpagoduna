@@ -16,6 +16,7 @@ class Venta extends Model
         'tx_celular_cliente',
         'tx_correo_cliente',
         'tx_comprobante',
+        'tx_referencia',
         'id_estado',
         'tx_observaciones',
         'id_usuario',

@@ -1,24 +1,33 @@
-import { useState } from "react";
+import { useCallback } from "react";
 import { Chip } from "@mui/material";
+import React from "react";
+
+const MemoizedChip = React.memo(({ ticket, onDelete }) => (
+  <Chip
+    key={ticket.id}
+    color="primary"
+    label={ticket.nu_numero.toString().padStart(3, "0")}
+    clickable
+    onDelete={onDelete}
+  />
+));
 
 export default function TicketsSelected({
   tickets,
   onRemoveTicket,
 }) {
-  const handledRemove = (ticket) => {
-     onRemoveTicket(ticket);
-  };
+  const handledRemove = useCallback((ticket) => {
+    onRemoveTicket(ticket);
+  }, [onRemoveTicket]);
 
   return (
     <>
       {tickets.map((ticket) => (
-        <Chip
+        <MemoizedChip
           key={ticket.id}
-          color="primary"
-          label={ticket.nu_numero.toString().padStart(3, "0")}
-          clickable
+          ticket={ticket}
           onDelete={() => handledRemove(ticket)}
-        ></Chip>
+        />
       ))}
     </>
   );

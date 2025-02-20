@@ -4,11 +4,13 @@ const EstadoVenta = ({ id_estado }) => {
     const getEstado = (id_estado) => {
         switch (id_estado) {
             case 3:
-                return {color: 'success', text: 'Pendiente'};
+                return {color: '', text: 'Pendiente'};
             case 4:
-                return {color: 'warning', text: 'Reservada'};
+                return {color: 'info', text: 'Reservada'};
             case 5:
-                return {color: 'error', text: 'Vendida'};
+                return {color: 'success', text: 'Vendida'};
+            case 6:
+                return {color: 'error', text: 'Cancelada'};
             default:
                 return {color: '', text: 'Desconocido'};
         }

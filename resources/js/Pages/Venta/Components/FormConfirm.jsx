@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { router, useForm } from "@inertiajs/react";
+import React, { useState, useEffect } from "react";
+import { router, useForm, usePage } from "@inertiajs/react";
 import {
-  IconButton,
   Dialog,
   DialogActions,
   DialogContent,
@@ -12,14 +11,14 @@ import {
   Backdrop,
   CircularProgress,
 } from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import MensajeError from "@/Components/MensajeError";
 import MensajeExito from "@/Components/MensajeExito";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
 import TextInput from "@/Components/TextInput";
 
-const ConfirmButton = ({ venta }) => {
+const FormConfirm = ({ open, OnClose, venta }) => {
+  
   const {
     data,
     setData,
@@ -28,37 +27,40 @@ const ConfirmButton = ({ venta }) => {
     post,
     reset,
     hasErrors,
-    transform,
     clearErrors,
+    setError,
   } = useForm({
     id: venta.id,
     referencia: "",
   });
 
-  const [open, setOpen] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleConfirm = () => {
+  const [exito, setExito] = useState(false);
+  const [msjExito, setMsjExito] = useState('');
+  const [showForm, setShowForm] = useState(true);
+  
+  const handleConfirm = (e) => {
+    e.preventDefault();
+    setShowForm(false);
     post(route("ventas.confirm", { id: data.id }), {
       _method: "put",
-      onSuccess: () => {
-        console.log("Venta confirmada");
-        setShowConfirmation(true);
+      onSuccess: (response) => {
+        setMsjExito(response.props.success);
+        setExito(true);
         router.reload({ only: ["ventas"] });
       },
       onFinish: () => {
-        setOpen(false);
+        reset();
+        setTimeout(() => {
+          OnClose(true);
+        }, 1000);
       },
     });
   };
+
+  const handdleClose = (valido) => {
+    reset();
+    OnClose(valido);
+  }
 
   return (
     <>
@@ -71,62 +73,59 @@ const ConfirmButton = ({ venta }) => {
 
       {/* Mostrar éxito */}
       <MensajeExito
-        open={showConfirmation}
-        onClose={() => setShowConfirmation(false)}
-        mensaje={"Compra realizada con éxito."}
+        open={exito}
+        onClose={() => setExito(false)}
+        mensaje={msjExito}
       ></MensajeExito>
 
-      <form action="" method="post">
-        <IconButton onClick={handleClickOpen}>
-          <CheckCircleIcon fontSize="small" color="success" />
-        </IconButton>
-        <Dialog open={open} onClose={handleClose}>
+      {showForm && (
+      <Dialog open={open} onClose={() => handdleClose(false)}>
+        <form action="" method="post">
           <DialogTitle>Confirmar Venta</DialogTitle>
           <DialogContent>
             <Typography variant="body1" gutterBottom>
-              ¿Estás seguro de que deseas Confirmar esta venta?
+              ¿Estás seguro de que deseas Confirmar la venta?
             </Typography>
             <Typography variant="body2" gutterBottom>
-              <strong>Cliente:</strong> {venta.tx_nombre_cliente}
+              <strong>Cliente:</strong> {venta?.tx_nombre_cliente}
             </Typography>
             <Typography variant="body2" gutterBottom>
-              <strong>Tickets:</strong> {venta.mo_total_tickets}
+              <strong>Tickets:</strong> {venta?.mo_total_tickets}
             </Typography>
             <Typography variant="body2" gutterBottom>
-              <strong>Monto:</strong> {venta.mo_total_venta}$
+              <strong>Monto:</strong> {venta?.mo_total_venta}$
             </Typography>
             <Grid2 item xs={8} md={4}>
               <div>
                 <InputLabel htmlFor="refrencia" value="Nro. Refrencia" />
-
                 <TextInput
                   id="refrencia"
                   type="number"
                   className="mt-1 mb-3 block w-full"
                   value={data.referencia}
-                  onChange={(e) => setData("refrencia", e.target.value)}
-                  autoComplete="refrencia"
+                  onChange={(e) => setData("referencia", e.target.value)}
                   pattern="[0-9]+"
                   required
-                  title="Solo numeros, Este campo es obligatorio."
+                  title="Ultimos 6 numeros."
                 />
-
                 <InputError className="mt-2" message={errors.telefono} />
               </div>
             </Grid2>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} disabled={processing}>
+            <Button onClick={() => handdleClose(false)} disabled={processing}>
               Cancelar
             </Button>
             <Button onClick={handleConfirm} autoFocus disabled={processing}>
               {processing ? "Confirmando..." : "Sí"}
             </Button>
           </DialogActions>
-        </Dialog>
-      </form>
+        </form>
+      </Dialog>
+      )}
+
       <Backdrop
-        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.modal+1 })}
         open={processing}
       >
         <CircularProgress color="inherit" />
@@ -135,4 +134,4 @@ const ConfirmButton = ({ venta }) => {
   );
 };
 
-export default ConfirmButton;
+export default FormConfirm;

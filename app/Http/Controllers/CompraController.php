@@ -63,9 +63,6 @@ class CompraController extends Controller
             return redirect()->back()->with([
                 'warning' => 'Existen cartones Vendidos'
             ]);
-          /*  return redirect()->back()->withErrors([
-                'warning' => 'Existen cartones Vendidos'
-            ]);*/
         }
 
         DB::beginTransaction();
