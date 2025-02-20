@@ -1,0 +1,1 @@
+import{t as n,c as r}from"./DefaultPropsProvider-0U4os2XN.js";import{r as s}from"./app-DZ9i8GeQ.js";function o(e){return Object.keys(e).length===0}function m(e=null){const t=s.useContext(n);return!t||o(t)?e:t}const u=r();function h(e=u){return m(e)}export{m as a,h as u};
