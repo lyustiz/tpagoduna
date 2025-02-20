@@ -15,7 +15,6 @@ import MensajeError from "@/Components/MensajeError";
 import MensajeExito from "@/Components/MensajeExito";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
-import TextInput from "@/Components/TextInput";
 
 const FormCancel = ({ open, OnClose, venta }) => {
   const {
@@ -27,7 +26,6 @@ const FormCancel = ({ open, OnClose, venta }) => {
     reset,
     hasErrors,
     clearErrors,
-    setError,
   } = useForm({
     id: venta.id,
     observaciones: "No pago",
