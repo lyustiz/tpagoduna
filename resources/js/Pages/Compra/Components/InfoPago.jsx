@@ -20,7 +20,7 @@ export default function InfoPago() {
     <>
       <Card sx={{ maxWidth: 275 }}>
         <CardHeader
-          title="Pago Movil Banesco"
+          title="Pago Movil Venezuela (0102)"
           avatar={
             <Avatar>
               <AccountBalanceRoundedIcon />
@@ -32,37 +32,37 @@ export default function InfoPago() {
             <Grid2 size={12}>
               <ListItem
                 secondaryAction={
-                  <CopyToClipboardButton textToCopy="0412998862" />
+                  <CopyToClipboardButton textToCopy="04129396107" />
                 }
               >
                 <ListItemIcon>
                   <PhoneAndroidIcon />
                 </ListItemIcon>
-                <ListItemText primary="0412998862" secondary="telefono" />
+                <ListItemText primary="04129396107" secondary="telefono" />
               </ListItem>
             </Grid2>
             <Grid2 size={12}>
               <ListItem
                 secondaryAction={
-                  <CopyToClipboardButton textToCopy="13479149" />
+                  <CopyToClipboardButton textToCopy="21415453" />
                 }
               >
                 <ListItemIcon>
                   <BadgeRoundedIcon />
                 </ListItemIcon>
-                <ListItemText primary="13479149" secondary="cedula" />
+                <ListItemText primary="21415453" secondary="cedula" />
               </ListItem>
             </Grid2>
             <Grid2 size={12}>
               <ListItem
                 secondaryAction={
-                  <CopyToClipboardButton textToCopy="Luis Yustiz" />
+                  <CopyToClipboardButton textToCopy="Mauricio Tellez" />
                 }
               >
                 <ListItemIcon>
                   <PersonOutlineRoundedIcon />
                 </ListItemIcon>
-                <ListItemText primary="Luis Yustiz" secondary="titular" />
+                <ListItemText primary="Mauricio Tellez" secondary="titular" />
               </ListItem>
             </Grid2>
           </Grid2>

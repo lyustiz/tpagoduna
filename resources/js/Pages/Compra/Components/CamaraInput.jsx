@@ -59,7 +59,6 @@ export default forwardRef(function CameraInput(
         <input
           type="file"
           accept="image/*" // Aceptar solo archivos de imagen
-          capture="environment" // Iniciar la cámara trasera (o "user" para la frontal)
           onChange={handleFileChange} // Manejar el cambio de archivo
           ref={fileInputRef}
           style={{ display: "none" }}

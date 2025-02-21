@@ -3,27 +3,31 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Chip from "@mui/material/Chip";
 import logo from "../../../public/images/logo.png";
-import FacebookIcon from '@mui/icons-material/Facebook';
-import XIcon from '@mui/icons-material/X';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import EmailIcon from '@mui/icons-material/Email';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import PlaceIcon from '@mui/icons-material/Place';
+import FacebookIcon from "@mui/icons-material/Facebook";
+import XIcon from "@mui/icons-material/X";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import EmailIcon from "@mui/icons-material/Email";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import PlaceIcon from "@mui/icons-material/Place";
+import InfoPago from "./Compra/Components/InfoPago";
+
+/** Imagenes  */
+import imgPagomovil from "../../../public/images/pagomovil.png";
+import imgComo from "../../../public/images/como.png";
+import imgGanar from "../../../public/images/ganar.png";
+import imgMonto from "../../../public/images/monto.png";
+import imgGanarHasta from "../../../public/images/ganahasta.png";
+import imgTePago from "../../../public/images/tepago.png";
 
 export default function Welcome({ auth }) {
   const premios = [
-    { cantidad: "$1,000,000", descripcion: "Premio Mayor" },
-    { cantidad: "$500,000", descripcion: "Segundo Premio" },
-    { cantidad: "$250,000", descripcion: "Tercer Premio" },
-    { cantidad: "$100,000", descripcion: "Cuarto Premio" },
+    { cantidad: "700,00$", descripcion: "Premio Mayor" },
+    { cantidad: "500,00$", descripcion: "Segundo Premio" },
+    { cantidad: "300,00$", descripcion: "Tercer Premio" },
+    { cantidad: "100,00$", descripcion: "Cuarto Premio" },
   ];
 
-  const metodosPago = [
-    { nombre: "Visa", icono: "visa.svg" },
-    { nombre: "Mastercard", icono: "mastercard.svg" },
-    { nombre: "PayPal", icono: "paypal.svg" },
-    { nombre: "Bitcoin", icono: "bitcoin.svg" },
-  ];
+  const metodosPago = [{ nombre: "Visa", icono: "visa.svg" }];
 
   return (
     <>
@@ -56,11 +60,11 @@ export default function Welcome({ auth }) {
                 Contacto
               </a>
               <Link
-                      href={route("login")}
-                      className="text-gray-700 hover:text-[#e62a3c]"
-                    >
-                      Ingresar
-                    </Link>
+                href={route("login")}
+                className="text-gray-700 hover:text-[#e62a3c]"
+              >
+                Ingresar
+              </Link>
             </div>
           </div>
         </nav>
@@ -69,32 +73,61 @@ export default function Welcome({ auth }) {
         <main className="container mx-auto px-4 pt-24 pb-12">
           {/* Hero Section */}
           <section className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-bold text-[#e62a3c] mb-6">
-              ¡GANA HASTA $1,000!
-            </h2>
-            <p className="text-xl text-gray-800 mb-8">
-              Participa en el sorteo más grande del año
-            </p>
-            
-                <Link
-                    href={route("compra.index")}
-                    className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
-                  >
-                    <button
-              className="bg-[#e62a3c] text-white px-8 py-3 rounded-full 
-            hover:bg-red-800 transition duration-300 text-lg"
-            >
-                    Comprar
-                    </button>
-                  </Link>
-            
+          <div className="flex justify-center">
+              <img
+                src={imgGanarHasta}
+                alt="ganar hasta"
+                style={{ height: "130px" }}
+              />
+            </div>
+
+            <div className="flex justify-center items-center gap-4 flex-col md:flex-row">
+              <img
+                src={imgMonto}
+                alt="Imagen Izquierda"
+                style={{ height: "120px" }}
+              />
+              <Link
+                href={route("compra.index")}
+                className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
+              >
+                <button
+                  className="bg-[#e62a3c] text-white px-8 py-3 rounded-full 
+        hover:bg-red-800 transition duration-300 text-lg"
+                >
+                  Comprar
+                </button>
+              </Link>
+              <img
+                src={imgMonto}
+                alt="Imagen Derecha"
+                style={{ height: "120px" }}
+              />
+            </div>
+            <div className="flex justify-center mt-8">
+              <iframe
+                className="rounded-lg"
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/Zfv6Wmf8R84"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
           </section>
 
           {/* Carousel de Premios */}
           <section className="mb-16" id="premios">
-            <h3 className="text-3xl text-[#e62a3c] font-bold mb-8 text-center">
-              Premios Disponibles
-            </h3>
+          <div className="flex justify-center">
+              <img
+                src={imgTePago}
+                alt="te pago"
+                style={{ height: "130px" }}
+              />
+            </div>
+
             <div className="flex flex-wrap bg-white justify-center gap-4 p-4 md:p-8 rounded-xl shadow-lg">
               {premios.map((premio, index) => (
                 <Card key={index}>
@@ -111,9 +144,11 @@ export default function Welcome({ auth }) {
 
           {/* Cómo Ganar */}
           <section className="mb-16" id="ganar">
-            <h3 className="text-3xl text-[#e62a3c] font-bold mb-8 text-center">
-              ¿Cómo Ganar?
-            </h3>
+            <div className="flex justify-center gap-8 flex-wrap">
+              <img src={imgComo} alt="como" style={{ height: "140px" }} />
+
+              <img src={imgGanar} alt="ganar" style={{ height: "125px" }} />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-xl shadow-md">
                 <div className="text-4xl font-bold text-[#e62a3c] mb-4">1</div>
@@ -141,67 +176,89 @@ export default function Welcome({ auth }) {
 
           {/* Métodos de Pago */}
           <section className="mb-16" id="pagos">
-            <h3 className="text-3xl text-[#e62a3c] font-bold mb-8 text-center">
-              Métodos de Pago
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {metodosPago.map((metodo, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-4 rounded-lg text-center 
-                shadow-md hover:shadow-lg transition duration-300"
-                >
-                  <img
-                    src={`/icons/${metodo.icono}`}
-                    alt={metodo.nombre}
-                    className="h-16 w-auto mx-auto mb-2"
-                  />
-                  <span className="text-gray-700">{metodo.nombre}</span>
-                </div>
-              ))}
+            <div className="flex justify-center">
+              <img
+                src={imgPagomovil}
+                alt="Pago Movil"
+                style={{ height: "150px" }}
+              />
+            </div>
+            <div className="flex justify-center items-center w-full">
+              <InfoPago></InfoPago>
             </div>
           </section>
         </main>
 
         {/* Footer */}
         <footer className="bg-white py-8">
-            <div className="flex flex-col md:flex-row items-center justify-around container mx-auto px-4">
-              <div className="seccion">
-                <h2 className="font-bold">TE PAGO DE UNA</h2>
-                <img
-                className="h-12 w-auto lg:h-10"
+          <div className="flex flex-col md:flex-row items-center justify-around container mx-auto px-4">
+            <div className="seccion flex flex-col">
+              <h2 className="font-bold" id="contacto">TE PAGO DE UNA</h2>
+              <img
+                className="h-16 w-auto lg:h-12"
                 src={logo}
                 height={20}
                 width={20}
               />
-              </div>
-              <div className="seccion">
-              <h2 className="font-bold">NOSOTROS</h2>
+            </div>
+            <div className="seccion">
+              <h2 className="font-bold text-center">NOSOTROS</h2>
               <p>Te pago de una</p>
-              </div>
-              <div className="seccion">
+            </div>
+            <div className="seccion">
               <h2 className="font-bold">CONTACTO</h2>
               <div>
-                <p><span><EmailIcon></EmailIcon></span> Correo: lyusttiz@gmail.com</p>
-                <p><span><WhatsAppIcon ></WhatsAppIcon></span>Telefono: 0412-9098862</p>
-                <p><span><PlaceIcon></PlaceIcon> </span>Direccion: Caracas, Venezuela</p>
-              </div>
-              </div>
-              <div className="seccion">
-              <h2 className="font-bold">SIGUENOS</h2>
-              <div className="flex gap-2">
-                <Button>
-                  <FacebookIcon></FacebookIcon>
-                </Button>
-                <Button>
-                 <XIcon></XIcon>
-                </Button>
-                <Button>
-                <InstagramIcon></InstagramIcon>
-                </Button>
-              </div>
+                <p className="py-1">
+                  <span>
+                    <EmailIcon color="info"></EmailIcon>
+                  </span>
+                  {"  "}Correo:{"  "}
+                  <a href="mailto:tepagodeuna@tepagodeuna.com" target="_blank">
+                    tepagodeuna@tepagodeuna.com
+                  </a>
+                </p>
+                <p className="py-1">
+                  <span>
+                    <WhatsAppIcon color="success"></WhatsAppIcon>
+                  </span>
+                  {"  "}WhatsApp:{"  "}
+                  <a
+                    href="https://wa.me/+584129396107?text= solicitar informacion:"
+                    target="_blank"
+                  >
+                    04129396107
+                  </a>
+                </p>
+                <p className="py-1">
+                  <span>
+                    <PlaceIcon color="primary"></PlaceIcon>{" "}
+                  </span>
+                  Direccion: Caracas, Venezuela
+                </p>
               </div>
             </div>
+            <div className="seccion">
+              <h2 className="font-bold mt-4 text-center">SIGUENOS</h2>
+              <div className="flex items-center justify-around gap-2">
+                <Button
+                  href="https://www.facebook.com/profile.php?id=61572828187654"
+                  target="_blank"
+                  noreferrer
+                  noopener
+                >
+                  <FacebookIcon fontSize="large"></FacebookIcon>
+                </Button>
+                <Button
+                  href="https://www.instagram.com/tepagodeuna?igsh=MTQ0dDRtMzZiaGZuYQ=="
+                  target="_blank"
+                  noreferrer
+                  noopener
+                >
+                  <InstagramIcon color="error" fontSize="large"></InstagramIcon>
+                </Button>
+              </div>
+            </div>
+          </div>
         </footer>
       </div>
     </>

@@ -34,6 +34,9 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
   const idsTicketSel = ticketsSel.map((ticket) => ticket.id);
   const cameraInputRef = useRef(null);
   const props = usePage().props
+  const isMobileDevice = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  };
   const {
     data,
     setData,
@@ -245,7 +248,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
             {data.whatsapp ? (
               <WhatsappButton
-                celular="+5804129098862"
+                celular="+584129396107"
                 texto={textoWhatsapp}
                 loading={processing}
               />
@@ -255,6 +258,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                 onChangeDataFile={HandleChangeDataFile}
               />
             )}
+                        
           </CardContent>
 
           <CardActions>
