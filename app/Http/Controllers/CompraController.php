@@ -25,9 +25,22 @@ class CompraController extends Controller
      */
     public function index()
     {
+        $jugada = Jugada::activo()->latest()->with('tickets')->first();
+
+        $this->validarVentasVencidas($jugada);
+
+        $jugada->load('tickets');
+        
         return Inertia::render("Compra/Index", [
-            "jugada" => Jugada::activo()->latest()->with('tickets')->first()
+            "jugada" => $jugada
         ]);
+    }
+
+
+    private function validarVentasVencidas(Jugada $jugada)
+    {
+        $result = DB::select('CALL psCancelarVentaSinConfirmar(?)', [$jugada->id]); //
+        return $result;
     }
 
     /**
