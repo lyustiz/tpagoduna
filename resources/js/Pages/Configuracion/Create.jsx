@@ -44,7 +44,7 @@ export default function Create() {
       <div className="mb-4 overflow-hidden bg-white shadow-sm sm:rounded-lg">
         <div className="p-6 text-gray-900 flex gap-8">
           
-          <form onSubmit={create} className="mt-6">
+          <form onSubmit={create} className="mt-6 w-full">
             <div>
               <InputLabel htmlFor="referencia" value="Referencia" />
 

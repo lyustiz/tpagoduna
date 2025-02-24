@@ -13,14 +13,7 @@ export default function ConfiguracionItem({ configuracion }) {
     <div className="mb-4 overflow-hidden bg-white shadow-sm sm:rounded-lg">
       <div className="p-6 text-gray-900 flex gap-8">
         <div className="flex">
-          <div className="flex flex-col items-center p-3">
-            <button>
-              <CreateIcon />
-            </button>
-            <button>
-              <DeleteIcon />
-            </button>
-          </div>
+
 
           <div className="flex-1">
             <h2 className="text-2xl mb-2">
@@ -30,14 +23,12 @@ export default function ConfiguracionItem({ configuracion }) {
               
             </h2>
             <p>
-              {isExpanded
-                ? configuracion.descripcion
-                : `${(configuracion.descripcion || '').slice(0, 40)}...`}
-                
+                {configuracion.descripcion}
             </p>
-            <button onClick={ToggleRead} className="text-amber-500">
-                { isExpanded ? 'Menos' : 'Mas' }
-            </button>
+            <p className="text-2xl">
+               <b>{configuracion.valor}</b> 
+            </p>
+           
           </div>
 
           <div>

@@ -20,7 +20,7 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Transition } from "@headlessui/react";
-import { useForm, router, usePage  } from "@inertiajs/react";
+import { useForm, router, usePage } from "@inertiajs/react";
 import PersonIcon from "@mui/icons-material/Person";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import RequestPageIcon from "@mui/icons-material/RequestPage";
@@ -28,14 +28,18 @@ import WhatsappButton from "./WhatsappButton";
 import InfoPago from "./InfoPago";
 import CameraInput from "./CamaraInput";
 import MensajeError from "@/Components/MensajeError";
-import MensajeExito from "@/Components/MensajeExito";
+//import MensajeExito from "@/Components/MensajeExito";
+import CompraConfirm from "./CompraConfirm";
+import CompraExito from "./CompraExito";
 
 export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
   const idsTicketSel = ticketsSel.map((ticket) => ticket.id);
   const cameraInputRef = useRef(null);
-  const props = usePage().props
+  const props = usePage().props;
   const isMobileDevice = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    );
   };
   const {
     data,
@@ -59,15 +63,16 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
   });
 
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
+  const Tickets = idsTicketSel;
   const CantTickets = ticketsSel.length;
 
   const textoWhatsapp =
     "Compra de " + CantTickets + " Ticket(s) Jugada " + jugada.id;
 
-  const create = (e) => {
+  const confirm = (e) => {
     e.preventDefault();
-
     if (CantTickets < 1) {
       alert("Seleccione tickets");
       return;
@@ -75,33 +80,40 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
     transform((data) => ({
       ...data,
-      tickets: idsTicketSel,
+      tickets: Tickets,
     }));
 
     if (!data.whatsapp && data.comprobante === "") {
       alert("El comprobante es Obligatorio");
       return;
     }
+    setShowConfirm(true);
+  };
 
+  const create = () => {
+    setShowConfirm(false)
     post(route("compra.store"), {
       _method: "put",
       _token: props.csrf_token,
       forceFormData: !data.whatsapp,
       preserveScroll: true,
       onSuccess: (page) => {
+        console.log(page)
         setShowSuccess(true);
-        reset();
-        if (cameraInputRef.current) {
-          cameraInputRef.current.clearImage();
-        }
-        router.reload({ only: ["jugada"] });
-        onFinVenta();
       },
     });
   };
 
   const handleCloseSuccess = () => {
+    console.log("handleCloseSuccess");
     setShowSuccess(false);
+    reset();
+    if (cameraInputRef.current) {
+      cameraInputRef.current.clearImage();
+    }
+    router.reload({ only: ["jugada"] });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    onFinVenta();
   };
 
   var handleCelular = (celularVal) => {
@@ -121,6 +133,17 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
   return (
     <>
+      {/* Mostrar Confirmacion */}
+      {showConfirm &&
+      <CompraConfirm
+        open={showConfirm}
+        onCancel={() => setShowConfirm(false)}
+        onConfirm={() => create()}
+        data={data}
+        tickets={Tickets}
+        jugada={jugada}
+      ></CompraConfirm>}
+
       {/* Mostrar error */}
       <MensajeError
         open={hasErrors}
@@ -128,14 +151,15 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
         errors={errors}
       ></MensajeError>
 
-      {/* Mostrar éxito */}
-      <MensajeExito
+      {/* Mostrar éxito */} 
+      <CompraExito
         open={showSuccess}
         onClose={handleCloseSuccess}
-        mensaje={"Compra realizada con éxito."}
-      ></MensajeExito>
+        tickets={Tickets}
+        jugada={jugada}
+      ></CompraExito>
 
-      <form onSubmit={create}>
+      <form onSubmit={confirm}>
         <Card>
           <CardHeader
             title="DATOS PERSONALES"
@@ -157,7 +181,6 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                     value={data.nombre}
                     onChange={(e) => setData("nombre", e.target.value)}
                     required
-                    isFocused
                     autoComplete="nombre"
                     title="Este campo es obligatorio."
                   />
@@ -258,7 +281,6 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                 onChangeDataFile={HandleChangeDataFile}
               />
             )}
-                        
           </CardContent>
 
           <CardActions>

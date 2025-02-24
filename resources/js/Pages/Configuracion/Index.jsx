@@ -1,4 +1,4 @@
-import ConfiguracionItem from "@/Components/ConfiguracionItem";
+import ConfiguracionItem from "@/Pages/Configuracion/Components/ConfiguracionItem";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";

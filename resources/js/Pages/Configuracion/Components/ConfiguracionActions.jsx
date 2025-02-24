@@ -1,6 +1,5 @@
 import Dropdown from "@/Components/Dropdown";
 import CreateIcon from "@mui/icons-material/Create";
-import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsIcon from "@mui/icons-material/Settings";
 export default function ConfiguracionAction({ configuracion }) {
   return (
@@ -18,7 +17,6 @@ export default function ConfiguracionAction({ configuracion }) {
 
       <Dropdown.Content>
         <Dropdown.Link href={route("configuracion.edit", configuracion.id)}> <CreateIcon></CreateIcon> Editar</Dropdown.Link>
-        {  <Dropdown.Link href={route("configuracion.destroy", configuracion )} method="delete" as="button">  <DeleteIcon  color="action"></DeleteIcon> Eliminar </Dropdown.Link>}
       </Dropdown.Content>
     </Dropdown>
   );

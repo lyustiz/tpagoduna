@@ -43,17 +43,18 @@ export default function Edit({configuracion}) {
       <div className="mb-4 overflow-hidden bg-white shadow-sm sm:rounded-lg">
         <div className="p-6 text-gray-900 flex gap-8">
           
-          <form onSubmit={create} className="mt-6">
+          <form onSubmit={create} className="mt-6 w-full">
             <div>
               <InputLabel htmlFor="referencia" value="Referencia" />
 
               <TextInput
                 id="referencia"
-                className="mt-1 mb-3 block w-full"
+                className="mt-1 mb-3 block w-full bg-grey"
                 value={data.referencia}
                 onChange={(e) => setData("referencia", e.target.value)}
                 required
                 isFocused
+                disabled
                 autoComplete="referencia"
               />
 

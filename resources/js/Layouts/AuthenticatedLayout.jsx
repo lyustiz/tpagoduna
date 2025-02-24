@@ -3,9 +3,10 @@ import { router, usePage } from "@inertiajs/react";
 import { useState, useMemo } from "react";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import PaymentsIcon from "@mui/icons-material/Payments";
 import { createTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 export default function AuthenticatedLayout({ header, children }) {
   const user = usePage().props.auth.user;
@@ -26,7 +27,12 @@ export default function AuthenticatedLayout({ header, children }) {
     {
       segment: "venta",
       title: "Venta",
-      icon: <DashboardIcon />,
+      icon: <PaymentsIcon />,
+    },
+    {
+      segment: "configuracion",
+      title: "Configuracion",
+      icon: <SettingsIcon />,
     },
     {
       kind: "divider",

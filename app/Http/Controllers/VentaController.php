@@ -18,13 +18,23 @@ class VentaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $paginated =  Venta::latest()->paginate(perPage: 10);
+        $id_estado = $request->input('id_estado');
+
+        $query = Venta::latest();
+
+        if($id_estado!=null && $id_estado != '0')
+        {            
+            $query->where('id_estado', $id_estado);
+        }
+        
+        $paginated = $query->paginate(10);
 
         return Inertia::render("Venta/Index", [
             "ventas" => $paginated,
-            "imgPath" => "/storage/comprobante/"
+            "imgPath" => "/storage/comprobante/",
+            "idEstado" =>  $id_estado ?? 0
         ]);
     }
 

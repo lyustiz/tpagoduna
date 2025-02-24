@@ -111,9 +111,7 @@ export default function Welcome({ auth }) {
                 height="315"
                 src="https://www.youtube.com/embed/Zfv6Wmf8R84"
                 title="YouTube video player"
-                frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
               ></iframe>
             </div>
           </section>
@@ -243,16 +241,14 @@ export default function Welcome({ auth }) {
                 <Button
                   href="https://www.facebook.com/profile.php?id=61572828187654"
                   target="_blank"
-                  noreferrer
-                  noopener
+                  rel="noopener noreferrer"
                 >
                   <FacebookIcon fontSize="large"></FacebookIcon>
                 </Button>
                 <Button
                   href="https://www.instagram.com/tepagodeuna?igsh=MTQ0dDRtMzZiaGZuYQ=="
                   target="_blank"
-                  noreferrer
-                  noopener
+                  rel="noopener noreferrer"
                 >
                   <InstagramIcon color="error" fontSize="large"></InstagramIcon>
                 </Button>

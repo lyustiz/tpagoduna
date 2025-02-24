@@ -39,8 +39,11 @@ class CompraController extends Controller
 
     private function validarVentasVencidas(Jugada $jugada)
     {
-        $result = DB::select('CALL psCancelarVentaSinConfirmar(?)', [$jugada->id]); //
-        return $result;
+        try {
+            $result = DB::select('CALL psCancelarVentaSinConfirmar(?)', [$jugada->id]); //
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
     }
 
     /**
@@ -109,10 +112,13 @@ class CompraController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'Registro actualizado correctamente.');
-
-            //return ['msj' => 'Compra Relizada Correctamente', $file];
-
+            return redirect()->back()->with(
+                key: [
+                    'venta' => $venta,
+                    'idventa' => $venta->id,
+                    'success' => 'Registro actualizado correctamente.',
+                ]
+            );
 
         } catch (\Exception $e) {
             DB::rollBack(); 

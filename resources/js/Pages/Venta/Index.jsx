@@ -20,9 +20,15 @@ import MensajeExito from "@/Components/MensajeExito";
 import { Pagination, Typography } from "@mui/material";
 import FormConfirm from "./Components/FormConfirm";
 import FormCancel from "./Components/FormCancel";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
+import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
+import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
+import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 
-export default function Index({ ventas, imgPath }) {
-  console.log(ventas, imgPath);
+export default function Index({ ventas, imgPath, idEstado }) {
+  console.log(ventas, imgPath, idEstado);
   const {
     data,
     setData,
@@ -44,6 +50,7 @@ export default function Index({ ventas, imgPath }) {
   const [formConfirm, setFormConfirm] = useState(false);
   const [formCancel, setFormCancel] = useState(false);
   const [ventaSel, setVentaSel] = useState(null);
+  const [estado, setEstado] = useState(idEstado ?? "");
 
   const handleCancel = (venta, oservaciones) => {
     setVentaSel(venta);
@@ -66,7 +73,13 @@ export default function Index({ ventas, imgPath }) {
   const handlePage = (event, page) => {
     console.log("Page", page);
     setLoadin(true);
-    router.get(route("ventas.index", { page: page }));
+    router.get(route("ventas.index", { page: page, id_estado: idEstado }));
+  };
+
+  const handleEstadoChange = (event) => {
+    setEstado(event.target.value);
+    setLoadin(true);
+    router.get(route("ventas.index", { id_estado: event.target.value }));
   };
 
   const handleCloseSuccess = () => {
@@ -78,20 +91,20 @@ export default function Index({ ventas, imgPath }) {
     <>
       {/* Form confirm */}
       {formConfirm && (
-      <FormConfirm
-        open={formConfirm}
-        OnClose={ () =>setFormConfirm(false) }
-        venta={ventaSel}
-      ></FormConfirm>
+        <FormConfirm
+          open={formConfirm}
+          OnClose={() => setFormConfirm(false)}
+          venta={ventaSel}
+        ></FormConfirm>
       )}
 
       {/* Form cancel */}
       {formCancel && (
-      <FormCancel
-        open={formCancel}
-        OnClose={ () =>setFormCancel(false) }
-        venta={ventaSel}
-      ></FormCancel>
+        <FormCancel
+          open={formCancel}
+          OnClose={() => setFormCancel(false)}
+          venta={ventaSel}
+        ></FormCancel>
       )}
 
       {/* Mostrar error */}
@@ -115,6 +128,48 @@ export default function Index({ ventas, imgPath }) {
         }
       >
         <Head title="Venta" />
+        {/*
+        <FormControl fullWidth>
+          <InputLabel id="estado-select-label">Estado</InputLabel>
+          <Select
+            labelId="estado-select-label"
+            id="estado-select"
+            value={estado}
+            label="Estado"
+            onChange={handleEstadoChange}
+          >
+            <MenuItem value="">
+              <em>Todos</em>
+            </MenuItem>
+            <MenuItem value={4}>Reservado</MenuItem>
+            <MenuItem value={5}>Vendido</MenuItem>
+            <MenuItem value={6}>Cancelado</MenuItem>
+          </Select>
+        </FormControl>*/}
+        <FormControl fullWidth>
+          <ToggleButtonGroup
+            size="small"
+            value={idEstado}
+            onChange={handleEstadoChange}
+            sx={{ marginBottom: 2 }}
+          >
+            <ToggleButton value={0} color="primary" selected={idEstado == 0}>
+              Todos
+            </ToggleButton>
+
+            <ToggleButton value={4} color="warning" selected={idEstado == 4}>
+              Reservado
+            </ToggleButton>
+
+            <ToggleButton value={5} color="success" selected={idEstado == 5}>
+              Vendido
+            </ToggleButton>
+
+            <ToggleButton value={6} color="error" selected={idEstado == 6}>
+              Cancelado
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </FormControl>
 
         {
           <TableContainer component={Paper}>
@@ -124,7 +179,7 @@ export default function Index({ ventas, imgPath }) {
               size="small"
             >
               <TableHead>
-                <TableRow>
+                <TableRow sx={{ backgroundColor: "#f5f5f5", fontWeight: "bold" }}>
                   <TableCell align="center">Id</TableCell>
                   <TableCell align="center">Tickets</TableCell>
                   <TableCell align="center">Monto</TableCell>
@@ -168,17 +223,12 @@ export default function Index({ ventas, imgPath }) {
                     </TableCell>
 
                     <TableCell align="center">
-                      
-                      
                       <ActionButtons
                         onCancel={handleCancel}
                         onConfirm={handleConfirm}
                         onEdit={handleEdit}
                         venta={venta}
                       ></ActionButtons>
-
-
-
                     </TableCell>
                   </TableRow>
                 ))}
