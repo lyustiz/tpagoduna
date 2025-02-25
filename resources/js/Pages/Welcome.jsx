@@ -127,16 +127,19 @@ export default function Welcome({ auth }) {
             </div>
 
             <div className="flex flex-wrap bg-white justify-center gap-4 p-4 md:p-8 rounded-xl shadow-lg">
-              {premios.map((premio, index) => (
-                <Card key={index}>
+            
+                <Card >
                   <div className="bg-white p-6 mx-2 rounded-xl text-center">
-                    <div className="text-4xl font-bold text-[#e62a3c] mb-4">
-                      {premio.cantidad}
-                    </div>
-                    <p className="text-gray-600">{premio.descripcion}</p>
+                    <p >
+                    Con "Te Pago D’Una", por solo $2, participas en 18 sorteos diarios con un premio total de $700 y pagos inmediatos. Los sorteos se realizan en tres horarios:  a la 1:00 PM, donde Táchira 'A' paga $200, Táchira 'B' paga $100, Chance 'A' y 'B' $50 cada uno, y Zulia 'A' y 'B' $25 cada uno, sumando $450 en premios. En la tarde a las 4:00 PM, Táchira 'A' y 'B' pagan $25 cada uno, Chance 'A' y 'B' $25 cada uno, y Zulia 'A' y 'B' $25 cada uno, repartiendo $150. Finalmente, en la noche a las 7:00 PM, Chance 'A' y 'B' pagan $25 cada uno, y Zulia 'A' y 'B' $25 cada uno, completando $100 en premios. 
+                    </p>
+                    <p className="text-xl mb-4">
+                    ¡Más sorteos, más oportunidades de ganar!  ¿Qué esperas? Dale a COMPRAR y participa, porque aquí no esperas... ¡Aquí te pago de una!
+                    </p>
+                   
                   </div>
                 </Card>
-              ))}
+              
             </div>
           </section>
 
