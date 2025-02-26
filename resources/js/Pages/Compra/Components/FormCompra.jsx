@@ -75,6 +75,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
     e.preventDefault();
     if (CantTickets < 1) {
       alert("Seleccione tickets");
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
@@ -91,14 +92,14 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
   };
 
   const create = () => {
-    setShowConfirm(false)
+    setShowConfirm(false);
     post(route("compra.store"), {
       _method: "put",
       _token: props.csrf_token,
       forceFormData: !data.whatsapp,
       preserveScroll: true,
       onSuccess: (page) => {
-        console.log(page)
+        console.log(page);
         setShowSuccess(true);
       },
     });
@@ -134,15 +135,16 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
   return (
     <>
       {/* Mostrar Confirmacion */}
-      {showConfirm &&
-      <CompraConfirm
-        open={showConfirm}
-        onCancel={() => setShowConfirm(false)}
-        onConfirm={() => create()}
-        data={data}
-        tickets={Tickets}
-        jugada={jugada}
-      ></CompraConfirm>}
+      {showConfirm && (
+        <CompraConfirm
+          open={showConfirm}
+          onCancel={() => setShowConfirm(false)}
+          onConfirm={() => create()}
+          data={data}
+          tickets={Tickets}
+          jugada={jugada}
+        ></CompraConfirm>
+      )}
 
       {/* Mostrar error */}
       <MensajeError
@@ -151,7 +153,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
         errors={errors}
       ></MensajeError>
 
-      {/* Mostrar éxito */} 
+      {/* Mostrar éxito */}
       <CompraExito
         open={showSuccess}
         onClose={handleCloseSuccess}
@@ -160,37 +162,35 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
       ></CompraExito>
 
       <form onSubmit={confirm}>
-        <Card>
+        <Card elevation={4} sx={{ borderRadius: 6 }} className="p-2">
           <CardHeader
             title="DATOS PERSONALES"
             avatar={
-              <Avatar>
+              <Avatar sx={{ bgcolor: "#e62a3c" }}>
                 <PersonIcon />
               </Avatar>
             }
           ></CardHeader>
           <CardContent>
             <Grid2 container spacing={2}>
-              <Grid2 item xs={12} md={4}>
-                <div>
-                  <InputLabel htmlFor="nombre" value="Nombre*" />
+              <Grid2 item size={{ xs: 12, sm: 6 }}>
+                <InputLabel htmlFor="nombre" value="Nombre*" />
 
-                  <TextInput
-                    id="nombre"
-                    className="mt-1 mb-3 block w-full"
-                    value={data.nombre}
-                    onChange={(e) => setData("nombre", e.target.value)}
-                    required
-                    autoComplete="nombre"
-                    title="Este campo es obligatorio."
-                  />
+                <TextInput
+                  id="nombre"
+                  className="mt-1 mb-3 block w-full"
+                  value={data.nombre}
+                  onChange={(e) => setData("nombre", e.target.value)}
+                  required
+                  autoComplete="nombre"
+                  title="Este campo es obligatorio."
+                />
 
-                  <InputError className="mt-2" message={errors.nombre} />
-                </div>
+                <InputError className="mt-2" message={errors.nombre} />
               </Grid2>
 
-              <Grid2 item xs={4} md={2}>
-                <div>
+              <Grid2 container size={{ xs: 12, md: 6 }}>
+                <Grid2 item size={4}>
                   <InputLabel htmlFor="codigo" value="Codigo*" />
 
                   <Select
@@ -207,11 +207,8 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                   </Select>
 
                   <InputError className="mt-2" message={errors.codigo} />
-                </div>
-              </Grid2>
-
-              <Grid2 item xs={8} md={4}>
-                <div>
+                </Grid2>
+                <Grid2 item size={8}>
                   <InputLabel htmlFor="celular" value="Celular " />
 
                   <TextInput
@@ -227,15 +224,16 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                   />
 
                   <InputError className="mt-2" message={errors.telefono} />
-                </div>
+                </Grid2>
               </Grid2>
-            </Grid2>
+
+              </Grid2>
           </CardContent>
 
           <CardHeader
             title="METODO DE PAGO"
             avatar={
-              <Avatar>
+              <Avatar sx={{ bgcolor: "#e62a3c" }}>
                 <PaymentsIcon></PaymentsIcon>
               </Avatar>
             }
@@ -248,7 +246,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
           <CardHeader
             title="COMPROBANTE"
             avatar={
-              <Avatar>
+              <Avatar sx={{ bgcolor: "#e62a3c" }}>
                 <RequestPageIcon></RequestPageIcon>
               </Avatar>
             }

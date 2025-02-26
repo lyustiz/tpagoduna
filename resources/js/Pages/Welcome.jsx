@@ -1,10 +1,8 @@
 import { Head, Link } from "@inertiajs/react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import Chip from "@mui/material/Chip";
 import logo from "../../../public/images/logo.png";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import XIcon from "@mui/icons-material/X";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import EmailIcon from "@mui/icons-material/Email";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -20,14 +18,6 @@ import imgGanarHasta from "../../../public/images/ganahasta.png";
 import imgTePago from "../../../public/images/tepago.png";
 
 export default function Welcome({ auth }) {
-  const premios = [
-    { cantidad: "700,00$", descripcion: "Premio Mayor" },
-    { cantidad: "500,00$", descripcion: "Segundo Premio" },
-    { cantidad: "300,00$", descripcion: "Tercer Premio" },
-    { cantidad: "100,00$", descripcion: "Cuarto Premio" },
-  ];
-
-  const metodosPago = [{ nombre: "Visa", icono: "visa.svg" }];
 
   return (
     <>
@@ -73,7 +63,7 @@ export default function Welcome({ auth }) {
         <main className="container mx-auto px-4 pt-24 pb-12">
           {/* Hero Section */}
           <section className="text-center mb-16">
-          <div className="flex justify-center">
+            <div id="topComprar" className="flex justify-center">
               <img
                 src={imgGanarHasta}
                 alt="ganar hasta"
@@ -91,11 +81,11 @@ export default function Welcome({ auth }) {
                 href={route("compra.index")}
                 className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
               >
-                <button
+                <button id="comprar"
                   className="bg-[#e62a3c] text-white px-8 py-3 rounded-full 
-        hover:bg-red-800 transition duration-300 text-lg"
+        hover:bg-red-800 transition duration-300 text-lg font-extrabold"
                 >
-                  Comprar
+                  COMPRAR
                 </button>
               </Link>
               <img
@@ -106,7 +96,7 @@ export default function Welcome({ auth }) {
             </div>
             <div className="flex justify-center mt-8">
               <iframe
-                className="rounded-lg"
+                className="rounded-2xl"
                 width="560"
                 height="315"
                 src="https://www.youtube.com/embed/Zfv6Wmf8R84"
@@ -118,28 +108,185 @@ export default function Welcome({ auth }) {
 
           {/* Carousel de Premios */}
           <section className="mb-16" id="premios">
-          <div className="flex justify-center">
-              <img
-                src={imgTePago}
-                alt="te pago"
-                style={{ height: "130px" }}
-              />
+            <div className="flex justify-center">
+              <img src={imgTePago} alt="te pago" style={{ height: "130px" }} />
             </div>
 
             <div className="flex flex-wrap bg-white justify-center gap-4 p-4 md:p-8 rounded-xl shadow-lg">
-            
-                <Card >
-                  <div className="bg-white p-6 mx-2 rounded-xl text-center">
-                    <p >
-                    Con "Te Pago D’Una", por solo $2, participas en 18 sorteos diarios con un premio total de $700 y pagos inmediatos. Los sorteos se realizan en tres horarios:  a la 1:00 PM, donde Táchira 'A' paga $200, Táchira 'B' paga $100, Chance 'A' y 'B' $50 cada uno, y Zulia 'A' y 'B' $25 cada uno, sumando $450 en premios. En la tarde a las 4:00 PM, Táchira 'A' y 'B' pagan $25 cada uno, Chance 'A' y 'B' $25 cada uno, y Zulia 'A' y 'B' $25 cada uno, repartiendo $150. Finalmente, en la noche a las 7:00 PM, Chance 'A' y 'B' pagan $25 cada uno, y Zulia 'A' y 'B' $25 cada uno, completando $100 en premios. 
-                    </p>
-                    <p className="text-xl mb-4">
-                    ¡Más sorteos, más oportunidades de ganar!  ¿Qué esperas? Dale a COMPRAR y participa, porque aquí no esperas... ¡Aquí te pago de una!
-                    </p>
-                   
-                  </div>
-                </Card>
-              
+              <p className="text-xl mb-4 w-full text-center">
+                Con solo 2$ puedes ganar hasta 700$ en premios en 18 sorteos
+                diarios:
+              </p>
+              <Card className="p-2" elevation={8} sx={{ borderRadius: 4 }}>
+                <table className="table-auto w-full">
+                  <thead>
+                    <tr>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Horario
+                      </th>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Sorteo
+                      </th>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Premio
+                      </th>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Total 1:00pm
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td rowSpan={7} className="text-center font-extrabold">
+                        1:00pm
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td rowSpan={7} className="text-center font-extrabold">
+                        450$
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Táchira 'A'</td>
+                      <td className="text-center">$200</td>
+                    </tr>
+                    <tr>
+                      <td>Táchira 'B'</td>
+                      <td className="text-center">$100</td>
+                    </tr>
+                    <tr>
+                      <td>Chance 'A'</td>
+                      <td className="text-center">$50</td>
+                    </tr>
+                    <tr>
+                      <td>Chance 'B'</td>
+                      <td className="text-center">$50</td>
+                    </tr>
+                    <tr>
+                      <td>Zulia 'A'</td>
+                      <td className="text-center">$25</td>
+                    </tr>
+                    <tr>
+                      <td>Zulia 'B'</td>
+                      <td className="text-center">$25</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Card>
+              <Card className="p-2" elevation={8} sx={{ borderRadius: 4 }}>
+                <table className="table-auto w-full">
+                  <thead>
+                    <tr>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Horario
+                      </th>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Sorteo
+                      </th>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Premio
+                      </th>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Total 4:00pm
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td rowSpan={7} className="text-center font-extrabold">
+                        4:00pm
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td rowSpan={7} className="text-center font-extrabold">
+                        150$
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Táchira 'A'</td>
+                      <td className="text-center">200$</td>
+                    </tr>
+                    <tr>
+                      <td>Táchira 'B'</td>
+                      <td className="text-center">25$</td>
+                    </tr>
+                    <tr>
+                      <td>Chance 'A'</td>
+                      <td className="text-center">25$</td>
+                    </tr>
+                    <tr>
+                      <td>Chance 'B'</td>
+                      <td className="text-center">25$</td>
+                    </tr>
+                    <tr>
+                      <td>Zulia 'A'</td>
+                      <td className="text-center">25$</td>
+                    </tr>
+                    <tr>
+                      <td>Zulia 'B'</td>
+                      <td className="text-center">25$</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Card>
+              <Card className="p-2" elevation={8} sx={{ borderRadius: 4 }}>
+                <table className="table-auto w-full">
+                  <thead>
+                    <tr>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Horario
+                      </th>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Sorteo
+                      </th>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Premio
+                      </th>
+                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                        Total 7:00pm
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td rowSpan={5} className="text-center font-extrabold">
+                        7:00pm
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td rowSpan={5} className="text-center font-extrabold">
+                        100$
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Chance 'A'</td>
+                      <td className="text-center">25$</td>
+                    </tr>
+                    <tr>
+                      <td>Chance 'B'</td>
+                      <td className="text-center">25$</td>
+                    </tr>
+                    <tr>
+                      <td>Zulia 'A'</td>
+                      <td className="text-center">$25</td>
+                    </tr>
+                    <tr>
+                      <td>Zulia 'B'</td>
+                      <td className="text-center">$25</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Card>
+              <p className="text-xl mb-4 w-full text-center">
+                ¡Más sorteos, más oportunidades de ganar! ¿Qué esperas? Dale a
+                <a
+                  href="#topComprar"
+                  className="text-gray-700 hover:text-[#e62a3c]"
+                >
+                  {" "}COMPRAR{" "}
+                </a>
+                y participa, porque aquí no esperas... ¡Aquí te pago de una!
+              </p>
             </div>
           </section>
 
@@ -194,7 +341,9 @@ export default function Welcome({ auth }) {
         <footer className="bg-white py-8">
           <div className="flex flex-col md:flex-row items-center justify-around container mx-auto px-4">
             <div className="seccion flex flex-col">
-              <h2 className="font-bold" id="contacto">TE PAGO DE UNA</h2>
+              <h2 className="font-bold" id="contacto">
+                TE PAGO DE UNA
+              </h2>
               <img
                 className="h-16 w-auto lg:h-12"
                 src={logo}

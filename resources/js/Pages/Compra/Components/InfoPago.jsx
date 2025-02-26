@@ -18,11 +18,11 @@ import CopyToClipboardButton from "@/Components/CopyToClipboardButton";
 export default function InfoPago() {
   return (
     <>
-      <Card sx={{ maxWidth: 275 }}>
+      <Card sx={{ maxWidth: 275, borderRadius: 6 }}>
         <CardHeader
           title="Pago Movil Venezuela (0102)"
           avatar={
-            <Avatar>
+            <Avatar sx={{ bgcolor: "#fbd101" }}>
               <AccountBalanceRoundedIcon />
             </Avatar>
           }
@@ -36,7 +36,7 @@ export default function InfoPago() {
                 }
               >
                 <ListItemIcon>
-                  <PhoneAndroidIcon />
+                  <PhoneAndroidIcon color="error"/>
                 </ListItemIcon>
                 <ListItemText primary="04129396107" secondary="telefono" />
               </ListItem>
@@ -48,7 +48,7 @@ export default function InfoPago() {
                 }
               >
                 <ListItemIcon>
-                  <BadgeRoundedIcon />
+                  <BadgeRoundedIcon color="error" />
                 </ListItemIcon>
                 <ListItemText primary="21415453" secondary="cedula" />
               </ListItem>
@@ -60,7 +60,7 @@ export default function InfoPago() {
                 }
               >
                 <ListItemIcon>
-                  <PersonOutlineRoundedIcon />
+                  <PersonOutlineRoundedIcon color="error" />
                 </ListItemIcon>
                 <ListItemText primary="Mauricio Tellez" secondary="titular" />
               </ListItem>

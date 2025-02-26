@@ -25,7 +25,7 @@ export default function CopyToClipboardButton({ textToCopy }) {
   return (
     <div style={{ position: "relative" }}>
       <IconButton edge="end" onClick={handleCopyClick}>
-        <ContentCopyIcon />
+        <ContentCopyIcon color="primary" />
       </IconButton>
       {showCopiedMessage && (
         <div

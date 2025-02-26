@@ -10,7 +10,7 @@ export default function TicketCounter({ cantidad, jugada }) {
   
   return (
     <>
-      <Card>
+      <Card elevation={3} sx={{ borderRadius: 6 }}>
       <CardContent className="text-center">
         <h2 className="font-bold">
         Ticket Seleccionados:  {cantidad}
