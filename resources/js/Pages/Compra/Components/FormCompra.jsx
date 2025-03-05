@@ -31,6 +31,7 @@ import MensajeError from "@/Components/MensajeError";
 //import MensajeExito from "@/Components/MensajeExito";
 import CompraConfirm from "./CompraConfirm";
 import CompraExito from "./CompraExito";
+import TicketsSeleccionados from "./TicketsSeleccionados";
 
 export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
   const idsTicketSel = ticketsSel.map((ticket) => ticket.id);
@@ -67,6 +68,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
   const Tickets = idsTicketSel;
   const CantTickets = ticketsSel.length;
+  const existenTickets = CantTickets > 0;
 
   const textoWhatsapp =
     "Compra de " + CantTickets + " Ticket(s) Jugada " + jugada.id;
@@ -161,6 +163,14 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
         jugada={jugada}
       ></CompraExito>
 
+      {/* Mostrar Tickets Seleccionados */}
+
+      <TicketsSeleccionados
+        open={existenTickets}
+        ticketsSeleccionados={ticketsSel}
+        jugada={jugada}
+      ></TicketsSeleccionados>
+
       <form onSubmit={confirm}>
         <Card elevation={4} sx={{ borderRadius: 6 }} className="p-2">
           <CardHeader
@@ -183,6 +193,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                   onChange={(e) => setData("nombre", e.target.value)}
                   required
                   autoComplete="nombre"
+                  placeholder="Nombre Cliente"
                   title="Este campo es obligatorio."
                 />
 
@@ -209,7 +220,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                   <InputError className="mt-2" message={errors.codigo} />
                 </Grid2>
                 <Grid2 item size={8}>
-                  <InputLabel htmlFor="celular" value="Celular " />
+                  <InputLabel htmlFor="celular" value="Celular*" />
 
                   <TextInput
                     id="celular"
@@ -218,6 +229,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                     value={data.celular}
                     onChange={(e) => handleCelular(e.target.value)}
                     autoComplete="celular"
+                    placeholder="Ejemplo: 04129396107"
                     pattern="[0-9]+"
                     required
                     title="Solo numeros, Este campo es obligatorio."
@@ -226,8 +238,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                   <InputError className="mt-2" message={errors.telefono} />
                 </Grid2>
               </Grid2>
-
-              </Grid2>
+            </Grid2>
           </CardContent>
 
           <CardHeader

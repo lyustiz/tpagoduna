@@ -6,6 +6,7 @@ import TicketItem from "./Components/TicketItem";
 import TicketsSelected from "./Components/TicketsSelected";
 import TikcetCounter from "./Components/TickeCounter";
 import FormCompra from "./Components/FormCompra";
+import WhatsappButton from "./Components/WhatsappButton";
 
 export default function Index({ jugada }) {
   const [ticketsSel, setTickets] = useState([]);
@@ -47,6 +48,12 @@ export default function Index({ jugada }) {
               Valor Ticket ${jugada.mo_valor_ticket} Bs.{" "}
               {jugada.mo_valor_ticket * jugada.mo_valor_divisa}
             </h2>
+
+            <WhatsappButton
+                            celular="+584129396107"
+                            texto={'Solicito Informacion de '}
+                            label={'Solicitar Informacion'}
+                          />
           </Container>
 
           <Container

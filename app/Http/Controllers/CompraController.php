@@ -9,7 +9,7 @@ use App\Models\TipoArchivo;
 use App\Http\Controllers\Traits\ArchivoTrait;
 use App\Models\Ticket;
 use App\Models\Venta;
-use Illuminate\Support\Facades\Auth;
+use App\Models\VentaTicket;
 use Illuminate\Support\Facades\DB;
 
 class CompraController extends Controller
@@ -104,11 +104,31 @@ class CompraController extends Controller
                 "id_usuario" => 1
             ]);
 
-            Ticket::whereIn('id', $request->tickets)->update([
-                'id_venta' => $venta->id,
-                'id_estado' => self::RESERVADO,
-                'id_usuario' => 1
-            ]);
+            $ticketsToUpdate = Ticket::where('id_jugada', $request->idJugada)
+                ->whereIn('nu_numero', $request->tickets)
+                ->get();
+
+            $ticketsToUpdate->each(function($ticket) use ($venta) {
+                $ticket->update([
+                    'id_venta' => $venta->id,
+                    'id_estado' => self::RESERVADO,
+                    'id_usuario' => 1
+                ]);
+            });
+
+            $ventasTiket = array_map(function($ticket) use ($venta, $request) {
+                return [
+                    'id_jugada' => $request->idJugada,
+                    'id_venta' => $venta->id,
+                    'id_ticket' => $ticket->id,
+                    'nu_ticket' => $ticket->nu_numero,
+                    'id_estado' => self::RESERVADO,
+                    'tx_observaciones' => $request->observaciones,
+                    'id_usuario' => 1
+                ];
+            }, $ticketsToUpdate->toArray());
+            
+            VentaTicket::create($ventasTiket);
 
             DB::commit();
 

@@ -18,7 +18,6 @@ import imgGanarHasta from "../../../public/images/ganahasta.png";
 import imgTePago from "../../../public/images/tepago.png";
 
 export default function Welcome({ auth }) {
-
   return (
     <>
       <div className="min-h-screen bg-[#fbd101]">
@@ -81,7 +80,8 @@ export default function Welcome({ auth }) {
                 href={route("compra.index")}
                 className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
               >
-                <button id="comprar"
+                <button
+                  id="comprar"
                   className="bg-[#e62a3c] text-white px-8 py-3 rounded-full 
         hover:bg-red-800 transition duration-300 text-lg font-extrabold"
                 >
@@ -117,21 +117,22 @@ export default function Welcome({ auth }) {
                 Con solo 2$ puedes ganar hasta 700$ en premios en 18 sorteos
                 diarios:
               </p>
-              <Card className="p-2" elevation={8} sx={{ borderRadius: 4 }}>
+              <Card className="p-2 md:text-md xs:text-sm" elevation={8} sx={{ borderRadius: 4 }}>
+              <div className="overflow-x-auto">
                 <table className="table-auto w-full">
                   <thead>
                     <tr>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                      <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
                         Horario
                       </th>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                      <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
                         Sorteo
                       </th>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                      <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
                         Premio
                       </th>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
-                        Total 1:00pm
+                      <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
+                        Total <span className="hidden sm:inline">1:00pm</span>
                       </th>
                     </tr>
                   </thead>
@@ -172,78 +173,82 @@ export default function Welcome({ auth }) {
                     </tr>
                   </tbody>
                 </table>
+                </div>
               </Card>
-              <Card className="p-2" elevation={8} sx={{ borderRadius: 4 }}>
+              <Card className="p-2 md:text-md xs:text-sm" elevation={8} sx={{ borderRadius: 4 }}>
+                <div className="overflow-x-auto">
+                  <table className="table-auto w-full">
+                    <thead>
+                      <tr>
+                        <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
+                          Horario
+                        </th>
+                        <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
+                          Sorteo
+                        </th>
+                        <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
+                          Premio
+                        </th>
+                        <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
+                          Total <span className="hidden sm:inline">4:00pm</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td rowSpan={7} className="text-center font-extrabold">
+                          4:00pm
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td rowSpan={7} className="text-center font-extrabold">
+                          150$
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Táchira 'A'</td>
+                        <td className="text-center">200$</td>
+                      </tr>
+                      <tr>
+                        <td>Táchira 'B'</td>
+                        <td className="text-center">25$</td>
+                      </tr>
+                      <tr>
+                        <td>Chance 'A'</td>
+                        <td className="text-center">25$</td>
+                      </tr>
+                      <tr>
+                        <td>Chance 'B'</td>
+                        <td className="text-center">25$</td>
+                      </tr>
+                      <tr>
+                        <td>Zulia 'A'</td>
+                        <td className="text-center">25$</td>
+                      </tr>
+                      <tr>
+                        <td>Zulia 'B'</td>
+                        <td className="text-center">25$</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+              <Card className="p-2 md:text-md xs:text-sm" elevation={8} sx={{ borderRadius: 4 }}>
+              <div className="overflow-x-auto">
                 <table className="table-auto w-full">
                   <thead>
                     <tr>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                      <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
                         Horario
                       </th>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                      <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
                         Sorteo
                       </th>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
+                      <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
                         Premio
                       </th>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
-                        Total 4:00pm
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td rowSpan={7} className="text-center font-extrabold">
-                        4:00pm
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td rowSpan={7} className="text-center font-extrabold">
-                        150$
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Táchira 'A'</td>
-                      <td className="text-center">200$</td>
-                    </tr>
-                    <tr>
-                      <td>Táchira 'B'</td>
-                      <td className="text-center">25$</td>
-                    </tr>
-                    <tr>
-                      <td>Chance 'A'</td>
-                      <td className="text-center">25$</td>
-                    </tr>
-                    <tr>
-                      <td>Chance 'B'</td>
-                      <td className="text-center">25$</td>
-                    </tr>
-                    <tr>
-                      <td>Zulia 'A'</td>
-                      <td className="text-center">25$</td>
-                    </tr>
-                    <tr>
-                      <td>Zulia 'B'</td>
-                      <td className="text-center">25$</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </Card>
-              <Card className="p-2" elevation={8} sx={{ borderRadius: 4 }}>
-                <table className="table-auto w-full">
-                  <thead>
-                    <tr>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
-                        Horario
-                      </th>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
-                        Sorteo
-                      </th>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
-                        Premio
-                      </th>
-                      <th className="text-[#e62a3c] text-lg font-bold px-3 py-1">
-                        Total 7:00pm
+                      <th className="text-[#e62a3c] md:text-lg xs:text-sm font-bold px-3 py-1">
+                        Total <span className="hidden sm:inline">7:00pm</span>
                       </th>
                     </tr>
                   </thead>
@@ -276,6 +281,7 @@ export default function Welcome({ auth }) {
                     </tr>
                   </tbody>
                 </table>
+                </div>
               </Card>
               <p className="text-xl mb-4 w-full text-center">
                 ¡Más sorteos, más oportunidades de ganar! ¿Qué esperas? Dale a
@@ -283,7 +289,8 @@ export default function Welcome({ auth }) {
                   href="#topComprar"
                   className="text-gray-700 hover:text-[#e62a3c]"
                 >
-                  {" "}COMPRAR{" "}
+                  {" "}
+                  COMPRAR{" "}
                 </a>
                 y participa, porque aquí no esperas... ¡Aquí te pago de una!
               </p>

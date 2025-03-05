@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Venta;
 use App\Models\Ticket;
+use App\Models\VentaTicket;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
@@ -14,7 +16,7 @@ class VentaController extends Controller
     private const RESERVADO = 4;
     private const VENDIDO = 5;
     private const CANCELADO = 6;
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -24,11 +26,10 @@ class VentaController extends Controller
 
         $query = Venta::latest();
 
-        if($id_estado!=null && $id_estado != '0')
-        {            
+        if ($id_estado != null && $id_estado != '0') {
             $query->where('id_estado', $id_estado);
         }
-        
+
         $paginated = $query->paginate(10);
 
         return Inertia::render("Venta/Index", [
@@ -99,19 +100,34 @@ class VentaController extends Controller
                 ]);
             }
 
-            $venta->update([
-                'id_estado' => $this::VENDIDO,
-                'tx_referencia' => $request->referencia,
-                'id_usuario' => $request->user()->id
-            ]);
+            DB::beginTransaction();
 
-            Ticket::where('id_venta', $id)->update([
-                'id_estado' => self::VENDIDO,
-                'id_usuario' => $request->user()->id
-            ]);
+            try {
+                $venta->update([
+                    'id_estado' => $this::VENDIDO,
+                    'tx_referencia' => $request->referencia,
+                    'id_usuario' => $request->user()->id
+                ]);
+
+                Ticket::where('id_venta', $id)->update([
+                    'id_estado' => self::VENDIDO,
+                    'id_usuario' => $request->user()->id
+                ]);
+
+                VentaTicket::where('id_venta', $id)->update([
+                    'id_estado' => self::VENDIDO,
+                    'id_usuario' => $request->user()->id
+                ]);
+
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                return redirect()->back()->withErrors([
+                    'error' => $th->getMessage()
+                ]);
+            }
 
             return redirect()->back()->with('success', 'Venta confirmada correctamente.');
-
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors([
                 'error' => $th->getMessage()
@@ -143,20 +159,35 @@ class VentaController extends Controller
                 ]);
             }
 
-            $venta->update([
-                'id_estado' => $this::CANCELADO,
-                'id_usuario' => $request->user()->id,
-                'tx_observaciones' => $request->observaciones
-            ]);
+            DB::beginTransaction();
 
-            Ticket::where('id_venta', $id)->update([
-                'id_venta' => null,
-                'id_estado' => self::RESERVADO,
-                'id_usuario' => $request->user()->id
-            ]);
+            try {
+
+                $venta->update([
+                    'id_estado' => $this::CANCELADO,
+                    'id_usuario' => $request->user()->id,
+                    'tx_observaciones' => $request->observaciones
+                ]);
+
+                Ticket::where('id_venta', $id)->update([
+                    'id_venta' => null,
+                    'id_estado' => self::RESERVADO,
+                    'id_usuario' => $request->user()->id
+                ]);
+
+                VentaTicket::where('id_venta', $id)->update([
+                    'id_estado' => self::CANCELADO,
+                    'id_usuario' => $request->user()->id
+                ]);
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                return redirect()->back()->withErrors([
+                    'error' => $th->getMessage()
+                ]);
+            }
 
             return redirect()->back()->with('success', 'Venta cancelada correctamente.');
-
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors([
                 'error' => $th->getMessage()
