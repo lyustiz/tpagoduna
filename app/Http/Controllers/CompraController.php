@@ -11,7 +11,7 @@ use App\Models\Ticket;
 use App\Models\Venta;
 use App\Models\VentaTicket;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Validator;
 class CompraController extends Controller
 {
     use ArchivoTrait;
@@ -30,7 +30,7 @@ class CompraController extends Controller
         $this->validarVentasVencidas($jugada);
 
         $jugada->load('tickets');
-        
+
         return Inertia::render("Compra/Index", [
             "jugada" => $jugada
         ]);
@@ -59,23 +59,36 @@ class CompraController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'idJugada' => 'required|integer',
+            'nombre' => 'required|string',
+            'codigo' => 'required|integer',
+            'celular' => 'required|numeric',
+            'tickets' => 'required|array',
+            'whatsapp' => 'nullable|boolean'
+        ]);
+        
+        $validator->sometimes('comprobante', 'required|file', function ($input) {
+            return $input->whatsapp !== true;
+        });
+        
+        $validator->validate();
+
         $jugada = Jugada::where('id', $request->idJugada)->first();
 
         $cantTickets = count($request->tickets);
 
-        $totalventa = count($request->tickets) * $jugada->mo_valor_divisa;
+        $totalventa = count($request->tickets) * $jugada->mo_valor_ticket;
 
         $tickets = Ticket::whereIn('id', $request->tickets)->get();
-            
-        if($tickets->contains('id_estado', self::RESERVADO) )
-        {
+
+        if ($tickets->contains('id_estado', self::RESERVADO)) {
             return redirect()->back()->withErrors([
                 'warning' => 'Existen cartones Reservados'
             ]);
         }
 
-        if($tickets->contains('id_estado', self::VENDIDO) )
-        {
+        if ($tickets->contains('id_estado', self::VENDIDO)) {
             return redirect()->back()->with([
                 'warning' => 'Existen cartones Vendidos'
             ]);
@@ -85,21 +98,33 @@ class CompraController extends Controller
 
         try {
 
-            $tipoArchivo = TipoArchivo::where('id', 1)->first();
-            $fileSource = $request->file(key: 'comprobante');
-            $storage    = $tipoArchivo->tx_storage;
-            $fileName   = implode("-", $request->tickets); 
-            $folder     = str_pad($request->idJugada, 3, "0", STR_PAD_LEFT);
+            if (!$request->whatsapp) {
 
-            $file = ArchivoTrait::writeFile($fileSource, $storage, $fileName, $folder);
-            
+                $tipoArchivo = TipoArchivo::where('id', 1)->first();
+                $fileSource = $request->file(key: 'comprobante');
+                $storage    = $tipoArchivo->tx_storage;
+                $fileName   = implode("-", $request->tickets);
+                $folder     = str_pad($request->idJugada, 3, "0", STR_PAD_LEFT);
+
+
+                try {
+                    $file = ArchivoTrait::writeFile($fileSource, $storage, $fileName, $folder);
+                } catch (\Exception $e) {
+                    return redirect()->back()->withErrors([
+                        'error' => 'Error al subir el comprobante intente nuevamente'
+                    ]);
+                }
+            } else {
+                $file = '';
+            }
+
             $venta =  Venta::create([
                 "id_jugada" => $request->idJugada,
                 "mo_total_tickets" => $cantTickets,
                 "mo_total_venta" => $totalventa,
                 "tx_nombre_cliente" => $request->nombre,
                 "tx_celular_cliente" => $request->codigo . '-' . $request->celular,
-                "tx_comprobante" =>$file,
+                "tx_comprobante" => $file,
                 "id_estado" => self::RESERVADO,
                 "id_usuario" => 1
             ]);
@@ -107,17 +132,18 @@ class CompraController extends Controller
             $ticketsToUpdate = Ticket::where('id_jugada', $request->idJugada)
                 ->whereIn('nu_numero', $request->tickets)
                 ->get();
-
-            $ticketsToUpdate->each(function($ticket) use ($venta) {
+ 
+            foreach ($ticketsToUpdate as $ticket) {
                 $ticket->update([
                     'id_venta' => $venta->id,
                     'id_estado' => self::RESERVADO,
                     'id_usuario' => 1
                 ]);
-            });
+            }
 
-            $ventasTiket = array_map(function($ticket) use ($venta, $request) {
-                return [
+            $ventasTiket = [];
+            foreach ($ticketsToUpdate as $ticket) {
+                $ventasTiket[] = [
                     'id_jugada' => $request->idJugada,
                     'id_venta' => $venta->id,
                     'id_ticket' => $ticket->id,
@@ -126,9 +152,9 @@ class CompraController extends Controller
                     'tx_observaciones' => $request->observaciones,
                     'id_usuario' => 1
                 ];
-            }, $ticketsToUpdate->toArray());
-            
-            VentaTicket::create($ventasTiket);
+            }
+
+            VentaTicket::insert($ventasTiket);
 
             DB::commit();
 
@@ -139,10 +165,9 @@ class CompraController extends Controller
                     'success' => 'Registro actualizado correctamente.',
                 ]
             );
-
         } catch (\Exception $e) {
-            DB::rollBack(); 
-
+            DB::rollBack();
+            dd($e);
             return redirect()->back()->withErrors([
                 'error' => $e->getMessage()
             ]);

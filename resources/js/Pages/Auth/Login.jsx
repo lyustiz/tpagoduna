@@ -29,7 +29,7 @@ export default function Login({ status, canResetPassword }) {
       {status && (
         <div className="mb-4 text-sm font-medium text-green-600">{status}</div>
       )}
-
+      <div id="loginContainer" className="w-full min-h-screen flex justify-center items-start">
       <Card className="p-6 bg-white shadow-sm sm:rounded-lg mx-auto mt-6 w-full sm:w-96 mb-6">
         <form onSubmit={submit}>
           <div>
@@ -72,7 +72,7 @@ export default function Login({ status, canResetPassword }) {
                 checked={data.remember}
                 onChange={(e) => setData("remember", e.target.checked)}
               />
-              <span className="ms-2 text-sm text-gray-600">Remember me</span>
+              <span className="ms-2 text-sm text-gray-600">Recordar Password</span>
             </label>
           </div>
 
@@ -82,7 +82,7 @@ export default function Login({ status, canResetPassword }) {
                 href={route("password.request")}
                 className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
-                Forgot your password?
+                Olvidaste el password?
               </Link>
             )}
 
@@ -92,6 +92,7 @@ export default function Login({ status, canResetPassword }) {
           </div>
         </form>
       </Card>
+      </div>
     </GuestLayout>
   );
 }

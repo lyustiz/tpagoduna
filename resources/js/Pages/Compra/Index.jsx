@@ -7,6 +7,7 @@ import TicketsSelected from "./Components/TicketsSelected";
 import TikcetCounter from "./Components/TickeCounter";
 import FormCompra from "./Components/FormCompra";
 import WhatsappButton from "./Components/WhatsappButton";
+import MenuCompra from "./Components/MenuCompra";
 
 export default function Index({ jugada }) {
   const [ticketsSel, setTickets] = useState([]);
@@ -49,11 +50,18 @@ export default function Index({ jugada }) {
               {jugada.mo_valor_ticket * jugada.mo_valor_divisa}
             </h2>
 
-            <WhatsappButton
+            <Grid2 container spacing={1} alignItems={"center"} justifyContent={"center"}>
+              <Grid2 item>
+                <WhatsappButton
                             celular="+584129396107"
                             texto={'Solicito Informacion de '}
                             label={'Solicitar Informacion'}
                           />
+              </Grid2>
+              <Grid2 item>
+              <MenuCompra></MenuCompra>
+              </Grid2>
+            </Grid2> 
           </Container>
 
           <Container

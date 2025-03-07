@@ -8,9 +8,10 @@ const TicketItem = memo(({ ticketsSel, ticket, onAddTicket, onRemoveTicket }) =>
     3: { color: "#2e7d32", label: "Disponible", active: true , "code" : '#2e7d32'},
     4: { color: "warning", label: "Reservado", active: false, "code" : '#ed6c02' },
     5: { color: "error", label: "Vendido", active: false, "code" : '#d32f2f' },
+    0: { color: "info", label: "No disponible", active: false, "code" : '#d32f2f' },
   };
 
-  const estado = estados[ticket.id_estado];
+  const estado = estados[ticket.id_estado] ?? estados[0]; ;
 
   const handleClick = () => {
     if (isSelected) {

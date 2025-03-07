@@ -33,14 +33,14 @@ export default function Welcome({ auth }) {
               />
             </div>
             <div className="hidden md:flex space-x-6">
+            <Link
+                href={route("compra.index")}
+                className="text-gray-700 hover:text-[#e62a3c]"
+              >
+                Comprar
+              </Link>
               <a href="#premios" className="text-gray-700 hover:text-[#e62a3c]">
                 Premios
-              </a>
-              <a href="#ganar" className="text-gray-700 hover:text-[#e62a3c]">
-                Cómo Ganar
-              </a>
-              <a href="#pagos" className="text-gray-700 hover:text-[#e62a3c]">
-                Pagos
               </a>
               <a
                 href="#contacto"

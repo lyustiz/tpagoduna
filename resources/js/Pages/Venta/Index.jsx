@@ -128,24 +128,6 @@ export default function Index({ ventas, imgPath, idEstado }) {
         }
       >
         <Head title="Venta" />
-        {/*
-        <FormControl fullWidth>
-          <InputLabel id="estado-select-label">Estado</InputLabel>
-          <Select
-            labelId="estado-select-label"
-            id="estado-select"
-            value={estado}
-            label="Estado"
-            onChange={handleEstadoChange}
-          >
-            <MenuItem value="">
-              <em>Todos</em>
-            </MenuItem>
-            <MenuItem value={4}>Reservado</MenuItem>
-            <MenuItem value={5}>Vendido</MenuItem>
-            <MenuItem value={6}>Cancelado</MenuItem>
-          </Select>
-        </FormControl>*/}
         <FormControl fullWidth>
           <ToggleButtonGroup
             size="small"
@@ -179,9 +161,12 @@ export default function Index({ ventas, imgPath, idEstado }) {
               size="small"
             >
               <TableHead>
-                <TableRow sx={{ backgroundColor: "#f5f5f5", fontWeight: "bold" }}>
+                <TableRow
+                  sx={{ backgroundColor: "#f5f5f5", fontWeight: "bold" }}
+                >
                   <TableCell align="center">Id</TableCell>
                   <TableCell align="center">Tickets</TableCell>
+                  <TableCell align="center">Fecha/Hora</TableCell>
                   <TableCell align="center">Monto</TableCell>
                   <TableCell align="center">Cliente</TableCell>
                   <TableCell align="center">Telefono</TableCell>
@@ -198,12 +183,27 @@ export default function Index({ ventas, imgPath, idEstado }) {
                   >
                     <TableCell align="center">{venta.id}</TableCell>
                     <TableCell align="center">
-                      {venta.mo_total_tickets}
+                      {venta.venta_tickets.map((ticket) => (
+                        <span key={ticket.id}>
+                          {ticket.nu_ticket.toString().padStart(3, "0")}{" "}
+                        </span>
+                      ))}{" "}
+                      ({venta.mo_total_tickets})
                     </TableCell>
-                    <TableCell align="center">{venta.mo_total_venta}</TableCell>
                     <TableCell align="center">
-                      {venta.tx_nombre_cliente}
+                      {new Date(venta.created_at).toLocaleString("es-US", {
+                        month: "2-digit",
+                        day: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}
                     </TableCell>
+                    <TableCell align="center">
+                      {venta.mo_total_venta}$
+                    </TableCell>
+                    <TableCell>{venta.tx_nombre_cliente}</TableCell>
                     <TableCell align="center">
                       {venta.tx_celular_cliente}
                     </TableCell>

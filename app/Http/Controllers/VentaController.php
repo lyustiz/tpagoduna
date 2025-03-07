@@ -7,7 +7,6 @@ use App\Models\Ticket;
 use App\Models\VentaTicket;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
@@ -24,7 +23,7 @@ class VentaController extends Controller
     {
         $id_estado = $request->input('id_estado');
 
-        $query = Venta::latest();
+        $query = Venta::latest()->with('ventaTickets');
 
         if ($id_estado != null && $id_estado != '0') {
             $query->where('id_estado', $id_estado);
@@ -171,7 +170,7 @@ class VentaController extends Controller
 
                 Ticket::where('id_venta', $id)->update([
                     'id_venta' => null,
-                    'id_estado' => self::RESERVADO,
+                    'id_estado' => self::PENDIENTE,
                     'id_usuario' => $request->user()->id
                 ]);
 

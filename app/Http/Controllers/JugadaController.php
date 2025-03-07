@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Jugada;
 use App\Http\Requests\StoreJugadaRequest;
 use App\Http\Requests\UpdateJugadaRequest;
+use Inertia\Inertia;
 
 class JugadaController extends Controller
 {
@@ -13,7 +14,11 @@ class JugadaController extends Controller
      */
     public function index()
     {
-        //
+        $paginated = Jugada::orderBy('id')->with('estado')->paginate(10);
+
+        return Inertia::render("Jugada/Index", [
+            "jugadas" => $paginated
+        ]);
     }
 
     /**

@@ -40,7 +40,12 @@ const FormConfirm = ({ open, OnClose, venta }) => {
   
   const handleConfirm = (e) => {
     e.preventDefault();
+    if(data.referencia.length < 6){
+      setError("warning", "Debe ingresar los ultimos 6 digitos");
+      return
+    }
     setShowForm(false);
+    
     post(route("ventas.confirm", { id: data.id }), {
       _method: "put",
       onSuccess: (response) => {
@@ -105,10 +110,13 @@ const FormConfirm = ({ open, OnClose, venta }) => {
                   value={data.referencia}
                   onChange={(e) => setData("referencia", e.target.value)}
                   pattern="[0-9]+"
+                  min="6" 
+                  max="20"
                   required
+                  placeholder="Ultimos 6 numeros"
                   title="Ultimos 6 numeros."
                 />
-                <InputError className="mt-2" message={errors.telefono} />
+                <InputError className="mt-2" message={errors.refrencia} />
               </div>
             </Grid2>
           </DialogContent>

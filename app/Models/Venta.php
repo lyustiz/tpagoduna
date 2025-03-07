@@ -45,4 +45,9 @@ class Venta extends Model
     {
         return $this->HasMany(Ticket::class, 'id_venta');
     }
+
+    public function ventaTickets()
+    {
+        return $this->HasMany(VentaTicket::class, 'id_venta');
+    }
 }

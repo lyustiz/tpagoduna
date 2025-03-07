@@ -32,6 +32,7 @@ import MensajeError from "@/Components/MensajeError";
 import CompraConfirm from "./CompraConfirm";
 import CompraExito from "./CompraExito";
 import TicketsSeleccionados from "./TicketsSeleccionados";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
   const idsTicketSel = ticketsSel.map((ticket) => ticket.id);
@@ -136,6 +137,17 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
   return (
     <>
+
+    {/* Mostrar Carga */}
+    {processing && (
+         <Backdrop
+         sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+         open={processing}
+       >
+         <CircularProgress color="inherit" />
+       </Backdrop>
+    )}
+
       {/* Mostrar Confirmacion */}
       {showConfirm && (
         <CompraConfirm
@@ -149,20 +161,24 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
       )}
 
       {/* Mostrar error */}
-      <MensajeError
-        open={hasErrors}
-        onClose={() => clearErrors()}
-        errors={errors}
-      ></MensajeError>
+      {hasErrors && (
+        <MensajeError
+          open={hasErrors}
+          onClose={() => clearErrors()}
+          errors={errors}
+        ></MensajeError>
+      )}
 
       {/* Mostrar éxito */}
-      <CompraExito
-        open={showSuccess}
-        onClose={handleCloseSuccess}
-        tickets={Tickets}
-        jugada={jugada}
-      ></CompraExito>
-
+      {showSuccess && (
+        <CompraExito
+          open={showSuccess}
+          onClose={handleCloseSuccess}
+          tickets={Tickets}
+          jugada={jugada}
+          venta={data}
+        ></CompraExito>
+      )}
       {/* Mostrar Tickets Seleccionados */}
 
       <TicketsSeleccionados

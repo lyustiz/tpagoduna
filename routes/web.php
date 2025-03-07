@@ -3,6 +3,7 @@
 use App\Enum\PermisosEnum;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ConfiguracionController;
+use App\Http\Controllers\JugadaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VentaController;
 use Illuminate\Foundation\Application;
@@ -51,10 +52,12 @@ Route::middleware('auth')->group(function () {
        // ->except(['index', 'show'])
         ->middleware('can:'.PermisosEnum::AdministrarConfiguracion->value);
 
-        Route::resource('/venta',  VentaController::class)->only(['index', 'show']);;
+        Route::resource('/venta',  VentaController::class)->only(['index', 'show']);
         Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
         Route::post('/ventas/{id}/confirm', [VentaController::class, 'confirm'])->name('ventas.confirm');
         Route::post('/ventas/{id}/cancel', [VentaController::class, 'cancel'])->name('ventas.cancel');
+
+        Route::resource('/jugada',  JugadaController::class);
         //
     });
 });

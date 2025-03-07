@@ -9,7 +9,7 @@ class Configuracion extends Model
 {
     use HasFactory;
 
-    protected $table 	  = 'Configuraciones';
+    protected $table 	  = 'configuraciones';
 
     protected $fillable   = [
         'referencia',

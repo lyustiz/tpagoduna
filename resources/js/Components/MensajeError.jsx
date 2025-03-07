@@ -2,7 +2,7 @@ import React from 'react';
 import { Snackbar, Fade, Alert } from '@mui/material';
 
 export default function MensajeError({ open, onClose, errors }) {
-
+  console.log(errors);
   return (
     <Snackbar
       open={open}

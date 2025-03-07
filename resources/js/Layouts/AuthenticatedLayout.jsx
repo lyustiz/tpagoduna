@@ -7,6 +7,7 @@ import PaymentsIcon from "@mui/icons-material/Payments";
 import { createTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import SettingsIcon from "@mui/icons-material/Settings";
+import CasinoIcon from '@mui/icons-material/Casino';
 
 export default function AuthenticatedLayout({ header, children }) {
   const user = usePage().props.auth.user;
@@ -33,6 +34,11 @@ export default function AuthenticatedLayout({ header, children }) {
       segment: "configuracion",
       title: "Configuracion",
       icon: <SettingsIcon />,
+    },
+    {
+      segment: "jugada",
+      title: "Jugadas",
+      icon: <CasinoIcon />,
     },
     {
       kind: "divider",

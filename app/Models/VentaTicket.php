@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class VentaTicket extends Model
 {
+    protected $table      = 'ventas_tickets';
+    
     protected $fillable   = [
         'id_jugada',
         'id_venta',

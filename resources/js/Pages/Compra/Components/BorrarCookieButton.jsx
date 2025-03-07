@@ -1,6 +1,8 @@
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
+import SettingsIcon from '@mui/icons-material/Settings';
 
-export default function BotonBorrarCookies () {
+
+export default function BorrarCookieButton () {
 
     const HandleClick = () => {
         const cookies = document.cookie.split(";");
@@ -18,9 +20,10 @@ export default function BotonBorrarCookies () {
 
     return (
         <>
-        <Button variant="contained" onClick={HandleClick} color="warning">
-            Reparar
-        </Button>
+        <IconButton variant="contained" onClick={HandleClick} color="warning">
+        <SettingsIcon />
+
+        </IconButton>
         </>
     );
 }
