@@ -27,15 +27,15 @@ class CompraController extends Controller
     {
         $jugada = Jugada::activo()->latest()->with('tickets')->first();
 
-        $this->validarVentasVencidas($jugada);
-
-        $jugada->load('tickets');
+        if ($jugada) {
+            $this->validarVentasVencidas($jugada);
+            $jugada->load('tickets');
+        }
 
         return Inertia::render("Compra/Index", [
             "jugada" => $jugada
         ]);
     }
-
 
     private function validarVentasVencidas(Jugada $jugada)
     {

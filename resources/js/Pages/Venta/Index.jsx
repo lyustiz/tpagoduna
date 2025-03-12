@@ -20,12 +20,8 @@ import MensajeExito from "@/Components/MensajeExito";
 import { Pagination, Typography } from "@mui/material";
 import FormConfirm from "./Components/FormConfirm";
 import FormCancel from "./Components/FormCancel";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl } from "@mui/material";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
-import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
-import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
-import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 
 export default function Index({ ventas, imgPath, idEstado }) {
   console.log(ventas, imgPath, idEstado);
@@ -120,14 +116,9 @@ export default function Index({ ventas, imgPath, idEstado }) {
         onClose={handleCloseSuccess}
         mensaje={"Compra realizada con éxito."}
       ></MensajeExito>
-      <AuthenticatedLayout
-        header={
-          <h2 className="text-xl font-semibold leading-tight text-gray-800">
-            Ventas Juego 1
-          </h2>
-        }
+      
+      <AuthenticatedLayout header="Ventas" title="Ventas"
       >
-        <Head title="Venta" />
         <FormControl fullWidth>
           <ToggleButtonGroup
             size="small"

@@ -10,7 +10,10 @@ class Jugada extends Model
     protected $fillable   = [
         'fe_fecha',
         'nu_tickets',
-        'tx_estado',
+        'mo_valor_ticket',
+        'mo_valor_divisa',
+        'nu_minutos_cierre',
+        'id_estado',
         'tx_observaciones',
         'id_usuario',
     ];

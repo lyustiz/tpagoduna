@@ -8,7 +8,8 @@ import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { useRef } from 'react';
 
-export default function Edit({configuracion}) {
+export default function Edit({jugada}) {
+   console.log(jugada)
 
    const {data, 
        setData,
@@ -17,77 +18,99 @@ export default function Edit({configuracion}) {
        patch,
        recentlySuccessful,
   } = useForm({
-    'referencia': configuracion.referencia,
-    'descripcion': configuracion.descripcion,
-    'valor': configuracion.valor
+    'fe_fecha': jugada.fe_fecha,
+    'nu_tickets': jugada.nu_tickets,
+    'mo_valor_ticket': jugada.mo_valor_ticket,
+    'mo_valor_divisa': jugada.mo_valor_divisa,
+    'nu_minutos_cierre': jugada.nu_minutos_cierre
    })
 
-  const create = (e) => {
+  const update = (e) => {
     e.preventDefault();
 
-    patch(route('configuracion.update', configuracion.id), {
+    patch(route('jugada.update', jugada.id), {
       preserveScroll: true,
     });
   };
 
   return (
-    <AuthenticatedLayout
-      header={
-        <h2 className="text-xl font-semibold leading-tight text-gray-800">
-          Editar Configuracion  <b>{configuracion.referencia}</b> 
-        </h2>
-      }
-    >
-      <Head title={"Editar Configuracion " +  configuracion.referencia} />
+    <AuthenticatedLayout header={"Editar"} title={"Editar Jugada " +  jugada.id}>
 
-      <div className="mb-4 overflow-hidden bg-white shadow-sm sm:rounded-lg">
-        <div className="p-6 text-gray-900 flex gap-8">
+      <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg mx-8">
+        <div className="p-2 text-gray-900 flex gap-8">
           
-          <form onSubmit={create} className="mt-6">
+          <form onSubmit={update} className="mt-6">
             <div>
-              <InputLabel htmlFor="referencia" value="Referencia" />
-
+              <InputLabel htmlFor="fecha" value="Fecha" />
               <TextInput
-                id="referencia"
+                id="fecha"
+                type='date'
                 className="mt-1 mb-3 block w-full"
-                value={data.referencia}
-                onChange={(e) => setData("referencia", e.target.value)}
+                value={data.fe_fecha}
+                onChange={(e) => setData("fe_fecha", e.target.value)}
                 required
                 isFocused
-                autoComplete="referencia"
+                autoComplete="fecha"
               />
-
-              <InputError className="mt-2" message={errors.referencia} />
+              <InputError className="mt-2" message={errors.fe_fecha} />
             </div>
 
             <div>
-              <InputLabel htmlFor="descripcion" value="Descripcion" />
-
+              <InputLabel htmlFor="nu_tickets" value="Numero de Tickets" />
               <TextInput
-                id="descripcion"
+                id="nu_tickets"
+                type='number'
                 className="mt-1 mb-3 block w-full"
-                value={data.descripcion}
-                onChange={(e) => setData("descripcion", e.target.value)}
-                autoComplete="descripcion"
-              />
-
-              <InputError className="mt-2" message={errors.descripcion} />
-            </div>
-
-            <div>
-              <InputLabel htmlFor="valor" value="Valor" />
-
-              <TextInput
-                id="valor"
-                type="number"
-                className="mt-1 mb-3 block w-full"
-                value={data.valor}
-                onChange={(e) => setData("valor", e.target.value)}
+                value={data.nu_tickets}
+                onChange={(e) => setData("nu_tickets", e.target.value)}
                 required
-                autoComplete="valor"
+                autoComplete="nu_tickets"
+                disabled
               />
+              <InputError className="mt-2" message={errors.nu_tickets} />
+            </div>
 
-              <InputError className="mt-2" message={errors.valor} />
+            
+            <div>
+              <InputLabel htmlFor="mo_valor_ticket" value="Valor de Tickets" />
+              <TextInput
+                id="mo_valor_ticket"
+                type='number'
+                className="mt-1 mb-3 block w-full"
+                value={data.mo_valor_ticket}
+                onChange={(e) => setData("mo_valor_ticket", e.target.value)}
+                required
+                autoComplete="mo_valor_ticket"
+              />
+              <InputError className="mt-2" message={errors.mo_valor_ticket} />
+            </div>
+
+            <div>
+              <InputLabel htmlFor="mo_valor_divisa" value="Tasa Divisa" />
+              <TextInput
+                id="mo_valor_divisa"
+                type='number'
+                className="mt-1 mb-3 block w-full"
+                value={data.mo_valor_divisa}
+                onChange={(e) => setData("mo_valor_divisa", e.target.value)}
+                required
+                autoComplete="mo_valor_divisa"
+              />
+              <InputError className="mt-2" message={errors.mo_valor_divisa} />
+            </div>
+
+            <div>
+              <InputLabel htmlFor="nu_minutos_cierre" value="Minutos Cierre" />
+              <TextInput
+                id="nu_minutos_cierre"
+                type='number'
+                className="mt-1 mb-3 block w-full"
+                value={data.nu_minutos_cierre}
+                onChange={(e) => setData("nu_minutos_cierre", e.target.value)}
+                required
+                autoComplete="nu_minutos_cierre"
+              />
+              <InputError className="mt-2" message={errors.nu_minutos_cierre} />
             </div>
 
             <div className="flex items-center gap-4">

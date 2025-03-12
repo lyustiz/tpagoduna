@@ -10,16 +10,12 @@ import {
   MenuItem,
   FormGroup,
   FormControlLabel,
-  Switch,
-  Snackbar,
-  Fade,
-  Alert,
+  Switch, Typography
 } from "@mui/material";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { Transition } from "@headlessui/react";
 import { useForm, router, usePage } from "@inertiajs/react";
 import PersonIcon from "@mui/icons-material/Person";
 import PaymentsIcon from "@mui/icons-material/Payments";
@@ -28,7 +24,6 @@ import WhatsappButton from "./WhatsappButton";
 import InfoPago from "./InfoPago";
 import CameraInput from "./CamaraInput";
 import MensajeError from "@/Components/MensajeError";
-//import MensajeExito from "@/Components/MensajeExito";
 import CompraConfirm from "./CompraConfirm";
 import CompraExito from "./CompraExito";
 import TicketsSeleccionados from "./TicketsSeleccionados";
@@ -38,11 +33,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
   const idsTicketSel = ticketsSel.map((ticket) => ticket.id);
   const cameraInputRef = useRef(null);
   const props = usePage().props;
-  const isMobileDevice = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent,
-    );
-  };
+
   const {
     data,
     setData,
@@ -50,7 +41,6 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
     errors,
     post,
     reset,
-    recentlySuccessful,
     hasErrors,
     transform,
     clearErrors,
@@ -71,8 +61,12 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
   const CantTickets = ticketsSel.length;
   const existenTickets = CantTickets > 0;
 
+  var ticketsList = ticketsSel.map((ticket) => {
+    return String(ticket.nu_numero).padStart(3, "0")+" ";
+  });
+
   const textoWhatsapp =
-    "Compra de " + CantTickets + " Ticket(s) Jugada " + jugada.id;
+    "Compra de Ticket(s) " + ticketsList + " (" +  CantTickets + ")  Jugada " + jugada.id;
 
   const confirm = (e) => {
     e.preventDefault();
@@ -190,7 +184,11 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
       <form onSubmit={confirm}>
         <Card elevation={4} sx={{ borderRadius: 6 }} className="p-2">
           <CardHeader
-            title="DATOS PERSONALES"
+            title={
+              <Typography variant="title" component="div" sx={{ fontWeight: 'bold' }}>
+              DATOS PERSONALES
+               </Typography>
+            }
             avatar={
               <Avatar sx={{ bgcolor: "#e62a3c" }}>
                 <PersonIcon />
@@ -200,7 +198,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
           <CardContent>
             <Grid2 container spacing={2}>
               <Grid2 item size={{ xs: 12, sm: 6 }}>
-                <InputLabel htmlFor="nombre" value="Nombre*" />
+                <InputLabel htmlFor="nombre" value="Nombre*" size="large" variant="filled" />
 
                 <TextInput
                   id="nombre"
@@ -221,11 +219,11 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                   <InputLabel htmlFor="codigo" value="Codigo*" />
 
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId="codigo"
                     value={58}
-                    label="Age"
+                    label="Codigo"
                     className="w-full"
+                    sx={{ fontSize: '0.9rem'}}
                     onChange={(e) => setData("codigo", e.target.value)}
                   >
                     <MenuItem value={58}>+58 Ven</MenuItem>
@@ -245,7 +243,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                     value={data.celular}
                     onChange={(e) => handleCelular(e.target.value)}
                     autoComplete="celular"
-                    placeholder="Ejemplo: 04129396107"
+                    placeholder="Ej: 04129396107"
                     pattern="[0-9]+"
                     required
                     title="Solo numeros, Este campo es obligatorio."
@@ -258,7 +256,11 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
           </CardContent>
 
           <CardHeader
-            title="METODO DE PAGO"
+            title={
+              <Typography variant="title" component="div" sx={{ fontWeight: 'bold' }}>
+              METODO DE PAGO
+               </Typography>
+            }
             avatar={
               <Avatar sx={{ bgcolor: "#e62a3c" }}>
                 <PaymentsIcon></PaymentsIcon>
@@ -271,7 +273,11 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
           </CardContent>
 
           <CardHeader
-            title="COMPROBANTE"
+          title={
+            <Typography variant="title" component="div" sx={{ fontWeight: 'bold' }}>
+            COMPROBANTE
+             </Typography>
+          }
             avatar={
               <Avatar sx={{ bgcolor: "#e62a3c" }}>
                 <RequestPageIcon></RequestPageIcon>
@@ -310,17 +316,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
           <CardActions>
             <div className="flex items-center gap-4">
-              <PrimaryButton disabled={processing}>Comprar</PrimaryButton>
-
-              <Transition
-                show={recentlySuccessful}
-                enter="transition ease-in-out"
-                enterFrom="opacity-0"
-                leave="transition ease-in-out"
-                leaveTo="opacity-0"
-              >
-                <p className="text-sm text-gray-600">Saved.</p>
-              </Transition>
+              <PrimaryButton className="text-lg" disabled={processing} >Comprar</PrimaryButton>
             </div>
           </CardActions>
         </Card>

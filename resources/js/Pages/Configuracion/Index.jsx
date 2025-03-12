@@ -7,11 +7,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 export default function Index({ configuraciones }) {
   return (
     <AuthenticatedLayout
-      header={
-        <h2 className="text-xl font-semibold leading-none text-gray-800">
-          Configuracion
-        </h2>
-      }
+      header="Configuracion"
     >
       <Head title="Configuracion -"   />
 

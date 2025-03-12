@@ -24,6 +24,26 @@ export default function Index({ jugada }) {
     setTickets([]);
   }
 
+  if (!jugada) {
+    return (
+      <GuestLayout>
+        <Head title="Jugada" />
+        <Container fixed className="rounded-xl text-center p-8 mt-2 bg-white h-screen flex flex-col justify-start items-center">
+          <div className="w-full">
+            <h2 className="text-4xl text-red-400 font-extrabold">
+              No hay Jugadas Activas
+            </h2>
+          </div>
+          <div className="w-full">
+            <h2 className="text-xl font-extrabold mt-4">
+              Mantente atento a nuestras redes sociales...
+            </h2>
+          </div>
+        </Container>
+      </GuestLayout>
+    );
+  }
+
   return (
     <>
       <GuestLayout>
@@ -34,9 +54,7 @@ export default function Index({ jugada }) {
           className="w-89 xs:mx-4 sm:mx-8 md:mx-16  px-4 py-8 mt-2 mb-2"
           color="white"
           sx={{
-          
             borderRadius: 8,
-          
           }}
           square={false}
         >

@@ -13,6 +13,10 @@ export default function MenuCompra() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleReload = () => {
+    setAnchorEl(null);
     const cookies = document.cookie.split(";");
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i];
@@ -47,7 +51,7 @@ export default function MenuCompra() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Recargar</MenuItem>
+        <MenuItem onClick={handleReload}>Recargar</MenuItem>
       </Menu>
     </div>
   );

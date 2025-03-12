@@ -8,6 +8,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import PlaceIcon from "@mui/icons-material/Place";
 import InfoPago from "./Compra/Components/InfoPago";
+import ConstactanosFlotante from "@/Components/ContactanosFlotante";
 
 /** Imagenes  */
 import imgPagomovil from "../../../public/images/pagomovil.png";
@@ -32,10 +33,10 @@ export default function Welcome({ auth }) {
                 width={50}
               />
             </div>
-            <div className="hidden md:flex space-x-6">
+            <div className="hidden md:flex space-x-6 text-lg" >
             <Link
                 href={route("compra.index")}
-                className="text-gray-700 hover:text-[#e62a3c]"
+                className=" text-gray-700 hover:text-[#e62a3c]"
               >
                 Comprar
               </Link>
@@ -60,6 +61,10 @@ export default function Welcome({ auth }) {
 
         {/* Main Content */}
         <main className="container mx-auto px-4 pt-24 pb-12">
+          {/* Contacto flotante */}
+          <ConstactanosFlotante></ConstactanosFlotante>
+         
+         
           {/* Hero Section */}
           <section className="text-center mb-16">
             <div id="topComprar" className="flex justify-center">
@@ -345,7 +350,7 @@ export default function Welcome({ auth }) {
         </main>
 
         {/* Footer */}
-        <footer className="bg-white py-8">
+        <footer className="bg-white py-8 text-lg">
           <div className="flex flex-col md:flex-row items-center justify-around container mx-auto px-4">
             <div className="seccion flex flex-col">
               <h2 className="font-bold" id="contacto">
@@ -390,7 +395,7 @@ export default function Welcome({ auth }) {
                   <span>
                     <PlaceIcon color="primary"></PlaceIcon>{" "}
                   </span>
-                  Direccion: Caracas, Venezuela
+                  Ubicacion: Caracas, Venezuela
                 </p>
               </div>
             </div>

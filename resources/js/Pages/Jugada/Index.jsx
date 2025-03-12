@@ -14,101 +14,71 @@ import React from "react";
 import MensajeError from "@/Components/MensajeError";
 import MensajeExito from "@/Components/MensajeExito";
 import { Pagination, Typography } from "@mui/material";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl } from "@mui/material";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import EstadoJugada from "@/Pages/Jugada/Components/EstadoJugada";
+import AccionJugada from "@/Pages/Jugada/Components/AccionJugada";
+import FormAccionesJugada from  "@/Pages/Jugada/Components/FormAccionesJugada";
 
 export default function Index({ jugadas }) {
-
   console.log(jugadas);
   const {
-    data,
-    setData,
-    processing,
     errors,
-    post,
-    reset,
-    recentlySuccessful,
     hasErrors,
-    transform,
     clearErrors,
-  } = useForm({
-    id: "",
-    observaciones: "",
-    referencia: "",
-  });
+  } = useForm();
 
   const [showSuccess, setShowSuccess] = useState(false);
-  const [formConfirm, setFormConfirm] = useState(false);
-  const [formCancel, setFormCancel] = useState(false);
-  const [ventaSel, setVentaSel] = useState(null);
   const [loading, setLoadin] = useState(false);
-/*
-  const handleCancel = (venta, oservaciones) => {
-    setVentaSel(venta);
-    setFormCancel(true);
-  };
+  const [frmAcciones, setFrmAcciones] = useState({open: false, accion: '', jugada: null});
 
-  const handleConfirm = (venta) => {
-    setVentaSel(venta);
-    setFormConfirm(true);
-  };
-
-  const handleEdit = (venta) => {
-    console.log("Edit", venta);
-    setLoadin(true);
-    setTimeout(() => {
-      setLoadin(false);
-    }, 1000);
-  };
-*/
   const handlePage = (event, page) => {
-    console.log("Page", page);
     setLoadin(true);
     router.get(route("jugada.index", { page: page }));
   };
-/*
-  const handleEstadoChange = (event) => {
-    setEstado(event.target.value);
-    setLoadin(true);
-    router.get(route("ventas.index", { id_estado: event.target.value }));
+
+  const handleCloseSuccess = () => {
+    setShowSuccess(false);
   };
 
-  
+  const handleAccionClose = () => {
+    setFrmAcciones({open: false, accion: '', jugada: null});
+  };
 
-  const [loading, setLoadin] = useState(false);*/
-const handleCloseSuccess = () => {
-    setShowSuccess(false);
+  const handleAccionOpen = (accion, jugada) => {
+    setFrmAcciones({open: true, accion: accion, jugada: jugada});
   };
 
   return (
     <>
-      
       {/* Mostrar error */}
+      { hasErrors &
       <MensajeError
         open={hasErrors}
         onClose={() => clearErrors()}
         errors={errors}
       ></MensajeError>
-
+      }
       {/* Mostrar éxito */}
       <MensajeExito
         open={showSuccess}
         onClose={handleCloseSuccess}
         mensaje={"Compra realizada con éxito."}
       ></MensajeExito>
-      <AuthenticatedLayout
-        header={
-          <h2 className="text-xl font-semibold leading-tight text-gray-800">
-            JUGADAS
-          </h2>
-        }
-      >
-        <Head title="Jugadas" />
+
+      {/* Acciones */}
+      <FormAccionesJugada
+        open={frmAcciones.open}
+        onClose={handleAccionClose}
+        accion={frmAcciones.accion}
+        jugada={frmAcciones.jugada}
+      ></FormAccionesJugada>
+
+      <AuthenticatedLayout header="JUGADAS" title="Jugadas">
+        
+        
         <FormControl fullWidth>
-          <ToggleButtonGroup
-            size="small"
-            sx={{ marginBottom: 2 }}
-          >
+          <ToggleButtonGroup size="small" sx={{ marginBottom: 2 }}>
             <ToggleButton value={0} color="primary" selected={false}>
               Pendiente
             </ToggleButton>
@@ -123,59 +93,59 @@ const handleCloseSuccess = () => {
           </ToggleButtonGroup>
         </FormControl>
 
-        
-          { <TableContainer component={Paper}>
+        {
+          <TableContainer component={Paper}>
             <Table
               sx={{ minWidth: 650 }}
               aria-label="simple table"
               size="small"
             >
-  {
 
-    /*
-id
-fe_fecha
-nu_tickets
-mo_valor_ticket
-mo_valor_divisa
-id_estado
-tx_observaciones
-id_usuario
-created_at
-updated_at
-
-
-    */
-  }
-
-
-
-             <TableHead>
-                <TableRow sx={{ backgroundColor: "#f5f5f5", fontWeight: "bold" }}>
+              <TableHead>
+                <TableRow
+                  sx={{ backgroundColor: "#f5f5f5", fontWeight: "bold" }}
+                >
                   <TableCell align="center">Id</TableCell>
                   <TableCell align="center">Fecha</TableCell>
                   <TableCell align="center">Tickets</TableCell>
                   <TableCell align="center">Valor</TableCell>
-                  <TableCell align="center">Valor Divisa</TableCell>
+                  <TableCell align="center">Tasa</TableCell>
+                  <TableCell align="center">Min.Cierre</TableCell>
                   <TableCell align="center">Estado</TableCell>
                   <TableCell align="center">Acciones</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {jugadas.data.map((jugada) => (
-
                   <TableRow
                     key={jugada.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell align="center">{jugada.id}</TableCell>
-                    <TableCell align="center">{new Date(jugada.fe_fecha).toLocaleDateString("es-ES")}</TableCell>
-                    <TableCell align="center">{jugada.nu_tickets}</TableCell>
-                    <TableCell align="center">{jugada.mo_valor_ticket}$</TableCell>
-                    <TableCell align="center">{jugada.mo_valor_divisa}Bs</TableCell>
-                    <TableCell align="center">{jugada.estado.tx_nombre}</TableCell>
                     <TableCell align="center">
-                     Acciones
+                      {new Date(jugada.fe_fecha).toLocaleDateString("es-ES")}
+                    </TableCell>
+                    <TableCell align="center">{jugada.nu_tickets}</TableCell>
+                    <TableCell align="center">
+                      {jugada.mo_valor_ticket}$
+                    </TableCell>
+                    <TableCell align="center">
+                      {jugada.mo_valor_divisa}Bs
+                    </TableCell>
+                    <TableCell align="center">
+                      {jugada.nu_minutos_cierre}
+                    </TableCell>
+                    <TableCell align="center">
+                      <EstadoJugada id_estado={jugada.id_estado} />{" "}
+                    </TableCell>
+                    <TableCell align="center">
+                      <AccionJugada
+                        jugada={jugada}
+                        onActivar={() => handleAccionOpen('activar', jugada)}
+                        onDesactivar={() => handleAccionOpen('desactivar', jugada)}
+                        onEdit={() => router.visit('/jugada/'+jugada.id+'/edit')}
+                        onCerrar={() => handleAccionOpen('cerrar', jugada)}
+                      ></AccionJugada>
                     </TableCell>
                   </TableRow>
                 ))}
