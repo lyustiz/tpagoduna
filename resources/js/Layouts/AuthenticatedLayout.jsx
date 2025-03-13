@@ -26,26 +26,28 @@ export default function AuthenticatedLayout({ header, title, children }) {
       title: "Principal",
     },
     {
-      segment: "venta",
-      title: "Venta",
-      icon: <PaymentsIcon />,
-    },
-    {
-      segment: "configuracion",
-      title: "Configuracion",
-      icon: <SettingsIcon />,
-    },
-    {
       segment: "jugada",
       title: "Jugadas",
       icon: <CasinoIcon />,
     },
+    {
+      segment: "venta",
+      title: "Venta",
+      icon: <PaymentsIcon />,
+    },
+    
+   
     {
       kind: "divider",
     },
     {
       kind: "header",
       title: "Administrar",
+    },
+    {
+      segment: "configuracion",
+      title: "Configuracion",
+      icon: <SettingsIcon />,
     },
   ];
 

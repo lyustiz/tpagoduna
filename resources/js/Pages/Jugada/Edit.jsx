@@ -1,15 +1,14 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
-import { useRef } from 'react';
+import Alert from "@mui/material/Alert";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 export default function Edit({jugada}) {
-   console.log(jugada)
 
    const {data, 
        setData,
@@ -33,13 +32,26 @@ export default function Edit({jugada}) {
     });
   };
 
+  let activo = jugada.id_estado == 1;
+
   return (
     <AuthenticatedLayout header={"Editar"} title={"Editar Jugada " +  jugada.id}>
 
       <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg mx-8">
+      { activo && 
+            <Alert severity="warning">
+                <Typography variant="body">
+                   El juego esta activo cualquier modificacion de estos parametros pueden traer efectos no deseados. Tenga precaucion
+                </Typography>
+              </Alert>
+           
+            }
         <div className="p-2 text-gray-900 flex gap-8">
+       
           
-          <form onSubmit={update} className="mt-6">
+          <form onSubmit={update} className="mt-1">
+
+            
             <div>
               <InputLabel htmlFor="fecha" value="Fecha" />
               <TextInput
@@ -115,16 +127,8 @@ export default function Edit({jugada}) {
 
             <div className="flex items-center gap-4">
               <PrimaryButton disabled={processing}>Guardar</PrimaryButton>
-
-              <Transition
-                show={recentlySuccessful}
-                enter="transition ease-in-out"
-                enterFrom="opacity-0"
-                leave="transition ease-in-out"
-                leaveTo="opacity-0"
-              >
-                <p className="text-sm text-gray-600">Saved.</p>
-              </Transition>
+              <Button variant="outlined" color="secondary" href="/jugada">Volver</Button>
+            
             </div>
           </form>
         </div>

@@ -15,22 +15,25 @@ import MensajeError from "@/Components/MensajeError";
 import MensajeExito from "@/Components/MensajeExito";
 import { Pagination, Typography } from "@mui/material";
 import { FormControl } from "@mui/material";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Button from "@mui/material/Button";
 import EstadoJugada from "@/Pages/Jugada/Components/EstadoJugada";
 import AccionJugada from "@/Pages/Jugada/Components/AccionJugada";
-import FormAccionesJugada from  "@/Pages/Jugada/Components/FormAccionesJugada";
+import FormAccionesJugada from "@/Pages/Jugada/Components/FormAccionesJugada";
+import Grid2 from "@mui/material/Grid2";
 
 export default function Index({ jugadas }) {
   console.log(jugadas);
-  const {
-    errors,
-    hasErrors,
-    clearErrors,
-  } = useForm();
+  const { errors, hasErrors, clearErrors } = useForm();
 
   const [showSuccess, setShowSuccess] = useState(false);
   const [loading, setLoadin] = useState(false);
-  const [frmAcciones, setFrmAcciones] = useState({open: false, accion: '', jugada: null});
+  const [frmAcciones, setFrmAcciones] = useState({
+    open: false,
+    accion: "",
+    jugada: null,
+  });
 
   const handlePage = (event, page) => {
     setLoadin(true);
@@ -42,23 +45,23 @@ export default function Index({ jugadas }) {
   };
 
   const handleAccionClose = () => {
-    setFrmAcciones({open: false, accion: '', jugada: null});
+    setFrmAcciones({ open: false, accion: "", jugada: null });
   };
 
   const handleAccionOpen = (accion, jugada) => {
-    setFrmAcciones({open: true, accion: accion, jugada: jugada});
+    setFrmAcciones({ open: true, accion: accion, jugada: jugada });
   };
 
   return (
     <>
       {/* Mostrar error */}
-      { hasErrors &
-      <MensajeError
-        open={hasErrors}
-        onClose={() => clearErrors()}
-        errors={errors}
-      ></MensajeError>
-      }
+      {hasErrors && (
+        <MensajeError
+          open={hasErrors}
+          onClose={() => clearErrors()}
+          errors={errors}
+        ></MensajeError>
+      )}
       {/* Mostrar éxito */}
       <MensajeExito
         open={showSuccess}
@@ -75,24 +78,30 @@ export default function Index({ jugadas }) {
       ></FormAccionesJugada>
 
       <AuthenticatedLayout header="JUGADAS" title="Jugadas">
-        
-        
-        <FormControl fullWidth>
-          <ToggleButtonGroup size="small" sx={{ marginBottom: 2 }}>
-            <ToggleButton value={0} color="primary" selected={false}>
-              Pendiente
-            </ToggleButton>
+        <Grid2 container spacing={2}>
+          <Grid2>
+            <FormControl>
+              <ToggleButtonGroup size="small" sx={{ marginBottom: 2 }}>
+                <ToggleButton value={0} color="primary" selected={false}>
+                  Pendiente
+                </ToggleButton>
 
-            <ToggleButton value={5} color="success" selected={false}>
-              Activa
-            </ToggleButton>
+                <ToggleButton value={5} color="success" selected={false}>
+                  Activa
+                </ToggleButton>
 
-            <ToggleButton value={6} color="error" selected={false}>
-              Cerrado
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </FormControl>
-
+                <ToggleButton value={6} color="error" selected={false}>
+                  Cerrado
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </FormControl>
+          </Grid2>
+          <Grid2 alignItems="flex-start" >
+            <Button size="small" variant="contained" color="success" href="/jugada/create" className="mt-2">
+              Nuevo
+            </Button>
+          </Grid2>
+        </Grid2>
         {
           <TableContainer component={Paper}>
             <Table
@@ -100,7 +109,6 @@ export default function Index({ jugadas }) {
               aria-label="simple table"
               size="small"
             >
-
               <TableHead>
                 <TableRow
                   sx={{ backgroundColor: "#f5f5f5", fontWeight: "bold" }}
@@ -141,10 +149,14 @@ export default function Index({ jugadas }) {
                     <TableCell align="center">
                       <AccionJugada
                         jugada={jugada}
-                        onActivar={() => handleAccionOpen('activar', jugada)}
-                        onDesactivar={() => handleAccionOpen('desactivar', jugada)}
-                        onEdit={() => router.visit('/jugada/'+jugada.id+'/edit')}
-                        onCerrar={() => handleAccionOpen('cerrar', jugada)}
+                        onActivar={() => handleAccionOpen("activar", jugada)}
+                        onDesactivar={() =>
+                          handleAccionOpen("desactivar", jugada)
+                        }
+                        onEdit={() =>
+                          router.visit("/jugada/" + jugada.id + "/edit")
+                        }
+                        onCerrar={() => handleAccionOpen("cerrar", jugada)}
                       ></AccionJugada>
                     </TableCell>
                   </TableRow>

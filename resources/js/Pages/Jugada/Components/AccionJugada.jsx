@@ -16,7 +16,7 @@ export default function AccionJugada({ onEdit, onDesactivar,  onActivar, onCerra
   return (
    <>
     <div className='d-flex justify-content-center'>
-      {isActiva && (
+      {!isCerrada && (
       <IconButton aria-label="editar" color="warning" onClick={() => onEdit(jugada)}>
         <EditIcon fontSize="small"   />
       </IconButton>

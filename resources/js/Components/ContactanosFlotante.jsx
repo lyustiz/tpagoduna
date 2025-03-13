@@ -20,7 +20,7 @@ export default function ConstactanosFlotante() {
           variant="contained"
           color="success"
         >
-          <WhatsAppIcon></WhatsAppIcon>{' '}Contactanos
+          <WhatsAppIcon></WhatsAppIcon>&nbsp;Contactanos
         </Button>
     </Snackbar>
   );

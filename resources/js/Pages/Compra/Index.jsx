@@ -1,7 +1,9 @@
 import { useState, useCallback } from "react";
 import { Head } from "@inertiajs/react";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { Grid2, Container, Paper } from "@mui/material";
+import Grid2 from "@mui/material/Grid2";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
 import TicketItem from "./Components/TicketItem";
 import TicketsSelected from "./Components/TicketsSelected";
 import TikcetCounter from "./Components/TickeCounter";

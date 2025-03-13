@@ -1,16 +1,13 @@
 import ConfiguracionItem from "@/Pages/Configuracion/Components/ConfiguracionItem";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Index({ configuraciones }) {
   return (
     <AuthenticatedLayout
-      header="Configuracion"
+      header="Configuracion" title="Configuracion"
     >
-      <Head title="Configuracion -"   />
-
       <div className="mb-8">
         <PrimaryButton>
           <Link href={route("configuracion.create")}>Nuevo</Link>

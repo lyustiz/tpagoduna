@@ -20,11 +20,21 @@ import MensajeExito from "@/Components/MensajeExito";
 import { Pagination, Typography } from "@mui/material";
 import FormConfirm from "./Components/FormConfirm";
 import FormCancel from "./Components/FormCancel";
-import { FormControl } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Grid2 from "@mui/material/Grid2";
+import { formatDate, formatDateTime } from "../../utils/formatData";
 
-export default function Index({ ventas, imgPath, idEstado }) {
-  console.log(ventas, imgPath, idEstado);
+export default function Index({
+  ventas,
+  jugadas,
+  imgPath,
+  idEstado,
+  id_jugada,
+}) {
+  console.log(ventas, imgPath, idEstado, jugadas);
   const {
     data,
     setData,
@@ -47,6 +57,7 @@ export default function Index({ ventas, imgPath, idEstado }) {
   const [formCancel, setFormCancel] = useState(false);
   const [ventaSel, setVentaSel] = useState(null);
   const [estado, setEstado] = useState(idEstado ?? "");
+  const [selectedJugada, setSelectedJugada] = useState("");
 
   const handleCancel = (venta, oservaciones) => {
     setVentaSel(venta);
@@ -69,17 +80,21 @@ export default function Index({ ventas, imgPath, idEstado }) {
   const handlePage = (event, page) => {
     console.log("Page", page);
     setLoadin(true);
-    router.get(route("ventas.index", { page: page, id_estado: idEstado }));
+    router.get(route("ventas.index", { page: page, id_estado: idEstado, id_jugada: id_jugada }));
   };
 
   const handleEstadoChange = (event) => {
     setEstado(event.target.value);
     setLoadin(true);
-    router.get(route("ventas.index", { id_estado: event.target.value }));
+    router.get(route("ventas.index", { id_estado: event.target.value, id_jugada: id_jugada }));
   };
 
   const handleCloseSuccess = () => {
     setShowSuccess(false);
+  };
+
+  const handleJugada = (event) => {
+    router.get(route("ventas.index", { id_jugada: event.target.value }));
   };
 
   const [loading, setLoadin] = useState(false);
@@ -116,34 +131,63 @@ export default function Index({ ventas, imgPath, idEstado }) {
         onClose={handleCloseSuccess}
         mensaje={"Compra realizada con éxito."}
       ></MensajeExito>
-      
-      <AuthenticatedLayout header="Ventas" title="Ventas"
-      >
-        <FormControl fullWidth>
-          <ToggleButtonGroup
-            size="small"
-            value={idEstado}
-            onChange={handleEstadoChange}
-            sx={{ marginBottom: 2 }}
-          >
-            <ToggleButton value={0} color="primary" selected={idEstado == 0}>
-              Todos
-            </ToggleButton>
 
-            <ToggleButton value={4} color="warning" selected={idEstado == 4}>
-              Reservado
-            </ToggleButton>
+      <AuthenticatedLayout header="Ventas" title="Ventas">
+        <Grid2 container gap={2}>
+          <Grid2 size={6}>
+            <FormControl fullWidth>
+              <Select
+                value={id_jugada}
+                onChange={handleJugada}
+                displayEmpty
+              >
+                {jugadas.map((jugada) => (
+                  <MenuItem key={jugada.id} value={jugada.id}>
+                    Jugada {jugada.id} - {formatDate(jugada.fe_fecha)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid2>
+          <Grid2 size={5}>
+            <FormControl>
+              <ToggleButtonGroup
+                size="small"
+                value={idEstado}
+                onChange={handleEstadoChange}
+                sx={{ marginBottom: 2 }}
+              >
+                <ToggleButton
+                  value={0}
+                  color="primary"
+                  selected={idEstado == 0}
+                >
+                  Todos
+                </ToggleButton>
 
-            <ToggleButton value={5} color="success" selected={idEstado == 5}>
-              Vendido
-            </ToggleButton>
+                <ToggleButton
+                  value={4}
+                  color="warning"
+                  selected={idEstado == 4}
+                >
+                  Reservado
+                </ToggleButton>
 
-            <ToggleButton value={6} color="error" selected={idEstado == 6}>
-              Cancelado
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </FormControl>
+                <ToggleButton
+                  value={5}
+                  color="success"
+                  selected={idEstado == 5}
+                >
+                  Vendido
+                </ToggleButton>
 
+                <ToggleButton value={6} color="error" selected={idEstado == 6}>
+                  Cancelado
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </FormControl>
+          </Grid2>
+        </Grid2>
         {
           <TableContainer component={Paper}>
             <Table
@@ -182,14 +226,7 @@ export default function Index({ ventas, imgPath, idEstado }) {
                       ({venta.mo_total_tickets})
                     </TableCell>
                     <TableCell align="center">
-                      {new Date(venta.created_at).toLocaleString("es-US", {
-                        month: "2-digit",
-                        day: "2-digit",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
-                      })}
+                      {formatDateTime(venta.created_at)}
                     </TableCell>
                     <TableCell align="center">
                       {venta.mo_total_venta}$

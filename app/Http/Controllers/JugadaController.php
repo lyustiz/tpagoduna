@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Jugada;
 use App\Http\Requests\StoreJugadaRequest;
 use App\Http\Requests\UpdateJugadaRequest;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
+
+
 
 class JugadaController extends Controller
 {
@@ -14,6 +18,7 @@ class JugadaController extends Controller
     private const ACTIVO = 1;
     private const INACTIVO = 2;
 
+    private const PENDIENTE = 3;
     private const CERRADO = 7;
     
     /**
@@ -33,15 +38,59 @@ class JugadaController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render("Jugada/Create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreJugadaRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nu_tickets'=> 'required|integer|min:1',
+            'fe_fecha'=> 'required|date|after_or_equal:today',
+            'mo_valor_ticket'=> 'required|numeric|min:1',
+            'mo_valor_divisa'=> 'required|numeric|min:1',
+            'nu_minutos_cierre'=> 'required|integer|min:1',
+        ]);
+
+        $request->merge([
+            'id_usuario' => $request->user()->id,
+            'id_estado' => self::INACTIVO,
+        ]);   
+
+        try {
+
+            DB::beginTransaction();
+
+            $jugada  = Jugada::create($request->all());
+            $tickets = [];
+            for ($i = 1; $i <= ($jugada->nu_tickets - 1); $i++) {
+                $tickets[] = [
+                    'id_jugada' => $jugada->id,
+                    'nu_numero' => $i,
+                    'id_estado' => self::PENDIENTE,
+                    'id_usuario' => $request->user()->id,
+                    'created_at' => now()
+                ];
+            }
+
+            $chunks = array_chunk($tickets, 100); // Divide los datos en trozos de 100 registros
+
+            foreach ($chunks as $chunk) {
+                Ticket::insert($chunk);
+            }
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([
+                'error' =>  'Error al Crear Jugada: ' + $th->getMessage()
+            ]);
+        }
+
+        return to_route('jugada.index')->with('success', 'Jugada creada correctamente');
     }
 
     /**
@@ -68,9 +117,25 @@ class JugadaController extends Controller
     public function update(Request $request, Jugada $jugada)
     {
         $request->validate([
-            'id_estado' => 'required|exists:estados,id'
-
+            'fe_fecha'=> 'required|date',
+            'mo_valor_ticket'=> 'required|numeric',
+            'mo_valor_divisa'=> 'required|numeric',
+            'nu_minutos_cierre'=> 'required|integer',
         ]);
+
+        $request->merge([
+            'id_usuario' => $request->user()->id
+        ]);   
+
+        try {
+            $jugada = $jugada->update($request->all());
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors([
+                'error' =>  'Error al Actualizar Jugada: ' + $th->getMessage()
+            ]);
+        }
+
+        return to_route('jugada.index')->with('success', 'Jugada actualizada correctamente');
     }
 
     public function activar(Request $request, string $id)

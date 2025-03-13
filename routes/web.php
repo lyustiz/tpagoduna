@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/ventas/{id}/confirm', [VentaController::class, 'confirm'])->name('ventas.confirm');
         Route::post('/ventas/{id}/cancel', [VentaController::class, 'cancel'])->name('ventas.cancel');
 
-        Route::resource('/jugada',  JugadaController::class)->only(['index', 'edit', 'update']);;
+        Route::resource('/jugada',  JugadaController::class)->only(['index', 'create', 'store', 'edit', 'update']);;
         Route::post('/jugada/{id}/activar', [JugadaController::class, 'activar'])->name('jugada.activar');
         Route::post('/jugada/{id}/desactivar', [JugadaController::class, 'desactivar'])->name('jugada.desactivar');
         Route::post('/jugada/{id}/cerrar', [JugadaController::class, 'cerrar'])->name('jugada.cerrar');
