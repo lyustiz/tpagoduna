@@ -71,14 +71,14 @@ export default function Index({ jugada }) {
             </h2>
 
             <Grid2 container spacing={1} alignItems={"center"} justifyContent={"center"}>
-              <Grid2 item>
+              <Grid2>
                 <WhatsappButton
                             celular="+584129396107"
                             texto={'Solicito Informacion de '}
                             label={'Solicitar Informacion'}
                           />
               </Grid2>
-              <Grid2 item>
+              <Grid2>
               <MenuCompra></MenuCompra>
               </Grid2>
             </Grid2> 

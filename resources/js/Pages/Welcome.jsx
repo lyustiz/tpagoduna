@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import logo from "../../../public/images/logo.png";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IconButton } from "@mui/material";
+import IconButton  from "@mui/material/IconButton";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 export default function CopyToClipboardButton({ textToCopy }) {

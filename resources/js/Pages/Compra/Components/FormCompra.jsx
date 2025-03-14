@@ -1,36 +1,39 @@
 import React, { useState, useRef } from "react";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardActions,
-  Avatar,
-  Grid2,
-  Select,
-  MenuItem,
-  FormGroup,
-  FormControlLabel,
-  Switch, Typography
-} from "@mui/material";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
 import { useForm, router, usePage } from "@inertiajs/react";
+/* material ui */
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Avatar from "@mui/material/Avatar";
+import Grid2 from "@mui/material/Grid2";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+/* icons */
 import PersonIcon from "@mui/icons-material/Person";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import RequestPageIcon from "@mui/icons-material/RequestPage";
-import WhatsappButton from "./WhatsappButton";
-import InfoPago from "./InfoPago";
-import CameraInput from "./CamaraInput";
+/* custom */
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
 import MensajeError from "@/Components/MensajeError";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import TicketsSeleccionados from "./TicketsSeleccionados";
 import CompraConfirm from "./CompraConfirm";
 import CompraExito from "./CompraExito";
-import TicketsSeleccionados from "./TicketsSeleccionados";
-import { Backdrop, CircularProgress } from "@mui/material";
+import InfoPago from "./InfoPago";
+import CameraInput from "./CamaraInput";
+import WhatsappButton from "./WhatsappButton";
 
 export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
-  const idsTicketSel = ticketsSel.map((ticket) => ticket.id);
+  const idsTicketSel = ticketsSel.map((ticket) => ticket.nu_numero);
   const cameraInputRef = useRef(null);
   const props = usePage().props;
 
@@ -44,6 +47,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
     hasErrors,
     transform,
     clearErrors,
+    setError,
   } = useForm({
     nombre: "",
     codigo: 58,
@@ -62,11 +66,16 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
   const existenTickets = CantTickets > 0;
 
   var ticketsList = ticketsSel.map((ticket) => {
-    return String(ticket.nu_numero).padStart(3, "0")+" ";
+    return String(ticket.nu_numero).padStart(3, "0") + " ";
   });
 
   const textoWhatsapp =
-    "Compra de Ticket(s) " + ticketsList + " (" +  CantTickets + ")  Jugada " + jugada.id;
+    "Compra de Ticket(s) " +
+    ticketsList +
+    " (" +
+    CantTickets +
+    ")  Jugada " +
+    jugada.id;
 
   const confirm = (e) => {
     e.preventDefault();
@@ -97,13 +106,18 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
       preserveScroll: true,
       onSuccess: (page) => {
         console.log(page);
-        setShowSuccess(true);
+
+        if(page.props.success)
+        {
+          setShowSuccess(true);
+        }else{
+          setError('comprobante', 'Ocurrio un error al cargar la compra intente nuevamente.');
+        }
       },
     });
   };
 
   const handleCloseSuccess = () => {
-    console.log("handleCloseSuccess");
     setShowSuccess(false);
     reset();
     if (cameraInputRef.current) {
@@ -129,18 +143,21 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
     setData("comprobante", file);
   };
 
+  var HandleCloseError = () =>{
+    clearErrors()
+  }
+
   return (
     <>
-
-    {/* Mostrar Carga */}
-    {processing && (
-         <Backdrop
-         sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
-         open={processing}
-       >
-         <CircularProgress color="inherit" />
-       </Backdrop>
-    )}
+      {/* Mostrar Carga */}
+      {processing && (
+        <Backdrop
+          sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+          open={processing}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
 
       {/* Mostrar Confirmacion */}
       {showConfirm && (
@@ -158,7 +175,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
       {hasErrors && (
         <MensajeError
           open={hasErrors}
-          onClose={() => clearErrors()}
+          onClose={() => HandleCloseError}
           errors={errors}
         ></MensajeError>
       )}
@@ -185,9 +202,13 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
         <Card elevation={4} sx={{ borderRadius: 6 }} className="p-2">
           <CardHeader
             title={
-              <Typography variant="title" component="div" sx={{ fontWeight: 'bold' }}>
-              DATOS PERSONALES
-               </Typography>
+              <Typography
+                variant="title"
+                component="div"
+                sx={{ fontWeight: "bold" }}
+              >
+                DATOS PERSONALES
+              </Typography>
             }
             avatar={
               <Avatar sx={{ bgcolor: "#e62a3c" }}>
@@ -197,8 +218,13 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
           ></CardHeader>
           <CardContent>
             <Grid2 container spacing={2}>
-              <Grid2 item size={{ xs: 12, sm: 6 }}>
-                <InputLabel htmlFor="nombre" value="Nombre*" size="large" variant="filled" />
+              <Grid2 size={{ xs: 12, sm: 6 }}>
+                <InputLabel
+                  htmlFor="nombre"
+                  value="Nombre*"
+                  size="large"
+                  variant="filled"
+                />
 
                 <TextInput
                   id="nombre"
@@ -215,7 +241,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
               </Grid2>
 
               <Grid2 container size={{ xs: 12, md: 6 }}>
-                <Grid2 item size={4}>
+                <Grid2 size={4}>
                   <InputLabel htmlFor="codigo" value="Codigo*" />
 
                   <Select
@@ -223,7 +249,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                     value={58}
                     label="Codigo"
                     className="w-full"
-                    sx={{ fontSize: '0.9rem'}}
+                    sx={{ fontSize: "0.9rem" }}
                     onChange={(e) => setData("codigo", e.target.value)}
                   >
                     <MenuItem value={58}>+58 Ven</MenuItem>
@@ -233,7 +259,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
                   <InputError className="mt-2" message={errors.codigo} />
                 </Grid2>
-                <Grid2 item size={8}>
+                <Grid2 size={8}>
                   <InputLabel htmlFor="celular" value="Celular*" />
 
                   <TextInput
@@ -257,9 +283,13 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
           <CardHeader
             title={
-              <Typography variant="title" component="div" sx={{ fontWeight: 'bold' }}>
-              METODO DE PAGO
-               </Typography>
+              <Typography
+                variant="title"
+                component="div"
+                sx={{ fontWeight: "bold" }}
+              >
+                METODO DE PAGO
+              </Typography>
             }
             avatar={
               <Avatar sx={{ bgcolor: "#e62a3c" }}>
@@ -273,11 +303,15 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
           </CardContent>
 
           <CardHeader
-          title={
-            <Typography variant="title" component="div" sx={{ fontWeight: 'bold' }}>
-            COMPROBANTE
-             </Typography>
-          }
+            title={
+              <Typography
+                variant="title"
+                component="div"
+                sx={{ fontWeight: "bold" }}
+              >
+                COMPROBANTE
+              </Typography>
+            }
             avatar={
               <Avatar sx={{ bgcolor: "#e62a3c" }}>
                 <RequestPageIcon></RequestPageIcon>
@@ -316,7 +350,9 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
           <CardActions>
             <div className="flex items-center gap-4">
-              <PrimaryButton className="text-lg" disabled={processing} >Comprar</PrimaryButton>
+              <PrimaryButton className="text-lg" disabled={processing}>
+                Comprar
+              </PrimaryButton>
             </div>
           </CardActions>
         </Card>

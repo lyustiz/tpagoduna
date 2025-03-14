@@ -1,5 +1,7 @@
 import React from "react";
-import { Snackbar, Fade, Alert } from "@mui/material";
+import Snackbar from '@mui/material/Snackbar';
+import Fade from '@mui/material/Fade';
+import Alert from '@mui/material/Alert';
 
 export default function MensajeExito({ open, onClose, mensaje }) {
   return (

@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import SettingsIcon from '@mui/icons-material/Settings';
 
 

@@ -1,8 +1,25 @@
 import React from 'react';
-import { Snackbar, Fade, Alert } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import Fade from '@mui/material/Fade';
+import Alert from '@mui/material/Alert';
 
 export default function MensajeError({ open, onClose, errors }) {
   console.log(errors);
+
+  const getErrorMessage = (error) => {
+    if (typeof error === 'object') {
+      return JSON.stringify(error);
+    }
+    return error;
+  };
+
+  const getValidaciones = (errors) => {
+    if (!errors.warning && !errors.error) {
+      return Object.values(errors).join(', ');
+    }
+    return null;
+  };
+
   return (
     <Snackbar
       open={open}
@@ -16,7 +33,7 @@ export default function MensajeError({ open, onClose, errors }) {
         variant='filled'
         sx={{ width: '100%' }}
       >
-        {errors.error || errors.warning}
+        {getErrorMessage(errors.error) || getErrorMessage(errors.warning) || getValidaciones(errors) }
       </Alert>
     </Snackbar>
   );

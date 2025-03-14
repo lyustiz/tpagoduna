@@ -59,6 +59,7 @@ class CompraController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validator = Validator::make($request->all(), [
             'idJugada' => 'required|integer',
             'nombre' => 'required|string',
@@ -66,6 +67,16 @@ class CompraController extends Controller
             'celular' => 'required|numeric',
             'tickets' => 'required|array',
             'whatsapp' => 'nullable|boolean'
+        ], [
+            'idJugada.required' => 'El juego es invalido intente nuevamente.',
+            'idJugada.integer' => 'El juego es invalido intente nuevamente.',
+            'celular.required' => 'El campo celular es obligatorio.',
+            'celular.numeric' => 'El campo celular debe ser solo números.',
+            'tickets.required' => 'Los tickets son obligatorios.',
+            'tickets.array' => 'Tickets invalidos.',
+            'whatsapp.boolean' => 'El campo whatsapp invalidos',
+            'comprobante.required' => 'El comprobante es obligatorio.',
+            'comprobante.file' => 'El archivo del comprobante es inválido, intente nuevamente.'
         ]);
         
         $validator->sometimes('comprobante', 'required|file', function ($input) {
@@ -80,17 +91,24 @@ class CompraController extends Controller
 
         $totalventa = count($request->tickets) * $jugada->mo_valor_ticket;
 
-        $tickets = Ticket::whereIn('id', $request->tickets)->get();
+        $tickets = Ticket::where('id_jugada', $jugada->id)
+                 ->whereIn('nu_numero', $request->tickets)->get();
 
-        if ($tickets->contains('id_estado', self::RESERVADO)) {
+        $TicketsReservados = $tickets->where('id_estado', self::RESERVADO);
+
+        if ($TicketsReservados->isNotEmpty()) {
+            $reservedNumbers = $TicketsReservados->pluck('nu_numero')->implode(', ');
             return redirect()->back()->withErrors([
-                'warning' => 'Existen cartones Reservados'
+                'warning' => 'Existen tickets Reservados: ' . $reservedNumbers
             ]);
         }
 
-        if ($tickets->contains('id_estado', self::VENDIDO)) {
-            return redirect()->back()->with([
-                'warning' => 'Existen cartones Vendidos'
+        $TicketsVendidos = $tickets->where('id_estado', self::VENDIDO);
+
+        if ($TicketsVendidos->isNotEmpty()) {
+            $NumerosVendidos = $TicketsVendidos->pluck('nu_numero')->implode(', ');
+            return redirect()->back()->withErrors([
+                'warning' => 'Existen tickets Vendidos: ' . $NumerosVendidos
             ]);
         }
 
@@ -105,7 +123,6 @@ class CompraController extends Controller
                 $storage    = $tipoArchivo->tx_storage;
                 $fileName   = implode("-", $request->tickets);
                 $folder     = str_pad($request->idJugada, 3, "0", STR_PAD_LEFT);
-
 
                 try {
                     $file = ArchivoTrait::writeFile($fileSource, $storage, $fileName, $folder);
@@ -158,6 +175,8 @@ class CompraController extends Controller
 
             DB::commit();
 
+            //dd($venta, $ventasTiket);
+
             return redirect()->back()->with(
                 key: [
                     'venta' => $venta,
@@ -167,7 +186,6 @@ class CompraController extends Controller
             );
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
             return redirect()->back()->withErrors([
                 'error' => $e->getMessage()
             ]);

@@ -1,14 +1,12 @@
 import * as React from "react";
-import {
-  Avatar,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Grid2,
-  Card,
-  CardHeader,
-  CardContent,
-} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Grid2 from "@mui/material/Grid2";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
@@ -36,7 +34,7 @@ export default function InfoPago() {
                 }
               >
                 <ListItemIcon>
-                  <PhoneAndroidIcon color="error"/>
+                  <PhoneAndroidIcon color="error" />
                 </ListItemIcon>
                 <ListItemText primary="04129396107" secondary="telefono" />
               </ListItem>

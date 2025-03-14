@@ -1,8 +1,9 @@
 import { useState, memo } from "react";
-import { Chip, Tooltip } from "@mui/material";
+import  Chip from "@mui/material/Chip";
+import  Tooltip from "@mui/material/Tooltip";
 
 const TicketItem = memo(({ ticketsSel, ticket, onAddTicket, onRemoveTicket }) => {
-  const isSelected = ticketsSel.some((t) => t.id === ticket.id);
+  const isSelected = ticketsSel.some((t) => t.nu_numero === ticket.nu_numero);
 
   const estados = {
     3: { color: "#2e7d32", label: "Disponible", active: true , "code" : '#2e7d32'},

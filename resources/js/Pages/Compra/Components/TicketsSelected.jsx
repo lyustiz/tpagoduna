@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Chip } from "@mui/material";
+import  Chip  from "@mui/material/Chip";
 import React from "react";
 
 const MemoizedChip = React.memo(({ ticket, onDelete }) => (

@@ -2,7 +2,7 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { IconButton } from "@mui/material";
+import  IconButton  from "@mui/material/IconButton";
 
 export default function MenuCompra() {
   const [anchorEl, setAnchorEl] = React.useState(null);

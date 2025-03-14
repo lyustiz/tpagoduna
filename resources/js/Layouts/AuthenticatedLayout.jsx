@@ -97,11 +97,11 @@ export default function AuthenticatedLayout({ header, title, children }) {
       authentication={authentication}
     >
       <DashboardLayout defaultSidebarCollapsed > 
-      <Paper sx={{ width: '100%' }}>
+      
       <PageContainer title={title}>
           {children}
       </PageContainer>
-      </Paper>
+
       </DashboardLayout>
     </AppProvider>
     </>

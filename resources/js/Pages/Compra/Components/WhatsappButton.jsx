@@ -1,5 +1,5 @@
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { Button } from "@mui/material";
+import  Button from "@mui/material/Button";
 
 export default function WhatsappButton({loading, celular, texto, label }) {
 
