@@ -1,12 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
-import { useRef } from 'react';
 
 export default function Create() {
 
@@ -33,13 +31,9 @@ export default function Create() {
 
   return (
     <AuthenticatedLayout
-      header={
-        <h2 className="text-xl font-semibold leading-tight text-gray-800">
-          Nueva Configuracion
-        </h2>
-      }
+      title={"Nueva Configuracion"}
+      header={"Nueva Configuracion"}
     >
-      <Head title={"Nueva Configuracion"} />
 
       <div className="mb-4 overflow-hidden bg-white shadow-sm sm:rounded-lg">
         <div className="p-6 text-gray-900 flex gap-8">

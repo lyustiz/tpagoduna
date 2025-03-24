@@ -1,5 +1,7 @@
 function formatDateTime(dateString) {
-    return new Date(dateString).toLocaleString("es-US", {
+    const date = new Date(dateString);
+    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+    return utcDate.toLocaleString("es-US", {
       month: "2-digit",
       day: "2-digit",
       year: "numeric",
@@ -10,7 +12,9 @@ function formatDateTime(dateString) {
   }
 
   function formatDate(dateString) {
-    return new Date(dateString).toLocaleString("es-US", {
+    const date = new Date(dateString);
+    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+    return utcDate.toLocaleString("es-US", {
       month: "2-digit",
       day: "2-digit",
       year: "numeric",

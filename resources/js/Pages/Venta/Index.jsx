@@ -1,5 +1,6 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, router, useForm } from "@inertiajs/react";
+import React from "react";
+import { useState } from "react";
+import { router, useForm } from "@inertiajs/react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,21 +11,22 @@ import Paper from "@mui/material/Paper";
 import EstadoVenta from "@/Pages/Venta/Components/EstadoVenta";
 import ImageZoom from "@/Pages/Venta/Components/ImageZoom";
 import UploadComprobante from "./Components/UploadComprobante";
-import ActionButtons from "./Components/ActionButtons";
 import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
-import { useState } from "react";
-import React from "react";
 import MensajeError from "@/Components/MensajeError";
 import MensajeExito from "@/Components/MensajeExito";
-import { Pagination, Typography } from "@mui/material";
+import Pagination from "@mui/material/Pagination";
+import Typography from "@mui/material/Typography";
 import FormConfirm from "./Components/FormConfirm";
 import FormCancel from "./Components/FormCancel";
 import FormControl from "@mui/material/FormControl";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Grid2 from "@mui/material/Grid2";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import ActionButtons from "./Components/ActionButtons";
 import { formatDate, formatDateTime } from "../../utils/formatData";
 
 export default function Index({

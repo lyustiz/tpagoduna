@@ -10,6 +10,7 @@ import TikcetCounter from "./Components/TickeCounter";
 import FormCompra from "./Components/FormCompra";
 import WhatsappButton from "./Components/WhatsappButton";
 import MenuCompra from "./Components/MenuCompra";
+import {formatDate} from "../../utils/formatData"
 
 export default function Index({ jugada }) {
   const [ticketsSel, setTickets] = useState([]);
@@ -61,13 +62,13 @@ export default function Index({ jugada }) {
           square={false}
         >
           <Container fixed className="text-center p-8">
-            <h2 className="text-2xl text-amber-400 font-extrabold">
-              Lista de Tickets - Juego {jugada.id.toString().padStart(2, "0")}
+            <h2 className="text-3xl text-red-400 font-extrabold">
+              Lista de Tickets - Juego {jugada.id.toString().padStart(2, "0")} - Fecha {formatDate(jugada.fe_fecha)}
             </h2>
 
             <h2 className="text-xl text-red-400 font-extrabold">
-              Valor Ticket ${jugada.mo_valor_ticket} Bs.{" "}
-              {jugada.mo_valor_ticket * jugada.mo_valor_divisa}
+              Valor Ticket {jugada.mo_valor_ticket}$ {" "}
+              {jugada.mo_valor_ticket * jugada.mo_valor_divisa}Bs.
             </h2>
 
             <Grid2 container spacing={1} alignItems={"center"} justifyContent={"center"}>

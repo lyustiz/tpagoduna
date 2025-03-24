@@ -15,7 +15,7 @@ export default function TicketCounter({ cantidad, jugada }) {
         Ticket Seleccionados:  {cantidad}
         </h2>
         <p>
-           Total: $ {total}  Bs.{totalBolivares}
+           Total:  {total}$  {totalBolivares}Bs.
         </p>
       </CardContent>
       </Card>

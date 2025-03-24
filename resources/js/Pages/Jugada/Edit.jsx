@@ -15,7 +15,6 @@ export default function Edit({jugada}) {
        processing,
        errors,
        patch,
-       recentlySuccessful,
   } = useForm({
     'fe_fecha': jugada.fe_fecha,
     'nu_tickets': jugada.nu_tickets,
@@ -53,6 +52,8 @@ export default function Edit({jugada}) {
 
             
             <div>
+            {data.fe_fecha}
+
               <InputLabel htmlFor="fecha" value="Fecha" />
               <TextInput
                 id="fecha"

@@ -22,6 +22,7 @@ import EstadoJugada from "@/Pages/Jugada/Components/EstadoJugada";
 import AccionJugada from "@/Pages/Jugada/Components/AccionJugada";
 import FormAccionesJugada from "@/Pages/Jugada/Components/FormAccionesJugada";
 import Grid2 from "@mui/material/Grid2";
+import {formatDate} from "../../utils/formatData"
 
 export default function Index({ jugadas }) {
   console.log(jugadas);
@@ -131,7 +132,7 @@ export default function Index({ jugadas }) {
                   >
                     <TableCell align="center">{jugada.id}</TableCell>
                     <TableCell align="center">
-                      {new Date(jugada.fe_fecha).toLocaleDateString("es-ES")}
+                      {formatDate(jugada.fe_fecha)}
                     </TableCell>
                     <TableCell align="center">{jugada.nu_tickets}</TableCell>
                     <TableCell align="center">

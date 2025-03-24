@@ -1,12 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
-import { useRef } from 'react';
 
 export default function Edit({configuracion}) {
 
@@ -32,14 +30,9 @@ export default function Edit({configuracion}) {
 
   return (
     <AuthenticatedLayout
-      header={
-        <h2 className="text-xl font-semibold leading-tight text-gray-800">
-          Editar Configuracion  <b>{configuracion.referencia}</b> 
-        </h2>
-      }
+      title={"Editar Configuracion " +  configuracion.referencia}
+      header={"Editar Configuracion " +  configuracion.referencia}
     >
-      <Head title={"Editar Configuracion " +  configuracion.referencia} />
-
       <div className="mb-4 overflow-hidden bg-white shadow-sm sm:rounded-lg">
         <div className="p-6 text-gray-900 flex gap-8">
           

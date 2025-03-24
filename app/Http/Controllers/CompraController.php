@@ -7,11 +7,14 @@ use Inertia\Inertia;
 use App\Models\Jugada;
 use App\Models\TipoArchivo;
 use App\Http\Controllers\Traits\ArchivoTrait;
+use App\Mail\NotificacionVenta;
 use App\Models\Ticket;
 use App\Models\Venta;
 use App\Models\VentaTicket;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 class CompraController extends Controller
 {
     use ArchivoTrait;
@@ -175,7 +178,12 @@ class CompraController extends Controller
 
             DB::commit();
 
-            //dd($venta, $ventasTiket);
+            try {
+                $MailTo = env('MAIL_DESTINO', 'lyustiz@gmail.com');
+                Mail::to($MailTo)->send(new NotificacionVenta($venta));
+            } catch (\Exception $e) {
+                Log::error('Error al enviar el correo: ' . $e->getMessage());
+            }
 
             return redirect()->back()->with(
                 key: [
@@ -184,6 +192,7 @@ class CompraController extends Controller
                     'success' => 'Registro actualizado correctamente.',
                 ]
             );
+
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors([

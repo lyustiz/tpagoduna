@@ -6,7 +6,6 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
-import { useRef } from 'react';
 
 export default function Create() {
 
@@ -33,11 +32,8 @@ export default function Create() {
 
   return (
     <AuthenticatedLayout
-      header={
-        <h2 className="text-xl font-semibold leading-tight text-gray-800">
-          Nueva Configuracion
-        </h2>
-      }
+      title={"Nueva Configuracion"}
+      header={"Nueva Configuracion"}
     >
       <Head title={"Nueva Configuracion"} />
 
