@@ -5,9 +5,9 @@ import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import { createTheme } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CasinoIcon from '@mui/icons-material/Casino';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import { PageContainer } from '@toolpad/core/PageContainer';
 
 export default function AuthenticatedLayout({ header, title, children }) {
@@ -35,8 +35,12 @@ export default function AuthenticatedLayout({ header, title, children }) {
       title: "Venta",
       icon: <PaymentsIcon />,
     },
-    
-   
+    {
+      segment: "ticket",
+      title: "Tickets",
+      icon: <ConfirmationNumberIcon />,
+    },
+  
     {
       kind: "divider",
     },

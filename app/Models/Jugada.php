@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jugada extends Model
 {
+
+    public const ACTIVO = 1;
+    public const INACTIVO = 2;
+    public const CERRADO = 7;
+
     protected $fillable   = [
         'fe_fecha',
         'nu_tickets',
@@ -26,7 +31,7 @@ class Jugada extends Model
 
     public function scopeActivo($query)
     {
-        return $query->where('id_estado', 1);
+        return $query->where('id_estado', $this::ACTIVO);
     }
 
     public function estado()

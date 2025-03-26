@@ -6,6 +6,7 @@ use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\JugadaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\TicketController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -61,7 +62,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/jugada/{id}/desactivar', [JugadaController::class, 'desactivar'])->name('jugada.desactivar');
         Route::post('/jugada/{id}/cerrar', [JugadaController::class, 'cerrar'])->name('jugada.cerrar');
 
-        
+        Route::resource('/ticket',  TicketController::class)->only(['index', 'show']);
         //
     });
 });
