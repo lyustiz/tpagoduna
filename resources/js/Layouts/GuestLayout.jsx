@@ -1,6 +1,6 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import { Link } from "@inertiajs/react";
-import { Card, Paper } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from '@mui/material/styles';
 

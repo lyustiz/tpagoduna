@@ -1,13 +1,7 @@
-import CreateIcon from "@mui/icons-material/Create";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
 import {Link} from "@inertiajs/react";
 import ConfiguracionAction from "./ConfiguracionActions";
 
 export default function ConfiguracionItem({ configuracion }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const ToggleRead = () => {setIsExpanded(!isExpanded)};
 
   return (
     <div className="mb-4 overflow-hidden bg-white shadow-sm sm:rounded-lg">

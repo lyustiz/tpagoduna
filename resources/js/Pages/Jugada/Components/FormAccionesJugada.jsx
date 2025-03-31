@@ -1,16 +1,15 @@
 import { router, useForm } from "@inertiajs/react";
 import { useState } from "react";
 
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Button,
-  Typography,
-  Backdrop,
-  CircularProgress,
-} from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import MensajeError from "@/Components/MensajeError";
 import MensajeExito from "@/Components/MensajeExito";
 

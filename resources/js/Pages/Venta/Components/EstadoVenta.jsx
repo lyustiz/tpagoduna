@@ -1,4 +1,4 @@
-import { Chip } from "@mui/material";
+import Chip from "@mui/material/Chip";
 
 const EstadoVenta = ({ id_estado }) => {
     const getEstado = (id_estado) => {

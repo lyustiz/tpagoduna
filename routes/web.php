@@ -20,9 +20,8 @@ use Inertia\Inertia;
     ]);
 });*/
 
-Route::redirect("/", "/welcome");
 
-Route::get('/welcome', function () {
+Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('welcome');
 

@@ -1,9 +1,9 @@
+import { useForm } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { useForm } from "@inertiajs/react";
 import Button from "@mui/material/Button";
 export default function Create() {
   const { data, setData, processing, errors, post } =

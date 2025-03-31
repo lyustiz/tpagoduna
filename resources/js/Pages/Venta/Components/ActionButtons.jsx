@@ -1,8 +1,8 @@
 import React from 'react';
+import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Typography from '@mui/material/Typography';
 
 export default function ActionButtons({ onConfirm, onEdit, onCancel, venta }) {
   

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { router, useForm, usePage } from "@inertiajs/react";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Button,
-  Typography,
-  Grid2,
-  Backdrop,
-  CircularProgress,
-} from "@mui/material";
+import React, { useState } from "react";
+import { router, useForm } from "@inertiajs/react";
+
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Grid2 from "@mui/material/Grid2";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
+
 import MensajeError from "@/Components/MensajeError";
 import MensajeExito from "@/Components/MensajeExito";
 import InputLabel from "@/Components/InputLabel";

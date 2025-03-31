@@ -1,24 +1,20 @@
 import React from "react";
-import { useState, useEffect } from "react"; // Import useEffect
+import { useState, useEffect } from "react"; 
 import { router, useForm } from "@inertiajs/react";
 import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
 import MensajeError from "@/Components/MensajeError";
-import MensajeExito from "@/Components/MensajeExito";
-import Typography from "@mui/material/Typography";
-import ToggleButton from "@mui/material/ToggleButton";
-import FormControl from "@mui/material/FormControl";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Grid2 from "@mui/material/Grid2";
-import TextField from "@mui/material/TextField"; // Import TextField
+import TextField from "@mui/material/TextField"; 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { formatDate, formatDateTime } from "../../utils/formatData";
+import { formatDate } from "../../utils/formatData";
 import TicketItemList from "./Components/TicketItemList";
 import InputAdornment from '@mui/material/InputAdornment';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export default function Index({ jugadas, id_jugada, tickets }) {
   console.log(jugadas, id_jugada, tickets);

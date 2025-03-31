@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import { formatDate, formatDateTime } from "../../../utils/formatData";
+import { formatDateTime } from "../../../utils/formatData";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 
 const TicketItemList = memo(({ ticket }) => {
@@ -103,7 +103,7 @@ const TicketItemList = memo(({ ticket }) => {
             { ' ' }
              Ticket {ticket.nu_numero.toString().padStart(3, "0")}
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <div id="modal-modal-description" sx={{ mt: 2 }}>
             { ((estado.label == "Vendido" || estado.label == "Reservado") ) ? (
               <>
                 <div>
@@ -123,7 +123,7 @@ const TicketItemList = memo(({ ticket }) => {
             ) : (
               <div> <b>Estado:</b> {estado.label}</div>
             )}
-          </Typography>
+          </div>
         </Box>
       </Modal>
     </>

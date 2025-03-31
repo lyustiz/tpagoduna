@@ -66,6 +66,10 @@ export default function Index({ jugada }) {
               Lista de Tickets - Juego {jugada.id.toString().padStart(2, "0")} - Fecha {formatDate(jugada.fe_fecha)}
             </h2>
 
+            <h2 className="text-xl font-extrabold mb-1">
+            Y Recuerda: "<span className="text-red-500 underline">Tu número participa en 18 sorteos diferentes el mismo dia.</span>"
+            </h2>
+
             <h2 className="text-xl text-red-400 font-extrabold">
               Valor Ticket {jugada.mo_valor_ticket}$ {" "}
               {jugada.mo_valor_ticket * jugada.mo_valor_divisa}Bs.

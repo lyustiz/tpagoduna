@@ -150,7 +150,7 @@ export default function Welcome({ auth }) {
                 src="https://www.youtube.com/embed/m0xByHVRfa4?rel=0"
                 title="Explicación Como jugar en TEPAGODEUNA"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
+                referrerPolicy="strict-origin-when-cross-origin"
               ></iframe>
             </div>
           </section>

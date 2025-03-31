@@ -228,6 +228,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
                 <TextInput
                   id="nombre"
+                  name="nombre"
                   className="mt-1 mb-3 block w-full"
                   value={data.nombre}
                   onChange={(e) => setData("nombre", e.target.value)}
@@ -245,6 +246,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
                   <InputLabel htmlFor="codigo" value="Codigo*" />
 
                   <Select
+                    name="codigo"
                     labelId="codigo"
                     value={58}
                     label="Codigo"
@@ -264,6 +266,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
                   <TextInput
                     id="celular"
+                    name="celular"
                     type="number"
                     className="mt-1 mb-3 block w-full"
                     value={data.celular}
@@ -324,7 +327,8 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
               <FormControlLabel
                 control={
                   <Switch
-                    id="celular"
+                    id="whatsapp"
+                    name="whatsapp"
                     checked={data.whatsapp}
                     color="success"
                     onChange={(e) => handleWhatsapp(e.target.checked)}
