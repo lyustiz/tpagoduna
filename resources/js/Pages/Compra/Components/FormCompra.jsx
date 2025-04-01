@@ -15,6 +15,7 @@ import Switch from "@mui/material/Switch";
 import Typography from "@mui/material/Typography";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 /* icons */
 import PersonIcon from "@mui/icons-material/Person";
 import PaymentsIcon from "@mui/icons-material/Payments";
@@ -109,6 +110,11 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
         if(page.props.success)
         {
+          try {
+            fbq('track', 'Purchase', {currency: "USD", value: CantTickets*jugada.mo_valor_divisa});
+          } catch (error) {
+            console.log("Error al enviar evento de compra a Facebook Pixel", error);
+          }
           setShowSuccess(true);
         }else{
           setError('comprobante', 'Ocurrio un error al cargar la compra intente nuevamente.');
@@ -339,11 +345,19 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
             </FormGroup>
 
             {data.whatsapp ? (
+              <>
               <WhatsappButton
                 celular="+584129396107"
                 texto={textoWhatsapp}
                 loading={processing}
               />
+
+            <Alert severity="warning" className="mt-2 mb-2">
+              <Typography color="error" variant="body2">
+              <b>Paso final:</b> Una vez enviado tu mensaje por WhatsApp, por favor, haz clic en el botón <b>"Comprar"</b>  para que podamos procesar tu compra.
+              </Typography>
+            </Alert>
+            </>
             ) : (
               <CameraInput
                 ref={cameraInputRef}
@@ -354,7 +368,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
 
           <CardActions>
             <div className="flex items-center gap-4">
-              <PrimaryButton className="text-lg" disabled={processing}>
+              <PrimaryButton id="btnComprar" className="text-lg" disabled={processing}>
                 Comprar
               </PrimaryButton>
             </div>

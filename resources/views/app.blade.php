@@ -4,7 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="author" content="Mauricio Tellez">
+    <meta name="keywords" content="lotería, comprar lotería, resultados lotería, premios lotería, jjugar loteria, ganar lotería, sorteos, TePagodeUna">
+    <meta name="description" content="Con solo 2$ puedes ganar hasta 700$ en premios en 16 sorteos diarios. ¡Más sorteos, más oportunidades de ganar! ¿Qué esperas? Dale a COMPRAR y participa, porque aquí no esperas... ¡Aquí te pago de una!">
+    <meta name="robots" content="index, follow">
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
     @routes
@@ -37,7 +40,7 @@
     </script>
     <noscript><img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=1577126926269609&ev=PageView&noscript=1" /></noscript>
-     End Meta Pixel Code -->
+    --><!-- End Meta Pixel Code -->
 
 
 

@@ -177,7 +177,7 @@ export default function Welcome({ auth }) {
 
             <div className="flex flex-wrap bg-white justify-center gap-4 p-4 md:p-8 rounded-xl shadow-lg">
               <p className="text-xl mb-4 w-full text-center">
-                Con solo 2$ puedes ganar hasta 700$ en premios en 18 sorteos
+                Con solo 2$ puedes ganar hasta 700$ en premios en 16 sorteos
                 diarios:
               </p>
               <Card
@@ -436,8 +436,8 @@ export default function Welcome({ auth }) {
                     <EmailIcon color="info"></EmailIcon>
                   </span>
                   {"  "}Correo:{"  "}
-                  <a href="mailto:tepagodeuna@tepagodeuna.com" target="_blank">
-                    tepagodeuna@tepagodeuna.com
+                  <a href="mailto:tepagodeuna@tpagodeuna.com" target="_blank">
+                    tepagodeuna@tpagodeuna.com
                   </a>
                 </p>
                 <p className="py-1">

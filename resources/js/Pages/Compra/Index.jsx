@@ -9,6 +9,7 @@ import TicketsSelected from "./Components/TicketsSelected";
 import TikcetCounter from "./Components/TickeCounter";
 import FormCompra from "./Components/FormCompra";
 import WhatsappButton from "./Components/WhatsappButton";
+import WhatsappButtonGroup from "./Components/WhatsappButtonGroup";
 import MenuCompra from "./Components/MenuCompra";
 import {formatDate} from "../../utils/formatData"
 
@@ -67,7 +68,7 @@ export default function Index({ jugada }) {
             </h2>
 
             <h2 className="text-xl font-extrabold mb-1">
-            Y Recuerda: "<span className="text-red-500 underline">Tu número participa en 18 sorteos diferentes el mismo dia.</span>"
+            Y Recuerda: "<span className="text-red-500 underline">Tu número participa en 16 sorteos diferentes el mismo dia.</span>"
             </h2>
 
             <h2 className="text-xl text-red-400 font-extrabold">
@@ -77,11 +78,11 @@ export default function Index({ jugada }) {
 
             <Grid2 container spacing={1} alignItems={"center"} justifyContent={"center"}>
               <Grid2>
-                <WhatsappButton
-                            celular="+584129396107"
-                            texto={'Solicito Informacion de '}
-                            label={'Solicitar Informacion'}
-                          />
+                <WhatsappButtonGroup
+                  codigoGrupo="HsrOip4gnJIIqfvjzTbGQf"
+                  texto={'Solicito Informacion de '}
+                  label={'Solicitar Informacion'}
+                />
               </Grid2>
               <Grid2>
               <MenuCompra></MenuCompra>
