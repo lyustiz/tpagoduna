@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Jugada;
-use App\Models\TipoArchivo;
 use App\Http\Controllers\Traits\ArchivoTrait;
 use App\Mail\NotificacionVenta;
 use App\Models\Ticket;
@@ -121,19 +120,16 @@ class CompraController extends Controller
 
             if (!$request->whatsapp) {
 
-                $tipoArchivo = TipoArchivo::where('id', 1)->first();
-                $fileSource = $request->file(key: 'comprobante');
-                $storage    = $tipoArchivo->tx_storage;
-                $fileName   = implode("-", $request->tickets);
-                $folder     = str_pad($request->idJugada, 3, "0", STR_PAD_LEFT);
+                $resp =   ArchivoTrait::UploadComprobante($request, $request->idJugada, $request->tickets);
 
-                try {
-                    $file = ArchivoTrait::writeFile($fileSource, $storage, $fileName, $folder);
-                } catch (\Exception $e) {
+                if ($resp->ok) {
+                    $file = $resp->file;
+                } else {
                     return redirect()->back()->withErrors([
-                        'error' => 'Error al subir el comprobante intente nuevamente'
+                        'error' => $resp->error
                     ]);
                 }
+
             } else {
                 $file = '';
             }

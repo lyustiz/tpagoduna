@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Modal from "@mui/material/Modal";
+import DeleteComprobanteButton from "./DeleteComprobanteButton";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -15,7 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
   "&:hover": {
     transform: "scale(4.5)",
   },
-  cursor: "pointer"
+  cursor: "pointer",
 }));
 
 const ModalContent = styled("div")({
@@ -35,7 +36,7 @@ const ModalContent = styled("div")({
   overflow: "hidden", // Para evitar que la imagen se salga del modal
 });
 
-export default function ImageZoom({ src, alt }) {
+export default function ImageZoom({ src, alt, venta }) {
   const [open, setOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
 
@@ -50,23 +51,23 @@ export default function ImageZoom({ src, alt }) {
     <div>
       <Item elevation={0} onClick={() => handleOpen("tu-imagen.jpg")}>
         {" "}
-        {/* <-- Añadido onClick */}
-        
-        {
-         src ? 
-        <img
-          src={src}
-          alt={alt}
-          style={{ width: "100%", height: "100%", objectFit: "contain" }}
-        />
-        : "Sin " + alt }
+        {src ? (
+          <img
+            src={src}
+            alt={alt}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          />
+        ) : (
+          "Sin " + alt
+        )}
       </Item>
 
       <Modal open={open} onClose={handleClose}>
         <ModalContent>
+        <DeleteComprobanteButton venta={venta} onClose={handleClose} />
           <img
             src={src}
-            alt="Imagen grande"
+            alt="Comprobante"
             style={{
               maxWidth: "100%",
               maxHeight: "100%",

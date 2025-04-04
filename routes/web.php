@@ -28,10 +28,10 @@ Route::get('/', function () {
 Route::resource('/compra',  CompraController::class)
         ->only(['index', 'store']);
 
-
+/*
 Route::get('/loteria', function () {
     return Inertia::render('Loteria');
-})->name('loteria');
+})->name('loteria');*/
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -55,6 +55,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
         Route::post('/ventas/{id}/confirm', [VentaController::class, 'confirm'])->name('ventas.confirm');
         Route::post('/ventas/{id}/cancel', [VentaController::class, 'cancel'])->name('ventas.cancel');
+        Route::post('/ventas/{id}/comprobante', [VentaController::class, 'comprobante'])->name('ventas.comprobante');
+        Route::post('/ventas/{id}/eliminarcomprobante', [VentaController::class, 'eliminarComprobante'])->name('ventas.eliminarcomprobante');
+        Route::post('/ventas/{id}/desconfirmar', [VentaController::class, 'desconfirmar'])->name('ventas.desconfirmar');
+        Route::post('/ventas/{id}/reactivar', [VentaController::class, 'reactivar'])->name('ventas.reactivar');
 
         Route::resource('/jugada',  JugadaController::class)->only(['index', 'create', 'store', 'edit', 'update']);;
         Route::post('/jugada/{id}/activar', [JugadaController::class, 'activar'])->name('jugada.activar');

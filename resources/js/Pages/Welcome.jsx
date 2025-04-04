@@ -446,10 +446,10 @@ export default function Welcome({ auth }) {
                   </span>
                   {"  "}WhatsApp:{"  "}
                   <a
-                    href="https://wa.me/+584129396107?text= solicitar informacion:"
+                    href="https://wa.me/+584243424885?text= solicitar informacion:"
                     target="_blank"
                   >
-                    04129396107
+                    04243424885
                   </a>
                 </p>
                 <p className="py-1">

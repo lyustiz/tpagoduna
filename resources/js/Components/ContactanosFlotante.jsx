@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 export default function ConstactanosFlotante() {
-  const whatsappNumber = "+584129396107";
+  const whatsappNumber = "+584243424885";
   const whatsappLink = `https://wa.me/${whatsappNumber.replace("+", "")}`;
 
   return (

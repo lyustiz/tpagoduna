@@ -3,8 +3,10 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
+import NextPlanIcon from '@mui/icons-material/NextPlan';
 
-export default function ActionButtons({ onConfirm, onEdit, onCancel, venta }) {
+export default function ActionButtons({ onConfirm, onEdit, onCancel, onDesconfirmar, onReactivar, venta }) {
   
   const isReservada = venta.id_estado == 4;
   const isVendida = venta.id_estado == 5;
@@ -14,15 +16,25 @@ export default function ActionButtons({ onConfirm, onEdit, onCancel, venta }) {
    <>
 
     {isVendida && (
-      <Typography variant="body2" className="p-2" gutterBottom>
+      <>
+      <Typography variant="body2" className="m-0" gutterBottom>
       <strong>Ref:</strong> {venta.tx_referencia}
       </Typography>
+      <IconButton aria-label="deconfirmar" color="warning" onClick={() => onDesconfirmar(venta)}>
+        <ReplayCircleFilledIcon fontSize="small"   />
+      </IconButton>
+      </>
     )}
 
     {isCancelada && (
-      <Typography variant="body2" className="p-2" gutterBottom>
+      <>
+      <Typography variant="body2" className="p-0" gutterBottom>
        {venta.tx_observaciones}
       </Typography>
+      <IconButton aria-label="reactivar" color="info" onClick={() => onReactivar(venta)}>
+        <NextPlanIcon fontSize="small"   />
+      </IconButton>
+      </>
     )}
 
     {isReservada && (

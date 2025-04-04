@@ -347,7 +347,7 @@ export default function FormCompra({ jugada, ticketsSel, onFinVenta }) {
             {data.whatsapp ? (
               <>
               <WhatsappButton
-                celular="+584129396107"
+                celular="+584243424885"
                 texto={textoWhatsapp}
                 loading={processing}
               />

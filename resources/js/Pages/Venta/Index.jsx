@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { router, useForm } from "@inertiajs/react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,26 +9,27 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import EstadoVenta from "@/Pages/Venta/Components/EstadoVenta";
-import ImageZoom from "@/Pages/Venta/Components/ImageZoom";
-import UploadComprobante from "./Components/UploadComprobante";
 import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
-import MensajeError from "@/Components/MensajeError";
-import MensajeExito from "@/Components/MensajeExito";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
-import FormConfirm from "./Components/FormConfirm";
-import FormCancel from "./Components/FormCancel";
 import FormControl from "@mui/material/FormControl";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Grid2 from "@mui/material/Grid2";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import ActionButtons from "./Components/ActionButtons";
 import { formatDate, formatDateTime } from "../../utils/formatData";
+import MensajeExito from "@/Components/MensajeExito";
+import MensajeError from "@/Components/MensajeError";
+import UploadComprobante from "./Components/UploadComprobante";
+import ImageZoom from "@/Pages/Venta/Components/ImageZoom";
+import EstadoVenta from "@/Pages/Venta/Components/EstadoVenta";
+import ActionButtons from "./Components/ActionButtons";
+import FormConfirm from "./Components/FormConfirm";
+import FormCancel from "./Components/FormCancel";
+import FormDesconfirmar from "./Components/FormDesconfirmar";
+import FormReactivar from "./Components/FormReactivar";
 
 export default function Index({
   ventas,
@@ -36,17 +38,10 @@ export default function Index({
   idEstado,
   id_jugada,
 }) {
-  console.log(ventas, imgPath, idEstado, jugadas);
   const {
     data,
-    setData,
-    processing,
     errors,
-    post,
-    reset,
-    recentlySuccessful,
     hasErrors,
-    transform,
     clearErrors,
   } = useForm({
     id: "",
@@ -57,27 +52,12 @@ export default function Index({
   const [showSuccess, setShowSuccess] = useState(false);
   const [formConfirm, setFormConfirm] = useState(false);
   const [formCancel, setFormCancel] = useState(false);
+  const [formDesconfirmar, setFormDesconfirmar] = useState(false);
+  const [formReactivar, setFormReactivar] = useState(false);
   const [ventaSel, setVentaSel] = useState(null);
+
   const [estado, setEstado] = useState(idEstado ?? "");
   const [selectedJugada, setSelectedJugada] = useState("");
-
-  const handleCancel = (venta, oservaciones) => {
-    setVentaSel(venta);
-    setFormCancel(true);
-  };
-
-  const handleConfirm = (venta) => {
-    setVentaSel(venta);
-    setFormConfirm(true);
-  };
-
-  const handleEdit = (venta) => {
-    console.log("Edit", venta);
-    setLoadin(true);
-    setTimeout(() => {
-      setLoadin(false);
-    }, 1000);
-  };
 
   const handlePage = (event, page) => {
     console.log("Page", page);
@@ -91,12 +71,35 @@ export default function Index({
     router.get(route("ventas.index", { id_estado: event.target.value, id_jugada: id_jugada }));
   };
 
+  const handleJugada = (event) => {
+    router.get(route("ventas.index", { id_jugada: event.target.value }));
+  };
+  
   const handleCloseSuccess = () => {
     setShowSuccess(false);
   };
 
-  const handleJugada = (event) => {
-    router.get(route("ventas.index", { id_jugada: event.target.value }));
+  /* ACCIONES FORMULARIO */
+  const handleCancel = (venta) => {
+    setVentaSel(venta);
+    setFormCancel(true);
+  };
+
+  const handleConfirm = (venta) => {
+    setVentaSel(venta);
+    setFormConfirm(true);
+  };
+
+  const handleEdit = (venta) => {};
+  
+  const handleDesconfirmar = (venta) => {
+    setVentaSel(venta);
+    setFormDesconfirmar(true);
+  };
+
+  const handleReactivar = (venta) => {
+    setVentaSel(venta);
+    setFormReactivar(true);
   };
 
   const [loading, setLoadin] = useState(false);
@@ -118,6 +121,24 @@ export default function Index({
           OnClose={() => setFormCancel(false)}
           venta={ventaSel}
         ></FormCancel>
+      )}
+
+      {/* Form Desconfirmar */}
+      {formDesconfirmar && (
+        <FormDesconfirmar
+          open={formDesconfirmar}
+          OnClose={() => setFormDesconfirmar(false)}
+          venta={ventaSel}
+        ></FormDesconfirmar>
+      )}
+
+      {/* Form Reactivar */}
+      {formReactivar && (
+        <FormReactivar
+          open={formReactivar}
+          OnClose={() => setFormReactivar(false)}
+          venta={ventaSel}
+        ></FormReactivar>
       )}
 
       {/* Mostrar error */}
@@ -191,7 +212,7 @@ export default function Index({
           </Grid2>
         </Grid2>
         {
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} className="mt-1">
             <Table
               sx={{ minWidth: 650 }}
               aria-label="simple table"
@@ -243,9 +264,10 @@ export default function Index({
                         <ImageZoom
                           src={imgPath + venta.tx_comprobante}
                           alt="Comprobante"
+                          venta={venta}
                         ></ImageZoom>
                       ) : (
-                        <UploadComprobante text="Sin comprobante"></UploadComprobante>
+                        <UploadComprobante venta={venta} text="Sin comprobante"></UploadComprobante>
                       )}
                     </TableCell>
                     <TableCell align="center">
@@ -257,6 +279,8 @@ export default function Index({
                         onCancel={handleCancel}
                         onConfirm={handleConfirm}
                         onEdit={handleEdit}
+                        onDesconfirmar={handleDesconfirmar}
+                        onReactivar={handleReactivar}
                         venta={venta}
                       ></ActionButtons>
                     </TableCell>

@@ -59,7 +59,7 @@ const CompraExito = ({ open, onClose, tickets, jugada, venta }) => {
               </Alert>
               <Grid2>
                 <WhatsappButton
-                  celular="+584129396107"
+                  celular="+584243424885"
                   texto={
                     "Informacion tickets; " +
                     ticketsList +

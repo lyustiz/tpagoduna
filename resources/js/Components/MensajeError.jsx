@@ -4,8 +4,6 @@ import Fade from '@mui/material/Fade';
 import Alert from '@mui/material/Alert';
 
 export default function MensajeError({ open, onClose, errors }) {
-  console.log(errors);
-
   const getErrorMessage = (error) => {
     if (typeof error === 'object') {
       return JSON.stringify(error);
@@ -33,7 +31,7 @@ export default function MensajeError({ open, onClose, errors }) {
         variant='filled'
         sx={{ width: '100%' }}
       >
-        {getErrorMessage(errors.error) || getErrorMessage(errors.warning) || getValidaciones(errors) }
+        {getErrorMessage(errors.error) || getErrorMessage(errors.warning) || getValidaciones(errors) || 'Ocurrio un error'}
       </Alert>
     </Snackbar>
   );
