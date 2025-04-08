@@ -46,12 +46,14 @@ export default function DeleteComprobanteButton({ onClose, venta }) {
 
      post(route("ventas.eliminarcomprobante", { id: data.id }), {
            onSuccess: (response) => {
-              alert("Comprobante eliminado con éxito"); 
-              router.reload({ only: ["ventas"] });
-            // 
+            handleConfirmClose();
+            alert("Comprobante eliminado con éxito"); 
+            router.reload({ only: ["ventas"] });
+              
            },
-           onError: () => {
-            alert("Error al eliminar el comprobante");
+           onError: (e) => {
+            alert("Error: " + e.error || "No se pudo eliminar el comprobante.");
+            handleConfirmClose();
            }
          });
   };
